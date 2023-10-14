@@ -7,13 +7,23 @@ public class MyCarApplication {
 	
 	public boolean isLogedin;
 	public boolean isSignedup;
+	public boolean inMenu;
+	public boolean validCommand;
+	public boolean validCategory;
+	public boolean validProduct; 
 	
 	DataArrayList list;
 	
 	public MyCarApplication() {
 		isLogedin = false;
 		isSignedup = false;
+		inMenu = true;
+		validCommand = false;
+		validCategory = false;
+		validProduct = false;
+		
 		list = new DataArrayList();
+		
 	}
 	
 	// Admin sign-in functions
@@ -242,4 +252,49 @@ public class MyCarApplication {
 	    	return isSignedup;
 	}
 	
+	// ProductCatalog functions
+	public boolean Category(String Menu) {
+		if(Menu.equals("Category")) {
+			validCommand = true;
+		}
+		else if(Menu.equals("Search")) {
+			validCommand = true;
+		}
+		return validCommand;
+	}
+	public boolean CategoryName(String Name) {
+		if (Name.equals("Interior") || Name.equals("Exterior") || Name.equals("Electronics")) {
+	        validCategory = true;
+	    }
+	    return validCategory;
+	}
+	public boolean ProductName(String CategoryName, String ProductName) {
+	if(CategoryName.equals("Interior")) {
+		for(Product n : DataArrayList.Interior) {
+	        if(ProductName.equals(n.getProductName())) {
+	           validProduct = true;
+	           break;
+	        }
+	    }
+	}
+		else if(CategoryName.equals("Exterior")) {
+			for(Product n : DataArrayList.Exterior) {
+		        if(ProductName.equals(n.getProductName())) {
+		           validProduct = true;
+		           break;
+		        }
+		    }
+		}
+		else if(CategoryName.equals("Electronics")) {
+			for(Product n : DataArrayList.Electronics) {
+		        if(ProductName.equals(n.getProductName())) {
+		           validProduct = true;
+		           break;
+		        }
+		    }
+		}
+	
+	return validProduct;
+	
+}
 }

@@ -1,8 +1,6 @@
 package CarAccessoriesCompany_Main;
 
 public class User {
-	
-	
 	public  String Email;
     public  String Password;
     
