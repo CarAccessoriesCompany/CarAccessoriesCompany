@@ -3,7 +3,9 @@ package CarAccessoriesCompany_Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import CarAccessoriesCompany_Main.DataArrayList;
 import CarAccessoriesCompany_Main.MyCarApplication;
+import CarAccessoriesCompany_Main.Product;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

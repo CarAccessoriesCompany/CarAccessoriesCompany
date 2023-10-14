@@ -5,11 +5,11 @@ public class Product {
 	public String ProductName;
 	public String Description;
 	public String Price;
-	public boolean Availability;
+	public String Availability;
 	
 	
 	
-	public Product(String ProductName, String Description, String Price, boolean Availability) {
+	public Product(String ProductName, String Description, String Price, String Availability) {
 		this.ProductName = ProductName;
 		this.Description = Description;
 		this.Price = Price;
@@ -25,7 +25,7 @@ public class Product {
 	public void setDescription(String Description) {
 		this.Description = Description;
 	}
-	public String setDescription() {
+	public String getDescription() {
 		return Description;
 	}
 	public void setPrice(String Price) {
@@ -34,10 +34,10 @@ public class Product {
 	public String getPrice() {
 		return Price;
 	}
-	public void setAvailability(boolean Availability) {
+	public void setAvailability(String Availability) {
 		this.Availability = Availability;
 	}
-	public boolean getAvailability() {
+	public String getAvailability() {
 		return Availability;
 	}
 	
