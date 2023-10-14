@@ -291,10 +291,6 @@ public class MyCarApplication {
 		           validProduct = true;
 		           break;
 		        }
-		           System.out.println(ProductName);
-		           System.out.println(n.getDescription());
-		           System.out.println(n.getPrice());
-		           System.out.println(n.getAvailability());
 		    }
 		}
 	
