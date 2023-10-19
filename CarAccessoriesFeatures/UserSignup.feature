@@ -13,7 +13,7 @@ Feature: User Sign-Up
 	 Scenario: The user sign-up with an existing email address
 	 
 		 Given User in the sign-up page
-		 When The user enters an existing email address "existinguser@gmail.com" and password "userpassword"
+		 When The user enters an existing email address "existinguser@gmail.com"
 		 Then The user should stay on the sign-up page
 		
 	 # Third Scenario

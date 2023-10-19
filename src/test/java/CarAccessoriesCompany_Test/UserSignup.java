@@ -28,7 +28,7 @@ public class UserSignup {
 
 	@When("The user their valid email address {string} and password {string}")
 	public void theUserTheirValidEmailAddressAndPassword(String string, String string2) {
-	    app.UserSignUp("NewUser@gmail.com", "NewUser123");
+	    app.UserSignUp("NewUser@gmail.com", "NewUser123","NewUser","059-1102030");
 	}
 
 	@Then("The user signs up success")
@@ -37,9 +37,9 @@ public class UserSignup {
 	}
 
 
-	@When("The user enters an existing email address {string} and password {string}")
-	public void theUserEntersAnExistingEmailAddressAndPassword(String string, String string2) {
-		app.ExistEmail("Customer1@gmail.com", "NewUser123");
+	@When("The user enters an existing email address {string}")
+	public void theUserEntersAnExistingEmailAddressAndPassword(String string) {
+		app.ExistEmail("Customer1@gmail.com");
 	}
 
 	@Then("The user should stay on the sign-up page")

@@ -6,16 +6,23 @@ public class Product {
 	public String Description;
 	public String Price;
 	public String Availability;
+	public String Category;
 	
 	
-	
-	public Product(String ProductName, String Description, String Price, String Availability) {
+	public Product(String Category, String ProductName, String Description, String Price, String Availability) {
+		this.Category = Category;
 		this.ProductName = ProductName;
 		this.Description = Description;
 		this.Price = Price;
 		this.Availability = Availability;
 	}
 	
+	public void setCategory(String Category ) {
+		this.Category = Category;
+	}
+	public String getCategory() {
+		return Category;
+	}
 	public void setProductName(String ProductName ) {
 		this.ProductName = ProductName;
 	}

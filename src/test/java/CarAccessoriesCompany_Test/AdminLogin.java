@@ -56,4 +56,5 @@ public class AdminLogin {
 	public void theAdminEntersTheEmailAndLeaveThePasswordFieldEmpty(String string) {
 	   app.AdminEmptyPassword("Ahmaddweikat@gmail.com", "");
 	}
+	
 }
