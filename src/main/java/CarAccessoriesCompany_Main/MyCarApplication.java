@@ -8,7 +8,8 @@ public class MyCarApplication {
 	
 	public boolean isLogedin;
 	public boolean invalidEmail;
-	public boolean validEmail;
+	public boolean incorrectPassword;
+	public boolean isEmpty;
 	public boolean isSignedup;
 	public boolean inMenu;
 	public boolean validCommand;
@@ -29,7 +30,8 @@ public class MyCarApplication {
 	public MyCarApplication() {
 		isLogedin = false;
 		invalidEmail = false;
-		validEmail = false;
+		incorrectPassword = false;
+		isEmpty = false;
 		isSignedup = false;
 		inMenu = true;
 		validCommand = false;
@@ -48,50 +50,40 @@ public class MyCarApplication {
 		
 	}
 	public boolean UserID(String Email) {
-		for(User n : DataArrayList.Admin) {
-	        if(Email.equals(n.getEmail())) {
-	           isAdmin = true;
-	           break;
-	        }
-	       
-	    }
-		for(Customers n : DataArrayList.Customer) {
-	        if(Email.equals(n.getEmail()) ) {
-	           isCustomer = true;
-	           break;
-	        }
-	        
-	    }
-		for(User n : DataArrayList.Installer) {
-	        if(Email.equals(n.getEmail())) {
-	           isInstaller = true;
-	           break;
-	        }
-	        
-	    }
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
+			for(User n : DataArrayList.Admin) {
+		        if(Email.equals(n.getEmail())) {
+		           isAdmin = true;
+		           break;
+		        }
+		       
+		    }
+			for(Customers n : DataArrayList.Customer) {
+		        if(Email.equals(n.getEmail()) ) {
+		           isCustomer = true;
+		           break;
+		        }
+		        
+		    }
+			for(User n : DataArrayList.Installer) {
+		        if(Email.equals(n.getEmail())) {
+		           isInstaller = true;
+		           break;
+		        }
+		        
+		    }
+		}
+		
 		
 		return isAdmin || isCustomer || isInstaller;
 		
 	}
-	
-	public boolean ValidEmail(String Email) {
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    if (matcher.matches()) {
-	    	validEmail = true;
-	    }
-	    System.out.println(validEmail);
-	    return validEmail;
-	}
-	
+
 	// Admin sign-in functions
 	public boolean Adminlogin(String Email, String Password) {
-		isLogedin = false;
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    if (matcher.matches()) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(User n : DataArrayList.Admin) {
 	        if(Email.equals(n.getEmail())) {
 	        	if(n.getPassword().equals(Password)) {
@@ -106,12 +98,8 @@ public class MyCarApplication {
 	}
 	
 	public boolean AdminInvalidEmail(String Email) {
-		
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    
-	    if (matcher.matches()) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 	        for (User n : DataArrayList.Admin) {
 	            if (Email.equals(n.getEmail())) {
 	                isLogedin = true;
@@ -124,45 +112,52 @@ public class MyCarApplication {
 	}
 	
 	public boolean AdminIncorrectPassword(String Email, String Password) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(User n : DataArrayList.Admin) {
-	        if(Email.equals(n.getEmail()) && Password.equals(n.getPassword())) {
-	           isLogedin = true;
-	           break;
-	        }
-	    }
-		return isLogedin;
-	}
-	
-	public boolean AdminEmptyPassword(String Email, String Password) {
-		isLogedin = true;
-		for(User n : DataArrayList.Admin) {
-	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
-	           isLogedin = false;
+	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	        	incorrectPassword = true;
 	           break;
 	        }
 	    }
 		
+	}
+	    isLogedin = !incorrectPassword;
+		return isLogedin;
+	}
+	
+	public boolean AdminEmptyPassword(String Email, String Password) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
+		for(User n : DataArrayList.Admin) {
+	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
+	           isEmpty = true;
+	           break;
+	        }
+	    }
+	    }
+	    isLogedin = !isEmpty;
 		return isLogedin;
 	}
 	
 	// Customer sign-in functions
 	public boolean Customerlogin(String Email, String Password) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(Customers n : DataArrayList.Customer) {
 	        if(Email.equals(n.getEmail()) && n.getPassword().equals(Password)) {
 	           isLogedin = true;
 	           break;
 	        }
 	    }
+	    }
 		return isLogedin;
 	}
 	
 	public boolean CustomerInvalidEmail(String Email) {
 		
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    
-	    if (matcher.matches()) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 	        for (Customers n : DataArrayList.Customer) {
 	            if (Email.equals(n.getEmail())) {
 	                isLogedin = true;
@@ -175,45 +170,53 @@ public class MyCarApplication {
 	}
 	
 	public boolean CustomerIncorrectPassword(String Email, String Password) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(Customers n : DataArrayList.Customer) {
-	        if(Email.equals(n.getEmail()) && Password.equals(n.getPassword())) {
-	           isLogedin = true;
+	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	           incorrectPassword = true;
 	           break;
 	        }
 	    }
+	    }
+	    
+	    isLogedin = !incorrectPassword;
 		return isLogedin;
 	}
 	
 	public boolean CustomerEmptyPassword(String Email, String Password) {
-		isLogedin = true;
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(Customers n : DataArrayList.Customer) {
 	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
-	           isLogedin = false;
-	           break;
+	        	isEmpty = true;
+	            break;
 	        }
 	    }
+	    }
 		
+	    isLogedin = !isEmpty;
 		return isLogedin;
 	}
 	
 	// Installer sign-in function
 	public boolean Installerlogin(String Email, String Password) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(User n : DataArrayList.Installer) {
 	        if(Email.equals(n.getEmail()) && n.getPassword().equals(Password)) {
 	           isLogedin = true;
 	           break;
 	        }
 	    }
+	    }
 		return isLogedin;
 	}
 	
 	public boolean InstallerInvalidEmail(String Email) {
 		
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    
-	    if (matcher.matches()) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 	        for (User n : DataArrayList.Installer) {
 	            if (Email.equals(n.getEmail())) {
 	                isLogedin = true;
@@ -226,37 +229,41 @@ public class MyCarApplication {
 	}
 	
 	public boolean InstallerIncorrectPassword(String Email, String Password) {
+		
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(User n : DataArrayList.Installer) {
-	        if(Email.equals(n.getEmail()) && Password.equals(n.getPassword())) {
-	           isLogedin = true;
+	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	           incorrectPassword = true;
 	           break;
 	        }
 	    }
+	    }
+	    isLogedin = !incorrectPassword;
 		return isLogedin;
 	}
 	
 	public boolean InstallerEmptyPassword(String Email, String Password) {
-		isLogedin = true;
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(User n : DataArrayList.Installer) {
 	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
-	           isLogedin = false;
-	           break;
+	        	isEmpty = true;
+	            break;
 	        }
 	    }
+	    }
 		
+	    isLogedin = !isEmpty;
 		return isLogedin;
 	}
 	
 	// User Sign-up functions
-	
 	public boolean UserSignUp(String Email, String Password, String Username, String PhoneNumber) {
 		isSignedup = true;
 		
-		String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
-	    
-	    if (!matcher.matches()) {
+		InvalidEmailType(Email);
+	    if (invalidEmail == true) {
 	        isSignedup = false;
 	        return isSignedup;
 	    }
@@ -276,6 +283,8 @@ public class MyCarApplication {
 	public boolean ExistEmail(String Email) {
 		
 		isSignedup = true;
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		for(Customers n : DataArrayList.Customer) {
 	        if(Email.equals(n.getEmail())) {
 	           isSignedup = false;
@@ -297,44 +306,72 @@ public class MyCarApplication {
 	        }
 	        
 	    }
+	    }
 		return isSignedup;
 	}
 	
-	public boolean SignupEmptyPassword(String Email, String Password) {
+public boolean ExistUsername(String Username) {
+		
 		isSignedup = true;
+		for(Customers n : DataArrayList.Customer) {
+	        if(Username.equals(n.getUsername())) {
+	           isSignedup = false;
+	           break;
+	        } 
+	    }
+	
+		return isSignedup;
+	}
+
+public boolean ExistPhoneNumber(String PhoneNumber) {
+	
+	isSignedup = true;
+	
+	for(Customers n : DataArrayList.Customer) {
+        if(PhoneNumber.equals(n.getPhoneNumber())) {
+           isSignedup = false;
+           break;
+        } 
+    }
+	return isSignedup;
+}
+	public boolean SignupEmptyPassword(String Email, String Password) {
+		
+		isSignedup = true;
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		Customers newUser = new Customers(Email, Password, null, null);
 		if(Password.isEmpty()) {
 			isSignedup = false;
 		}
-		
-		
+	    }
 		return isSignedup;
 	}
 	
 	public boolean SignupWeakPassword(String Email, String Password) {
 		isSignedup = true;
 		invalidEmail = true;
+		InvalidEmailType(Email);
+	    if (invalidEmail == false) {
 		User newUser = new User(Email, Password);
 		 if (Password.length() < 8) {
 			 isSignedup = false;
 			 invalidEmail = false;
 		 }
+	    }
 		    return isSignedup; 
 	}
 	
 	public boolean InvalidEmailType(String Email) {
-		isSignedup = true;
-		
+		invalidEmail = false;
 	    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 	    Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(Email);
-
 	    	if(!matcher.matches()) {
-	    		isSignedup = false;
 	    		invalidEmail = true;
-	    		
 	    	}
-	    	return isSignedup;
+	    	isSignedup = !invalidEmail;
+	    	return invalidEmail;
 	}
 	
 	// ProductCatalog functions
@@ -500,7 +537,7 @@ public class MyCarApplication {
 		return DisplayList;
 	}
 	
-	private Customers findCustomerByEmail(String email) {
+	public Customers findCustomerByEmail(String email) {
 	    // Search for the customer by email in your data source (DataArrayList.Customer)
 	    for (Customers customer : DataArrayList.Customer) {
 	        if (customer.getEmail().equals(email)) {
