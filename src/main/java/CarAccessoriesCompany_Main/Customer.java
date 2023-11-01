@@ -2,16 +2,17 @@ package CarAccessoriesCompany_Main;
 
 import java.util.ArrayList;
 
-public class Customers {
+public class Customer {
+	
 	public  String Email;
     public  String Password;
     public String Username;
     public String PhoneNumber;
-    public static ArrayList<Customers> Orders = new ArrayList<Customers>();
-    public static ArrayList<Customers> Request = new ArrayList<Customers>();
+    public static ArrayList<Customer> Orders = new ArrayList<Customer>();
+    public static ArrayList<Customer> Request = new ArrayList<Customer>();
 //    public String Address;
     
-	public Customers(String Email, String Password, String Username, String PhoneNumber) {
+	public Customer(String Email, String Password, String Username, String PhoneNumber) {
 		// TODO Auto-generated constructor stub
 		this.Email = Email;
 		this.Password = Password;
@@ -42,10 +43,10 @@ public class Customers {
 	public void setPhoneNumber(String PhoneNumber) {
 		this.PhoneNumber = PhoneNumber;
 	}
-	public ArrayList<Customers> getOrders() {
+	public ArrayList<Customer> getOrders() {
 		return Orders;
 	}
-	public ArrayList<Customers> getRequest() {
+	public ArrayList<Customer> getRequest() {
 		return Request;
 	}
 //	public String getAddress() {

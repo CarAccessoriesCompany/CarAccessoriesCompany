@@ -9,19 +9,12 @@ public class Product {
 	public String Category;
 	
 	
-	public Product(String Category, String ProductName, String Description, String Price, String Availability) {
+	public Product(String ProductName, String Description, String Price, String Availability, String Category) {
 		this.Category = Category;
 		this.ProductName = ProductName;
 		this.Description = Description;
 		this.Price = Price;
 		this.Availability = Availability;
-	}
-	
-	public void setCategory(String Category ) {
-		this.Category = Category;
-	}
-	public String getCategory() {
-		return Category;
 	}
 	public void setProductName(String ProductName ) {
 		this.ProductName = ProductName;
@@ -29,6 +22,7 @@ public class Product {
 	public String getProductName() {
 		return ProductName;
 	}
+	
 	public void setDescription(String Description) {
 		this.Description = Description;
 	}
@@ -46,6 +40,12 @@ public class Product {
 	}
 	public String getAvailability() {
 		return Availability;
+	}
+	public void setCategory(String Category ) {
+		this.Category = Category;
+	}
+	public String getCategory() {
+		return Category;
 	}
 	
 }

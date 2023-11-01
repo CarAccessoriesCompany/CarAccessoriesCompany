@@ -30,4 +30,4 @@
     When I enter the command "Search"
     Then I should be prompted to enter the product name
     When I enter command "Steering Wheel"
-    Then I should see a list of products containing the keyword "Steering Wheel"
+    Then I should see a list of products containing the keyword
