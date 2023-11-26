@@ -8,8 +8,8 @@ public class Customer {
     public  String Password;
     public String Username;
     public String PhoneNumber;
-    public static ArrayList<Customer> Orders = new ArrayList<Customer>();
-    public static ArrayList<Customer> Request = new ArrayList<Customer>();
+    public static ArrayList<String> Orders = new ArrayList<String>();
+    public static ArrayList<String> Request = new ArrayList<String>();
 //    public String Address;
     
 	public Customer(String Email, String Password, String Username, String PhoneNumber) {
@@ -43,10 +43,10 @@ public class Customer {
 	public void setPhoneNumber(String PhoneNumber) {
 		this.PhoneNumber = PhoneNumber;
 	}
-	public ArrayList<Customer> getOrders() {
+	public ArrayList<String> getOrders() {
 		return Orders;
 	}
-	public ArrayList<Customer> getRequest() {
+	public ArrayList<String> getRequest() {
 		return Request;
 	}
 //	public String getAddress() {

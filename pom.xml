@@ -32,7 +32,12 @@
 		<version>7.3.4</version>
 		<scope>test</scope>
 	</dependency>
-	
-	
-  </dependencies>
+
+
+	<dependency>
+		<groupId>CarAccessoriesCompanyProject</groupId>
+		<artifactId>Car_AccessoriesCompany</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  	</dependencies>
 </project>

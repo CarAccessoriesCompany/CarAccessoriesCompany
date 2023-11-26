@@ -6,7 +6,7 @@ public class DataArrayList {
 	
 	public static ArrayList<User> Admin = new ArrayList<User>();
 	public static ArrayList<Customer> Customers = new ArrayList<Customer>();
-	public static ArrayList<User> Installer = new ArrayList<User>();
+	public static ArrayList<Installer> Installers = new ArrayList<Installer>();
 	
 //	public static ArrayList<Product> Interior = new ArrayList<Product>();
 //	public static ArrayList<Product> Exterior = new ArrayList<Product>();
@@ -14,6 +14,8 @@ public class DataArrayList {
 	
 	public static ArrayList<Product> Products = new ArrayList<Product>();
 	public static ArrayList<Category> Categories = new ArrayList<Category>();
+	
+	public static ArrayList<Order> Orders = new ArrayList<Order>();
 	
 //	public static String[] Category = {"Interior", "Exterior", "Electronics"};
 	
@@ -28,10 +30,10 @@ public class DataArrayList {
 		Customers.add(firstCustomer);
 		Customers.add(secondCustomer);
 		
-		User firstInstaller = new User("Installer1@gmail.com","Installer123");
-		User secondInstaller = new User("Installer2@gmail.com","Installer456");
-		Installer.add(firstInstaller);
-		Installer.add(secondInstaller);
+		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", "Installer1", "Available");
+		Installer secondInstaller = new Installer("Installer2@gmail.com","Installer456", "Installer2", "Busy");
+		Installers.add(firstInstaller);
+		Installers.add(secondInstaller);
 		
 		Product  InteriorPart1 = new Product("Steering Wheel", "The wheel which the driver holds when he or she is driving", "100$", "Yes","Interior");
 		Product  InteriorPart2 = new Product("Speedometer and Fuel Gauge", "The speedometer displays wheel speed. Meanwhile, the fuel gauge displays the level of fuel in the tank."
@@ -66,5 +68,11 @@ public class DataArrayList {
 		Categories.add(cat1);
 		Categories.add(cat2);
 		Categories.add(cat3);
+		
+		Order ord1 = new Order("Customer123", "Customer1@gmail.com", "Body Shell", "150$", "Confirmed");
+		Order ord2 = new Order("Customer123", "Customer1@gmail.com", "Anti-lock Braking System", "450$", "Not Confirmed");
+		Orders.add(ord1);
+		Orders.add(ord2);
+		
 	}
 }

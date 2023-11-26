@@ -7,6 +7,8 @@ public class Product {
 	public String Price;
 	public String Availability;
 	public String Category;
+	public String Review;
+	public int Rate;
 	
 	
 	public Product(String ProductName, String Description, String Price, String Availability, String Category) {
@@ -46,6 +48,20 @@ public class Product {
 	}
 	public String getCategory() {
 		return Category;
+	}
+	
+	public void setReview(String Review) {
+		this.Review = Review;
+	}
+	public String getReview() {
+		return Review;
+	}
+	
+	public int getRating() {
+		return Rate;
+	}
+	public void setRating(int Rate) {
+		this.Rate = Rate;
 	}
 	
 }

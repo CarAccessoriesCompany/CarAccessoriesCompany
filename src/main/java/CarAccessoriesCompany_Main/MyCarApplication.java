@@ -43,13 +43,25 @@ public class MyCarApplication {
 	
 	
 	
+	
 	public boolean customerAccIsExist;
 	public boolean displayCustomerInfo;
 	public boolean customerNameUpdated;
 	public boolean customerIsDeleted;
 	public boolean ProductIsDeleted;
 	
+	
+	public boolean isInproductPage;
+	public boolean isReviewed;
+	public boolean isRated;
+	public boolean DisplayReview;
+	public boolean DisplayRate;
+					
+	public boolean isInServicePage;
+	public boolean ValidRequest;
+	public boolean isAvailable;
 	DataArrayList list;
+	public boolean isConfirmed;
 	
 	public MyCarApplication() {
 		isLogedin = false;
@@ -96,6 +108,15 @@ public class MyCarApplication {
 	    customerNameUpdated=false;
 	    customerIsDeleted=false;
 	    
+	 	isInproductPage = true;
+	 	isReviewed = false;
+	 	isRated = false;
+	 	DisplayReview = false;
+	 	DisplayRate = false;
+	    
+	 	isInServicePage = true;
+	 	ValidRequest = true;
+	 	isAvailable = false;
 		list = new DataArrayList();
 		
 	}
@@ -116,7 +137,7 @@ public class MyCarApplication {
 		        }
 		        
 		    }
-			for(User n : DataArrayList.Installer) {
+			for(Installer n : DataArrayList.Installers) {
 		        if(Email.equals(n.getEmail())) {
 		           isInstaller = true;
 		           break;
@@ -253,7 +274,7 @@ public class MyCarApplication {
 	public boolean Installerlogin(String Email, String Password) {
 		InvalidEmailType(Email);
 	    if (invalidEmail == false) {
-		for(User n : DataArrayList.Installer) {
+		for(Installer n : DataArrayList.Installers) {
 	        if(Email.equals(n.getEmail()) && n.getPassword().equals(Password)) {
 	           isLogedin = true;
 	           break;
@@ -267,7 +288,7 @@ public class MyCarApplication {
 		
 		InvalidEmailType(Email);
 	    if (invalidEmail == false) {
-	        for (User n : DataArrayList.Installer) {
+	        for (Installer n : DataArrayList.Installers) {
 	            if (Email.equals(n.getEmail())) {
 	                isLogedin = true;
 	                break;
@@ -282,7 +303,7 @@ public class MyCarApplication {
 		
 		InvalidEmailType(Email);
 	    if (invalidEmail == false) {
-		for(User n : DataArrayList.Installer) {
+		for(Installer n : DataArrayList.Installers) {
 	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
 	           incorrectPassword = true;
 	           break;
@@ -296,7 +317,7 @@ public class MyCarApplication {
 	public boolean InstallerEmptyPassword(String Email, String Password) {
 		InvalidEmailType(Email);
 	    if (invalidEmail == false) {
-		for(User n : DataArrayList.Installer) {
+		for(Installer n : DataArrayList.Installers) {
 	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
 	        	isEmpty = true;
 	            break;
@@ -349,7 +370,7 @@ public class MyCarApplication {
 	        }
 	        
 	    }
-		for(User n : DataArrayList.Installer) {
+		for(Installer n : DataArrayList.Installers) {
 	        if(Email.equals(n.getEmail())) {
 	           isSignedup = false;
 	           break;
@@ -550,13 +571,13 @@ public boolean ExistPhoneNumber(String PhoneNumber) {
 		 Customer customer = findCustomerByEmail(Email);
 		if (customer != null) {
 	        // Assuming that the customer has a list of orders
-	        List<Customer> customerOrders = customer.getOrders();
+	        List<String> customerOrders = customer.getOrders();
 	        
 	        if (customerOrders.isEmpty()) {
 	        	DisplayList = false;
 	        }
 	        else {
-	        	 for (Customer order : customerOrders) {
+	        	 for (String order : Customer.Request) {
 	        		 if(customerOrders.size() >= 1) {
 	        			 DisplayList = true;
 	        		 }
@@ -570,13 +591,13 @@ public boolean ExistPhoneNumber(String PhoneNumber) {
 		 Customer customer = findCustomerByEmail(Email);
 		if (customer != null) {
 	        // Assuming that the customer has a list of orders
-	        List<Customer> customerRequest = customer.getRequest();
+	        List<String> customerRequest = customer.getRequest();
 	        
 	        if (customerRequest.isEmpty()) {
 	        	DisplayList = false;
 	        }
 	        else {
-	        	 for (Customer order : customerRequest) {
+	        	 for (String order : Customer.Request) {
 	        		 if(customerRequest.size() >= 1) {
 	        			 DisplayList = true;
 	        		 }
@@ -846,7 +867,86 @@ public boolean updateProdCategory(String cat, String name){
 	    
 	    return customerIsDeleted;
 	}
-
+	
+		
+		
+	public boolean Review(String ProdName,String Review) {
+		for(Product n : DataArrayList.Products) {
+	        if(ProdName.equals(n.getProductName())) {
+	        	if(!Review.isEmpty()) {
+	        		n.setReview(Review);
+		        	isReviewed = true;
+		        	break;
+	        	}
+	        }
+	        }
+		return isReviewed;
+	}
+	
+	public boolean Rated(String ProdName,int Rate) {
+		for(Product n : DataArrayList.Products) {
+	        if(ProdName.equals(n.getProductName())) {
+	        	if(Rate <= 5 && Rate >= 0) {
+	        		n.setRating(Rate);
+	        		isRated = true;
+		        	break;
+	        	}
+	        }
+	        }
+		return isRated;
+	}
+	
+	
+	
+	public boolean DispalyReview(String ProdName) {
+		for(Product n : DataArrayList.Products) {
+	        if(ProdName.equals(n.getProductName())) {
+	        		DisplayReview = true;
+	        	}
+	        }
+	        return DisplayReview;
+	}
+	public boolean DispalyRate(String ProdName) {
+		for(Product n : DataArrayList.Products) {
+	        if(ProdName.equals(n.getProductName())) {
+	        	if(n.getRating() >= 0 && n.getRating() <= 5){
+	        		DisplayRate = true;
+	        	}
+	        	}
+	        }
+	        return DisplayRate;
+	}
+	public boolean Request(String Username, String Email, String Car_Model, String Descriptions , String Date) {
+		for(Customer u : DataArrayList.Customers) {
+	        	if(Email.equals(u.getEmail()) && Username.equals(u.getUsername())) {
+	        		for(String c : Customer.Request) {
+	                	if(!Car_Model.isEmpty() && !Descriptions.isEmpty() && !Date.isEmpty()) {
+	                		Customer.Request.add(Car_Model);
+	                		Customer.Request.add(Descriptions);
+	                		Customer.Request.add(Date);
+	                		
+	                	}
+	                	
+	            	}
+	        		ValidRequest = true;
+	        		break;
+	        	}
+	        	
+        	}
+	
+		return ValidRequest;
+	}
+	
+	public boolean InstAvalibilty(String Username) {
+		for(Installer in: DataArrayList.Installers) {
+			if(Username.equals(in.getUsername())) {
+				if(in.getInstallerAvalibilty().equals("Available")) {
+					isAvailable = true;
+				}
+			}
+		}
+		return isAvailable;
+	}
 
 	public void PrintAdminMenu() {
 		System.out.println("\tWelcome Admin");
