@@ -1,7 +1,7 @@
 package CarAccessoriesCompany_Main;
 
 public class Category {
-
+//h
 	public String CatName;
 	
 	public Category(String name) {

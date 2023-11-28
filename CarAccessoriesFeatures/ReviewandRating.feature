@@ -19,7 +19,7 @@ Scenario: Display  review for products
 	When cutomer enters "product name"
 	Then cutomer should see the review for the product
 	
-# Fourth Scenario
+# Fourth Scenario--
 Scenario: Display  Rating for products
 	Given customer in products page
 	When cutomer enters "product name" to display rating

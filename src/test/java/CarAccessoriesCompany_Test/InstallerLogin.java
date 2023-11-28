@@ -28,7 +28,7 @@ public class InstallerLogin {
 	public void theInstallerEnteredAValidEmailAndAValidPassword(String string, String string2) {
 	    app.Installerlogin("Installer1@gmail.com", "Installer123");
 	}
-
+	//h
 	@Then("The installer sign-in succeeded")
 	public void theInstallerSignInSucceeded() {
 	    assertTrue(app.isLogedin);

@@ -28,7 +28,7 @@ Then the system should remove the product category "Electronics"
 
 
 
-################     Add and update product listings.  
+################     Add and update product listings----.  
 
    # Fourth Scenario
    Scenario: Add a New Product Listing

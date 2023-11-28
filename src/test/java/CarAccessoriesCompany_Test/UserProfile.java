@@ -32,7 +32,7 @@ public class UserProfile {
 	public void aCutomerInHisHerProfile() {
 		assertTrue(app.inProfile);
 	}
-
+	//h
 	@When("they choose to edit their profile")
 	public void theyChooseToEditTheirProfile() {
 	    app.EditCommand();

@@ -11,7 +11,7 @@ public class User {
 		// TODO Auto-generated constructor stub
 		this.Email = Email;
 		this.Password = Password;
-		
+		//h
 	}
 	public String getEmail() {
 		return Email;

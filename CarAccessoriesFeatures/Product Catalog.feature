@@ -16,7 +16,7 @@
     When I enter command "Exterior"
     Then I should see a list of products with details (product name,description, price, availability)
     
-    # Third Scenario
+    # Third Scenario--
 	  Scenario: List Products in a Electronics Category
     Given I am in the main menu
     When I enter the command "Category"

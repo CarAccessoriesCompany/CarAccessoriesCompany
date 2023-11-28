@@ -1,7 +1,7 @@
 package CarAccessoriesCompany_Main;
 
 import java.util.ArrayList;
-
+//j
 public class Installer {
 	public String Email;
     public String Password;
