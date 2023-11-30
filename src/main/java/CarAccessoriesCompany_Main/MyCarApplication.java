@@ -73,6 +73,11 @@ public class MyCarApplication {
 	
 	
 	
+	public boolean IsOrdered;
+	public boolean sendEmail;
+	public boolean InstallationReqReceived;
+	
+	
 	public MyCarApplication() {
 		isLogedin = false;
 		invalidEmail = false;
@@ -135,6 +140,11 @@ public class MyCarApplication {
 	 	appCanceled=false;
 	 	InstallerScheduleViewd=false;
 	 	
+	 	
+	 	
+	 	IsOrdered=false;
+	 	sendEmail=false;
+	 	InstallationReqReceived=false;
 	 	
 		list = new DataArrayList();
 		
@@ -1075,11 +1085,26 @@ public boolean updateProdCategory(String cat, String name){
 	
 	
 	
+	public boolean orderIsPlacedBy(String email) {
+		for(Order r:DataArrayList.Orders) {
+			if(r.GetCustomerEmail().equals(email) && r.GetStatus().equalsIgnoreCase("Confirmed")) {
+				
+					 sendEmail = true;
+			}
+		}
+		return sendEmail;
+	}
 	
 	
 	
-	
-	
+	public boolean getAnInsallationReqFot(String name) {
+		for(Installer n:DataArrayList.Installers) {
+			if(n.getUsername().equals(name) && n.getInstallerAvalibilty().equals("Available")) {
+				InstallationReqReceived=true;
+			}
+		}
+		return InstallationReqReceived;
+	}
 	
 	
 	
