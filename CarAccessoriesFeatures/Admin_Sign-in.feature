@@ -11,7 +11,7 @@ Feature: Administrator sign-in
 		Then The admin sign-in succeeded
 
 		
-		# Second Scenario
+		# Second Scenario---
 		Scenario: The admin enters an invalid email
 			
 			Given The admin is on the sign-in page

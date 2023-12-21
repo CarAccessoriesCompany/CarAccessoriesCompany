@@ -32,7 +32,7 @@ public class UserProfile {
 	public void aCutomerInHisHerProfile() {
 		assertTrue(app.inProfile);
 	}
-
+	//h
 	@When("they choose to edit their profile")
 	public void theyChooseToEditTheirProfile() {
 	    app.EditCommand();
@@ -50,7 +50,7 @@ public class UserProfile {
 
 	@When("a cutomer enter specific number on the list \\(My Orders)")
 	public void aCutomerEnterSpecificNumberOnTheListMyOrders() {
-	    app.DisplayCustomerOrders("Customer1@gmail.com");
+	    app.displayCustomerOrders("Customer1@gmail.com");
 	}
 
 	@Then("they should see a list of their past orders")
@@ -60,7 +60,7 @@ public class UserProfile {
 
 	@When("a cutomer enter specific number on the list \\(My Installation Requests)")
 	public void aCutomerEnterSpecificNumberOnTheListMyInstallationRequests() {
-	   app.DisplayInstallationRequests("Customer1@gmail.com");
+	   app.displayInstallationRequests("Customer1@gmail.com");
 	}
 
 	@Then("they should see a list of their installation requests")

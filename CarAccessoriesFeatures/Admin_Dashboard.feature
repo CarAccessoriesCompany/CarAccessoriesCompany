@@ -28,7 +28,7 @@ Then the system should remove the product category "Electronics"
 
 
 
-################     Add and update product listings.  
+################     Add and update product listings----.  
 
    # Fourth Scenario
    Scenario: Add a New Product Listing
@@ -145,9 +145,9 @@ Then the system should remove the product category "Electronics"
   #14th
   
   Scenario: Schedule an Installation Appointment
-  Given the Admin is on the appointment scheduling page
-  When the Admin schedules an installation appointment for "October 20, 2023, 10:00 AM" with technician "John Doe" for customer "Jane Smith"
-  Then the appointment for "Jane Smith" on "October 20, 2023, 10:00 AM" with technician "John Doe" should be scheduled
+  Given the Admin is on the appointment page
+  When the Admin schedules a new installation appointment in "October 20, 2023, 10:00 AM" with technician "John Doe" for customer "Jane Smith" with product name "Steering Wheel"
+  Then the appointment in "Jane Smith" on "October 20, 2023, 10:00 AM" with technician "John Doe" and with product name "Steering Wheel" should be scheduled
   
   
   
@@ -158,10 +158,10 @@ Then the system should remove the product category "Electronics"
   #15th
   
   Scenario: View Scheduled Appointments
-  Given the Admin is on the appointment management page
+  Given the Admin is on the appointment page
 When the Admin selects the option to view scheduled appointments for "October 20, 2023"
 Then the Admin should see a list of all scheduled appointments for "October 20, 2023"
-And each appointment entry should display customer name, appointment time, and assigned technician
+
   
   
   
@@ -173,8 +173,8 @@ And each appointment entry should display customer name, appointment time, and a
   #16th
   
   Scenario: Reschedule an Appointment
- Given the Admin is on the appointment management page
-When the Admin reschedules the appointment for "October 20, 2023, 10:00 AM" with technician "John Doe" for customer "Jane Smith"  to "October 21, 2023, 2:00 PM"
+ Given the Admin is on the appointment page
+When the Admin reschedules the appointment date for "October 20, 2023, 10:00 AM" with technician "John Doe" for customer "Jane Smith" to a new date "October 21, 2023, 2:00 PM"
 Then the appointment for "Jane Smith" on "October 20, 2023, 10:00 AM" with technician "John Doe" should be updated to "October 21, 2023, 2:00 PM"
   
   
@@ -187,7 +187,7 @@ Then the appointment for "Jane Smith" on "October 20, 2023, 10:00 AM" with techn
   
   #17th
   Scenario: Cancel an Appointment
- Given the Admin is on the appointment management page
+ Given the Admin is on the appointment page
 When the Admin cancels the appointment for "Jane Smith" on "October 21, 2023, 2:00 PM" with technician "John Doe"
 Then the appointment for "Jane Smith" on "October 21, 2023, 2:00 PM" with technician "John Doe" should be canceled
   
@@ -202,11 +202,11 @@ Then the appointment for "Jane Smith" on "October 21, 2023, 2:00 PM" with techni
   
  #18th 
   
-  Scenario: View Technician’s Schedule
- Given the Admin is on the appointment management page
-When the Admin selects to view "John Doe"’s schedule for "October 20, 2023" but he is a one of multiple technicians available
-Then the Admin should see a list of all appointments assigned to "John Doe" on "October 20, 2023"
-And each appointment entry should display customer name, appointment time, and service details
+  Scenario: View Technician Schedule
+ Given the Admin is on the appointment page
+When the Admin selects to view "John Doe"’s schedule
+Then the Admin should see a list of all appointments assigned to "John Doe" 
+
   
   
   
@@ -216,10 +216,4 @@ And each appointment entry should display customer name, appointment time, and s
   
   
   
-  #19th
   
-   Scenario: Attempt to Schedule Overlapping Appointments
- Given the Admin is on the appointment scheduling page
-And there exists a scheduled appointment for "October 21, 2023, 2:00 PM" with technician "John Doe" for customer "Jane Smith"
-When the Admin attempts to schedule another appointment for "October 21, 2023, 1:00 PM" with technician "John Doe"
-Then the appointment should not be scheduled

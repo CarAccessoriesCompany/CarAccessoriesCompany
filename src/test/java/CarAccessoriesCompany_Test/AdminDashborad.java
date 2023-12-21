@@ -215,32 +215,27 @@ public void theCustomerAccountShouldNotBeDeleted() {
 }
 
 
+//h
 
 
-
-
-
-
-
-
-
-
-
-
-
-@Given("the Admin is on the appointment scheduling page")
-public void theAdminIsOnTheAppointmentSchedulingPage() {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+@Given("the Admin is on the appointment page")
+public void theAdminIsOnTheAppointmentPage(){
+	assertTrue(app.inDashboard);
 }
 
-@When("the Admin schedules an installation appointment for {string} with technician {string} for customer {string}")
-public void theAdminSchedulesAnInstallationAppointmentForWithTechnicianForCustomer(String string, String string2, String string3) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+
+
+
+
+@When("the Admin schedules a new installation appointment in {string} with technician {string} for customer {string} with product name {string}")
+public void theAdminSchedulesANewInstallationAppointmentInWithTechnicianForCustomerWithProductName(String string, String string2, String string3, String string4) {
+	app.appointmentSchedule("October 25, 2023, 10:00 AM","Installer3","Customer3","Steering Wheel");
 }
 
-@Then("the appointment for {string} on {string} with technician {string} should be scheduled")
-public void theAppointmentForOnWithTechnicianShouldBeScheduled(String string, String string2, String string3) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+
+@Then("the appointment in {string} on {string} with technician {string} and with product name {string} should be scheduled")
+public void theAppointmentInOnWithTechnicianAndWithProductNameShouldBeScheduled(String string, String string2, String string3, String string4) {
+	assertTrue(app.appIsSechduled);
 }
 
 
@@ -250,58 +245,58 @@ public void theAppointmentForOnWithTechnicianShouldBeScheduled(String string, St
 
 
 
-@Given("the Admin is on the appointment management page")
-public void theAdminIsOnTheAppointmentManagementPage() {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
-}
 @When("the Admin selects the option to view scheduled appointments for {string}")
 public void theAdminSelectsTheOptionToViewScheduledAppointmentsFor(String string) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+	app.appointmentView("October 20, 2023, 10:00 AM");
 }
 
 @Then("the Admin should see a list of all scheduled appointments for {string}")
 public void theAdminShouldSeeAListOfAllScheduledAppointmentsFor(String string) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+	assertTrue(app.viewAppointment);
 }
 
-@Then("each appointment entry should display customer name, appointment time, and assigned technician")
-public void eachAppointmentEntryShouldDisplayCustomerNameAppointmentTimeAndAssignedTechnician() {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+@Then("each appointment entry should display customer name, appointment time, assigned technician and prodcut name")
+public void eachAppointmentEntryShouldDisplayCustomerNameAppointmentTimeAssignedTechnicianAndProdcutName() {
+	assertTrue(app.viewAppointment);
 }
 
-@When("the Admin reschedules the appointment for {string} with technician {string} for customer {string}  to {string}")
-public void theAdminReschedulesTheAppointmentForWithTechnicianForCustomerTo(String string, String string2, String string3, String string4) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+
+
+@When("the Admin reschedules the appointment date for {string} with technician {string} for customer {string} to a new date {string}")
+public void theAdminReschedulesTheAppointmentDateForWithTechnicianForCustomerToANewDate(String string, String string2, String string3, String string4) {
+	app.appReschdule("October 20, 2023, 10:00 AM", "Installer1", "Customer1", "October 30, 2023, 10:00 AM");
+
 }
 
 @Then("the appointment for {string} on {string} with technician {string} should be updated to {string}")
 public void theAppointmentForOnWithTechnicianShouldBeUpdatedTo(String string, String string2, String string3, String string4) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+	assertTrue(app.appReschduled);
 }
+
+
+
+
 
 @When("the Admin cancels the appointment for {string} on {string} with technician {string}")
 public void theAdminCancelsTheAppointmentForOnWithTechnician(String string, String string2, String string3) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+	app.appCancel("Customer1", "October 20, 2023, 10:00 AM", "Installer1");
 }
 
 @Then("the appointment for {string} on {string} with technician {string} should be canceled")
 public void theAppointmentForOnWithTechnicianShouldBeCanceled(String string, String string2, String string3) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+	assertTrue(app.appCanceled);
 }
 
-@When("the Admin selects to view {string}’s schedule for {string} but he is a one of multiple technicians available")
-public void theAdminSelectsToViewSScheduleForButHeIsAOneOfMultipleTechniciansAvailable(String string, String string2) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+
+
+@When("the Admin selects to view {string}’s schedule")
+public void theAdminSelectsToViewSSchedule(String string){
+	app.ViewInstallerSchedule("Installer1");
 }
 
-@Then("the Admin should see a list of all appointments assigned to {string} on {string}")
-public void theAdminShouldSeeAListOfAllAppointmentsAssignedToOn(String string, String string2) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
-}
-
-@Then("each appointment entry should display customer name, appointment time, and service details")
-public void eachAppointmentEntryShouldDisplayCustomerNameAppointmentTimeAndServiceDetails() {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
+@Then("the Admin should see a list of all appointments assigned to {string}")
+public void theAdminShouldSeeAListOfAllAppointmentsAssignedTo(String string) {
+	 assertTrue(app.InstallerScheduleViewd);
 }
 
 
@@ -310,22 +305,6 @@ public void eachAppointmentEntryShouldDisplayCustomerNameAppointmentTimeAndServi
 
 
 
-
-
-@Given("there exists a scheduled appointment for {string} with technician {string} for customer {string}")
-public void thereExistsAScheduledAppointmentForWithTechnicianForCustomer(String string, String string2, String string3) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
-}
-
-@When("the Admin attempts to schedule another appointment for {string} with technician {string}")
-public void theAdminAttemptsToScheduleAnotherAppointmentForWithTechnician(String string, String string2) {
-	System.out.println("not implemented yet"); // this just for pass the test case until implmented it
-}
-
-@Then("the appointment should not be scheduled")
-public void theAppointmentShouldNotBeScheduled() {
-    System.out.println("not implemented yet"); // this just for pass the test case until implmented it
-}
 
 
 

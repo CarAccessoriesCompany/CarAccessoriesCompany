@@ -6,7 +6,7 @@ Scenario: Customer requests installation services
     When they provide the necessary details (e.g., car make/model, preferred date).
     Then the installation request should be submitted successfully
 
-# Third Scenario
+# Third Scenario---
 Scenario: Installer availability and appointment scheduling
     Given the customer has submitted an installation request
     When the system checks installer availability

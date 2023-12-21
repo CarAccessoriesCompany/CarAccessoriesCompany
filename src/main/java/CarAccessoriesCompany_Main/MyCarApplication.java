@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 public class MyCarApplication {
-	
+	//h
 	public boolean isLogedin;
 	public boolean invalidEmail;
 	public boolean incorrectPassword;
@@ -63,6 +63,21 @@ public class MyCarApplication {
 	DataArrayList list;
 	public boolean isConfirmed;
 	
+	
+	
+	public boolean appIsSechduled;
+	public boolean viewAppointment;
+	public boolean appReschduled;
+	public boolean appCanceled;
+	public boolean InstallerScheduleViewd;
+	
+	
+	
+	public boolean IsOrdered;
+	public boolean sendEmail;
+	public boolean InstallationReqReceived;
+	
+	
 	public MyCarApplication() {
 		isLogedin = false;
 		invalidEmail = false;
@@ -117,6 +132,20 @@ public class MyCarApplication {
 	 	isInServicePage = true;
 	 	ValidRequest = true;
 	 	isAvailable = false;
+	 	
+	 	
+	 	appIsSechduled=false;
+	 	viewAppointment=false;
+	 	appReschduled=false;
+	 	appCanceled=false;
+	 	InstallerScheduleViewd=false;
+	 	
+	 	
+	 	
+	 	IsOrdered=false;
+	 	sendEmail=false;
+	 	InstallationReqReceived=false;
+	 	
 		list = new DataArrayList();
 		
 	}
@@ -566,47 +595,82 @@ public boolean ExistPhoneNumber(String PhoneNumber) {
 		
 	    return isupdated;
 		}
+	public void addProductToCustomerArray(String email, String prodName) {
+	    for (Customer customer : DataArrayList.Customers) {
+	        if (email.equals(customer.getEmail())) {
+	            for (Product product : DataArrayList.Products) {
+	                if (prodName.equals(product.getProductName())) {
+	                    // Assuming that the customer has a list to store orders
+	                    List<String> customerOrders = customer.getOrders();
+
+	                    // Add product information to the customer's orders
+	                    customerOrders.add("Product name: " + prodName);
+	                    customerOrders.add("Price: " + String.valueOf(product.getPrice())); // Assuming getPrice returns a numeric value
+	                    customerOrders.add("Category: " + product.getCategory());
+
+	                    
+	                }
+	            }
+	        }
+	    }
+	}
+
 	
-	public boolean DisplayCustomerOrders(String Email) {
-		 Customer customer = findCustomerByEmail(Email);
-		if (customer != null) {
-	        // Assuming that the customer has a list of orders
+	public void displayCustomerOrders(String email) {
+	    Customer customer = findCustomerByEmail(email);
+
+	    if (customer != null) {
 	        List<String> customerOrders = customer.getOrders();
-	        
-	        if (customerOrders.isEmpty()) {
-	        	DisplayList = false;
+
+	        if (!customerOrders.isEmpty()) {
+	           
+	            int orderNumber = 1;
+
+	            for (int i = 0; i < customerOrders.size(); i += 3) {
+	                System.out.println(orderNumber + ". " +
+	                        customerOrders.get(i) + " " +
+	                        customerOrders.get(i + 1) + " " +
+	                        customerOrders.get(i + 2));
+	                orderNumber++;
+	            }
+	            System.out.print("\n");
+	        } else {
+	            System.out.println("No orders");
 	        }
-	        else {
-	        	 for (String order : Customer.Request) {
-	        		 if(customerOrders.size() >= 1) {
-	        			 DisplayList = true;
-	        		 }
-	        	 }
+	    } else {
+	        System.out.println("Customer not found with email: ");
+	    }
+	}
+
+	public boolean displayInstallationRequests(String email) {
+	    Customer customer = findCustomerByEmail(email);
+
+	    boolean displayList = false; // Initialize the variable outside the conditions
+
+	    if (customer != null) {
+	        // Assuming that the customer has a list of requests
+	        List<String> customerRequests = customer.getRequest();
+
+	        if (!customerRequests.isEmpty()) {
+	            int requestNumber = 1;
+	            // Iterate through the list of requests and print them
+	            for (int i = 0; i < customerRequests.size(); i += 4) {
+	                System.out.println(requestNumber + ". " +
+	                		customerRequests.get(i) + " " +
+	                		customerRequests.get(i + 1) + " " +
+	                		customerRequests.get(i + 2) + " " +
+	                		customerRequests.get(i + 3));
+	                requestNumber++;
+	            }
+	            System.out.print("\n");
+	            displayList = true; // Set the flag to true since the list is not empty
 	        }
-		
+	    }
+
+	    return displayList;
 	}
-		return DisplayList;
-	}
-	public boolean DisplayInstallationRequests(String Email) {
-		 Customer customer = findCustomerByEmail(Email);
-		if (customer != null) {
-	        // Assuming that the customer has a list of orders
-	        List<String> customerRequest = customer.getRequest();
-	        
-	        if (customerRequest.isEmpty()) {
-	        	DisplayList = false;
-	        }
-	        else {
-	        	 for (String order : Customer.Request) {
-	        		 if(customerRequest.size() >= 1) {
-	        			 DisplayList = true;
-	        		 }
-	        	 }
-	        }
-		
-	}
-		return DisplayList;
-	}
+
+
 	
 	public Customer findCustomerByEmail(String email) {
 	    // Search for the customer by email in your data source (DataArrayList.Customer)
@@ -691,10 +755,7 @@ public boolean ExistPhoneNumber(String PhoneNumber) {
 		 prodIsExist=false;
 			
 		    java.util.Iterator<Product> iterator = DataArrayList.Products.iterator();
-	        Product p=new Product(name,description,price,availability,categoryName);
-
-	        
-	       
+	        Product p = new Product(name,description,price,availability,categoryName);
 		    while (iterator.hasNext()) {
 		       Product s = iterator.next();
 		        if (p.getProductName().equals(s.getProductName())) {
@@ -707,8 +768,6 @@ public boolean ExistPhoneNumber(String PhoneNumber) {
 		        DataArrayList.Products.add(p);
 		    }
 		    
-	        
-
 		    return prodIsExist;
 	}
 		
@@ -951,7 +1010,6 @@ public boolean updateProdCategory(String cat, String name){
 	public void PrintAdminMenu() {
 		System.out.println("\tWelcome Admin");
 		System.out.println("1.Admin Dashboard");
-		System.out.println("2.My profile");
 		System.out.println("0.Sign out");
 		
 	}
@@ -963,33 +1021,266 @@ public boolean updateProdCategory(String cat, String name){
 		System.out.println("4.Add Category");
 		System.out.println("5.Edit Category");
 		System.out.println("6.Delete Category");
+		
+		System.out.println("7.Change Username");
+		System.out.println("8.Delete User");
+		
 		System.out.println("0.Back to Menu");
 	}
+	public void PrintCustomerMenu() {
+		System.out.println("1.Browse products");
+		System.out.println("2.My Profile");
+		System.out.println("0.Sign out");
+	}
 	
-	public void PrintTheProducts() {
-		for(Product p:DataArrayList.Products) {
-			System.out.println("Product Name:" + p.getProductName());
-			System.out.println("Product Discription:" + p.getDescription());
-			System.out.println("Product Price:" + p.getPrice());
-			System.out.println("Product Availability:" + p.getAvailability());
-			System.out.println("Product Category:" + p.getCategory());
-			System.out.println("/////////////////////////////////////////////////////");
+	public void PrintTheProducts(int Cat) {
+		if(Cat == 1) {
+			for(Product p:DataArrayList.Products) {
+				System.out.println("Product Name:" + p.getProductName());
+				System.out.println("Product Discription:" + p.getDescription());
+				System.out.println("Product Price:" + p.getPrice());
+				System.out.println("Product Availability:" + p.getAvailability());
+				System.out.println("Product Category:" + p.getCategory());
+				System.out.println("/////////////////////////////////////////////////////");
+				}
+		}
+		else if(Cat == 2) {
+			for(Product p:DataArrayList.Products) {
+				if (p.getCategory().equals("Interior")) {
+				System.out.println("Product Name:" + p.getProductName());
+				System.out.println("Product Discription:" + p.getDescription());
+				System.out.println("Product Price:" + p.getPrice());
+				System.out.println("Product Availability:" + p.getAvailability());
+				System.out.println("Product Category:" + p.getCategory());
+				System.out.println("/////////////////////////////////////////////////////");
+				}
 			}
+		}
+		else if(Cat == 3) {
+			for(Product p:DataArrayList.Products) {
+				if (p.getCategory().equals("Exterior")) {
+				System.out.println("Product Name:" + p.getProductName());
+				System.out.println("Product Discription:" + p.getDescription());
+				System.out.println("Product Price:" + p.getPrice());
+				System.out.println("Product Availability:" + p.getAvailability());
+				System.out.println("Product Category:" + p.getCategory());
+				System.out.println("/////////////////////////////////////////////////////");
+				}
+			}
+		}
+		else if(Cat == 4) {
+			for(Product p:DataArrayList.Products) {
+				if (p.getCategory().equals("Electronic")) {
+				System.out.println("Product Name:" + p.getProductName());
+				System.out.println("Product Discription:" + p.getDescription());
+				System.out.println("Product Price:" + p.getPrice());
+				System.out.println("Product Availability:" + p.getAvailability());
+				System.out.println("Product Category:" + p.getCategory());
+				System.out.println("/////////////////////////////////////////////////////");
+				}
+			}
+		}
+		
 		
 	}
 	public void PrintEditChoices(){
-		System.out.println("1.Product Name:" );
-		System.out.println("2.Product Discription:");
-		System.out.println("3.Product Price:" );
-		System.out.println("4.Product Availability:");
-		System.out.println("5.Product Category:");
+		System.out.println("1.Product Name" );
+		System.out.println("2.Product Discription");
+		System.out.println("3.Product Price");
+		System.out.println("4.Product Availability");
+		System.out.println("5.Product Category");
+		System.out.println("0.Back");
 	}
 	
 	public void PrintCat() {
+		System.out.println("Categories:");
+		int index = 1;
 		for(Category cat:DataArrayList.Categories) {
-			System.out.println("Category Name:" + cat.getCatName());
+			System.out.println(index +"." + cat.getCatName());
+			index++;
 			}
 		
 	}
+	public void PrintUsers() {
+		System.out.println("Customers:");
+		int i = 1;
+		for(Customer n : DataArrayList.Customers) {
+	       System.out.println(i + "." + n.getUsername());
+	       System.out.println("/////////////////////////////////////////////////////");
+	       i++;
+	        }
+		for(Installer J : DataArrayList.Installers) {
+		       System.out.println(i + "." + J.getUsername());
+		       System.out.println("/////////////////////////////////////////////////////");
+		       i++;
+		        }
+	    }
 	
+	
+	
+	
+	
+	public boolean appointmentSchedule(String date,String insName,String cusName,String proName) {
+		Appointment ap1=new Appointment();
+		ap1.setDate(date);
+		ap1.setInsName(insName);
+		ap1.setCusName(cusName);
+		ap1.setProName(proName);
+		
+		DataArrayList.Appointments.add(ap1);
+		appIsSechduled=true;
+		return appIsSechduled;
+	}
+	
+	
+	public boolean appointmentView(String date) {
+		for(Appointment ap:DataArrayList.Appointments) {
+			if(ap.getDate().equals(date));
+			viewAppointment=true;
+
+		}
+		return viewAppointment;
+	}
+	
+	
+	public boolean appReschdule(String oDate, String insName, String cusName, String nDate) {
+		for(Appointment ap:DataArrayList.Appointments) {
+			if(ap.getCusName().equals(cusName) && ap.getDate().equals(oDate) && ap.getInsName().equals(insName)) {
+			ap.setDate(nDate);
+			
+			appReschduled=true;
+			}
+
+		}
+		return appReschduled;
+	}
+	
+	
+	public boolean appCancel(String cusName, String Date, String insName) {
+		for(Appointment ap:DataArrayList.Appointments) {
+			if(ap.getCusName().equals(cusName) && ap.getDate().equals(Date) && ap.getInsName().equals(insName)) {
+				DataArrayList.Appointments.remove(ap);
+				appCanceled=true;
+				
+			}
+		}
+		return appCanceled;
+	}
+	
+	public boolean ViewInstallerSchedule(String insName) {
+		for(Appointment ap:DataArrayList.Appointments) {
+			if(ap.getInsName().equals(insName)) {
+				InstallerScheduleViewd=true;
+			}
+		}
+		return InstallerScheduleViewd;
+	}
+	
+	
+	
+	
+	
+	
+	public boolean orderIsPlacedBy(String email) {
+		for(Order r:DataArrayList.Orders) {
+			if(r.GetCustomerEmail().equals(email) && r.GetStatus().equalsIgnoreCase("Confirmed")) {
+				
+					 sendEmail = true;
+			}
+		}
+		return sendEmail;
+	}
+	
+	
+	
+	public boolean getAnInsallationReqFot(String name) {
+		for(Installer n:DataArrayList.Installers) {
+			if(n.getUsername().equals(name) && n.getInstallerAvalibilty().equals("Available")) {
+				InstallationReqReceived=true;
+			}
+		}
+		return InstallationReqReceived;
+	}
+	
+	public boolean isProductNameExist(String ProdName) {
+		for(Product p : DataArrayList.Products) {
+	        if(ProdName.equals(p.getProductName())) {
+	        	prodIsExist = true;
+	           break;
+	        } 
+	    }
+		return prodIsExist;
+	}	
+	public boolean isCategoryNameExist(String CatName) {
+		for (Category s : DataArrayList.Categories) {
+	        if (s.getCatName().equals(CatName)) {
+	        	catIsExist = true;
+	            break; 
+	        } 
+	    }
+		return catIsExist;
+	}	
+	public void changeUsernameforCust(String email, String nname) {
+		for(Customer c : DataArrayList.Customers) {
+			System.out.println("Before " + c.getUsername());
+	        if(email.equals(c.getEmail())) {
+	        	c.setUsername(nname);
+	        	System.out.println(c.getUsername());
+	           break;
+	        } 
+	        
+	    }
+	}
+	public void changePasswordforCust(String email, String nPass) {
+		for(Customer c : DataArrayList.Customers) {
+			System.out.println("Before " + c.getPassword());
+	        if(email.equals(c.getEmail())) {
+	        	c.setPassword(nPass);
+	        	System.out.println(c.getPassword());
+	           break;
+	        } 
+	        
+	    }
+	}
+	public void changePhoneforCust(String email, String nPhone) {
+		for(Customer c : DataArrayList.Customers) {
+			System.out.println("Before " + c.getPhoneNumber());
+	        if(email.equals(c.getEmail())) {
+	        	c.setPhoneNumber(nPhone);
+	        	System.out.println(c.getPhoneNumber());
+	           break;
+	        } 
+	        
+	    }
+	}
+	public void addReq(String email, String prodname, String CarModel, String installer, String date) {
+		 for (Customer customer : DataArrayList.Customers) {
+		        if (email.equals(customer.getEmail())) {
+		            for (Product product : DataArrayList.Products) {
+		                if (prodname.equals(product.getProductName())) {
+		                    // Assuming that the customer has a list to store orders
+		                    List<String> customerRequest = customer.getRequest();
+		                    
+		                    for(Installer in: DataArrayList.Installers) {
+		                    	if(!installer.equals(in.getUsername())) {
+//		                    		System.out.println("No installer with this name ! re-Enter new order with valid Installer");
+		                    		
+		                    	}
+		                    	else {
+		                    		
+		                    		customerRequest.add("Product Name: " + prodname);
+				                    customerRequest.add("Car Model: " + CarModel);
+		                    		customerRequest.add("Installer Name: " + installer);
+		                    		customerRequest.add("Preferd Date: " + date);
+		                    	}
+		                    }
+		                    // Add product information to the customer's orders
+		                    
+		                }
+		                
+		            }
+		        }
+		    }
+
+	}
 }

@@ -2,7 +2,7 @@ package CarAccessoriesCompany_Main;
 
 import java.util.Scanner;
 public class Main {
-
+//h
 	public static void main(String[] args) {
 		
 		MyCarApplication obj;
@@ -25,301 +25,420 @@ public class Main {
 		String NewAvalibility;
 		String NewCategory;
 		
-		int Choice;
+		String NewUsername;
+		
+		int Choice = 0;
 		Scanner input = new Scanner(System.in);
 			System.out.println("\t Menu");
 			System.out.println("1.Sign in");
 			System.out.println("2.Sign up");
 			
 			Choice = input.nextInt();
-			System.out.print("Enter email:");
-			while(Choice != 0) {
-				if(Choice == 1) {
-					Email = input.next();
-					obj.InvalidEmailType(Email);
-					if(obj.invalidEmail == true) {
-						System.out.print("Invalid Email!, re-Enter your email:");
-					}
-					else {
-						obj.UserID(Email);
-						if(obj.isAdmin) {
-							System.out.print("Enter your password:");
-							Password = input.next();
-							obj.AdminIncorrectPassword(Email, Password);
-							if(obj.isLogedin == false) {
-								System.out.print("Incorrect Password!, re-Enter your password:");
-								Password = input.next();
-								
-							}
-							obj.Adminlogin(Email, Password);
-							 if(obj.isLogedin) {
-								 	obj.PrintAdminMenu();
-								 	Choice = input.nextInt();
-								 	
-								 	while(Choice != 0) {
-								 		if(Choice == 1) {
-											obj.PrintAdminDashoard();
-											Choice = input.nextInt();
-											if(Choice == 1) {
-												System.out.print("Enter Product Name:");
-												ProductName = input.next();
-												System.out.print("Enter Product Description:");
-												Description = input.next();
-												System.out.print("Enter Product Price:");
-												Price = input.next();
-												System.out.print("Enter Product Avalibilty:");
-												Avalibilty = input.next();
-												System.out.print("Enter Product Category:");
-												Category = input.next();
-												obj.addProduct(ProductName,Description, Price, Avalibilty, Category );
-												System.out.println("Add Done Successfully :)");
-												
-											}
-											 if(Choice == 2) {
-												obj.PrintEditChoices();
-												System.out.print("What do you want to edit?:");
-												Choice = input.nextInt();
-													if(Choice == 1) {
-														obj.PrintTheProducts();
-														System.out.print("Enter the product name that you want to edit:");
-														ProductName = input.next();
-														System.out.print("Enter the new product name:");
-														NewProductName = input.next();
+			
+			while(true) {
+				 if (Choice == 1) {
+		                System.out.print("Enter your email:");
+		                Email = input.next();
+		                obj.InvalidEmailType(Email);
+
+		                if (obj.invalidEmail) {
+		                    System.out.print("Invalid Email!, re-Enter your email:");
+		                } 
+		                else {
+		                    // Consume the newline character in the input buffer
+		                    input.nextLine();
+		                    obj.UserID(Email);
+		                    if (obj.isAdmin) {
+		                        System.out.print("Enter your password:");
+		                        Password = input.nextLine();
+		                        obj.AdminIncorrectPassword(Email, Password);
+		                        if(obj.isLogedin == false) {
+									System.out.print("Incorrect Password!, re-Enter your password:");
+									Password = input.next();
+								}
+		                        obj.Adminlogin(Email, Password);
+		                        if(obj.isLogedin) {
+		                        	int AdminChoice = 0;
+		                        	obj.PrintAdminMenu();	
+		                        	AdminChoice = input.nextInt();
+		                        	while(Choice == 1) {
+		                        		if(AdminChoice == 1) {
+			                        		obj.PrintAdminDashoard();
+			                        		AdminChoice = input.nextInt();
+			                        		if(AdminChoice == 1) {
+			                        			input.nextLine();
+			                        			
+				                        		System.out.print("Enter Product Name: ");
+				                        		ProductName = input.nextLine();
+				                        		obj.isProductNameExist(ProductName);
+				                        		if(obj.prodIsExist) {
+				                        			System.out.println("The Product is exist !");
+				                        		}
+				                        		else {
+				                        			System.out.print("Enter Product Description: ");
+													Description = input.nextLine();
+													System.out.print("Enter Product Price: ");
+													Price = input.nextLine();
+													Price = Price + "$";
+													System.out.print("Enter Product Avalibilty: ");
+													Avalibilty = input.nextLine();
+													System.out.print("Enter Product Category: ");
+													Category = input.nextLine();
+													obj.addProduct(ProductName,Description, Price, Avalibilty, Category );
+													System.out.println("Add Done Successfully :)");	
+				                        		}
+												obj.PrintTheProducts(1);
+			                        		}
+			                        		if(AdminChoice == 2) {
+			                        			obj.PrintEditChoices();
+												System.out.print("What do you want to edit?: ");
+												AdminChoice = input.nextInt();
+												if(AdminChoice == 1) {
+													input.nextLine();
+													obj.PrintTheProducts(1);
+													System.out.print("Enter product name that you want to edit: ");
+													ProductName = input.nextLine();
+													obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
+														System.out.print("Enter new product name: ");
+														NewProductName = input.nextLine();
 														obj.updateProdName(ProductName, NewProductName);
 														System.out.println("Edit Done Successfully :)");
-													}	
-													else if(Choice == 2) {
-														obj.PrintTheProducts();
-														System.out.print("Enter the product name that you want to edit:");
-														ProductName = input.next();
-														System.out.print("Enter the new product Discription:");
-														NewProductDisc = input.next();
+													}
+													obj.PrintTheProducts(1);
+												}	
+												else if(AdminChoice == 2) {
+													input.nextLine();
+													obj.PrintTheProducts(1);
+													System.out.print("Enter product name that you want to edit:");
+													ProductName = input.nextLine();
+													obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
+														System.out.print("Enter new product Discription:");
+														NewProductDisc = input.nextLine();
 														obj.updateProdDescription(NewProductDisc, ProductName);
 														System.out.println("Edit Done Successfully :)");
 													}
-													else if(Choice == 3) {
-														obj.PrintTheProducts();
-														System.out.print("Enter the product name that you want to edit:");
-														ProductName = input.next();
+													
+													obj.PrintTheProducts(1);
+												}
+												else if(AdminChoice == 3) {
+													input.nextLine();
+													obj.PrintTheProducts(1);
+													System.out.print("Enter the product name that you want to edit:");
+													ProductName = input.nextLine();
+													obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
 														System.out.print("Enter the new product Price:");
-														NewPrice = input.next();
+														NewPrice = input.nextLine();
+														NewPrice = NewPrice + "$";
 														obj.updateProdPrice(NewPrice, ProductName);
 														System.out.println("Edit Done Successfully :)");
 													}
-													else if(Choice == 4) {
-														obj.PrintTheProducts();
-														System.out.print("Enter the product name that you want to edit:");
-														ProductName = input.next();
+													obj.PrintTheProducts(1);
+												}
+												else if(AdminChoice == 4) {
+													input.nextLine();
+													obj.PrintTheProducts(1);
+													System.out.print("Enter the product name that you want to edit:");
+													ProductName = input.nextLine();
+													obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
 														System.out.print("Enter the new product Avalibility:");
-														NewAvalibility = input.next();
+														NewAvalibility = input.nextLine();
 														obj.updateProdAvailability(NewAvalibility, ProductName);
 														System.out.println("Edit Done Successfully :)");
 													}
-													else if(Choice == 5) {
-														obj.PrintTheProducts();
-														System.out.print("Enter the product name that you want to edit:");
-														ProductName = input.next();
+													
+													obj.PrintTheProducts(1);
+													
+												}
+												else if(AdminChoice == 5) {
+													input.nextLine();
+													obj.PrintTheProducts(1);
+													System.out.print("Enter the product name that you want to edit:");
+													ProductName = input.nextLine();
+													obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
 														System.out.print("Enter the new product Category:");
-														NewCategory = input.next();
+														NewCategory = input.nextLine();
 														obj.updateProdCategory(NewCategory, ProductName);
 														System.out.println("Edit Done Successfully :)");
 													}
-													
-									 		}
-											 if(Choice == 3) {
-												 obj.PrintTheProducts();
-												 System.out.println("Enter the Product that you want to delete:");
-												 ProductName = input.next();
-												 obj.deleteProd(ProductName);
-												 System.out.println("The Product Deleted Succeffuly:");
+													obj.PrintTheProducts(1);
+												}		
+			                        		}
+			                        		if(AdminChoice == 3) {
+			                        			 input.nextLine();
+												 obj.PrintTheProducts(1);
+												 System.out.print("Enter Product name that you want to delete:");
+												 ProductName = input.nextLine();
+												 obj.isProductNameExist(ProductName);
+													if(obj.prodIsExist == false) {
+					                        			System.out.println("The Product is not exist !");
+					                        		}
+													else {
+														obj.deleteProd(ProductName);
+														 System.out.println("The Product Deleted Succeffuly:");
+														 obj.PrintTheProducts(1);
+													}
+
 											 }
-											 
-											 if(Choice == 4) {
-//												 obj.PrintCat();
-												 System.out.println("Enter Category name:");
-												 Category = input.next();
-												 obj.AddCategory(Category);
-												 System.out.println("The Category added Succeffuly:");
-											 }
-											 if(Choice == 5) {
+			                        		 if(AdminChoice == 4) {
+			                        			 input.nextLine();
+												 System.out.print("Enter new Category name:");
+												 Category = input.nextLine();
+												 obj.isCategoryNameExist(Category);
+												 if(obj.catIsExist) {
+													 System.out.println("The Category exist !");
+												 }
+												 else {
+													 obj.AddCategory(Category);
+													 System.out.println("The Category added Succeffuly:");
+												 }
+												 
 												 obj.PrintCat();
-												 System.out.println("Enter Category name that you want to edit:");
-												 Category = input.next();
-												 System.out.println("Enter the new Category name:");
-												 NewCategory = input.next();
-												 obj.editCat(Category, NewCategory);
-												 System.out.println("The Category had been edit Succeffuly:");
+												 System.out.println("\n"); 
 											 }
-											 
-											 if(Choice == 6) {
+			                        		 if(AdminChoice == 5) {
+			                        			 input.nextLine();
 												 obj.PrintCat();
-												 System.out.println("Enter the Category that you want to delete:");
-												 Category = input.next();
-												 obj.deleteCat(Category);
-												 System.out.println("The Category Deleted Succeffuly:");
+												 System.out.print("Enter Category name that you want to edit:");
+												 Category = input.nextLine();
+												 obj.isCategoryNameExist(Category);
+												 if(obj.catIsExist == false) {
+													 System.out.println("The Category is not exist !");
+												 }
+												 else {
+													 System.out.print("Enter the new Category name:");
+													 NewCategory = input.nextLine();
+													 obj.editCat(Category, NewCategory);
+													 System.out.println("The Category had been edit Succeffuly:");
+												 }
+												 obj.PrintCat();
+												 System.out.println("\n"); 
 											 }
-											 obj.PrintAdminDashoard();
-//											 Choice = input.nextInt();
 											 
-//										
-										}
-								 		
-								 	}
-								 	
-								 	
-							 }
-									
-							}
-							
-						
-						
-						else if(obj.isCustomer) {
-							System.out.print("Enter your password:");
-							Password = input.next();
-							obj.CustomerIncorrectPassword(Email, Password);
-							if(obj.isLogedin == false) {
-								System.out.print("Incorrect Password!, re-Enter your password:");
-								Password = input.next();
-								
-							}
-							obj.Customerlogin(Email, Password);
-							 if(obj.isLogedin) {
-									System.out.println("1.My profile");
-									System.out.println("2.Search");
-									System.out.println("0.Sign out");
-									Choice = input.nextInt();
-									if(Choice == 1) {
-										System.out.println("My profile");
-									}
-									else if(Choice == 2) {
-										System.out.println("Search");
-									}
-									else if(Choice == 0) {
-										System.out.println("GoodBye");
-										
-									}
-							}
-						}
-						else if(obj.isInstaller) {
-							System.out.print("Enter your password:");
-							Password = input.next();
-							obj.InstallerIncorrectPassword(Email, Password);
-							if(obj.isLogedin == false) {
-								System.out.print("Incorrect Password!, re-Enter your password:");
-								Password = input.next();
-								
-							}
-							obj.Installerlogin(Email, Password);
-							 if(obj.isLogedin) {
-									System.out.println("1.My profile");
-									System.out.println("2.My Request");
-									System.out.println("0.Sign out");
-									Choice = input.nextInt();
-									if(Choice == 1) {
-										System.out.println("My profile");
-									}
-									else if(Choice == 2) {
-										System.out.println("My Request");
-									}
-									else if(Choice == 0) {
-										System.out.println("GoodBye");
-										
-									}
-							}
-						}
-					}
-				}
-				if(Choice == 2) {
-					Email = input.next();
-					obj.InvalidEmailType(Email);
-					if(obj.invalidEmail == true) {
-						System.out.print("Invalid Email!, re-Enter email:");
-					}
-					else {
-						obj.ExistEmail(Email);
-						if(obj.isSignedup == false) {
-							System.out.print("You try to sign up with exist email:");
-							Email = input.next();
-						}
-						System.out.print("Enter Password:");
-						Password = input.next();
-						obj.SignupWeakPassword(Email, Password);
-						if(obj.isSignedup == false) {
-							System.out.print("Weak Password!, Enter Strong password (minimum 8 characteres):");
-							Password = input.next();
-						}
-						System.out.print("Enter Username:");
-						Username = input.next();
-						obj.ExistUsername(Username);
-						if(obj.isSignedup == false) {
-							System.out.print("You try to enter an exist Username try another one :");
-							Username = input.next();
-						}
-						
-						System.out.print("Enter Phone Number:");
-						PhoneNumber = input.next();
-						obj.ExistPhoneNumber(PhoneNumber);
-						if(obj.isSignedup == false) {
-							System.out.print("You try to enter an exist PhoneNumber try another one :");
-							PhoneNumber = input.next();
-						}
-						
-						obj.UserSignUp(Email, Password, Username, PhoneNumber);
-						if(obj.isSignedup == true) {
-							System.out.println("You Sign up successfully :)");
-							
-							
-						}
-						
-						
-					}
-				}
+											 if(AdminChoice == 6) {
+												 input.nextLine();
+												 obj.PrintCat();
+												 System.out.print("Enter the Category that you want to delete:");
+												 Category = input.nextLine();
+												 obj.isCategoryNameExist(Category);
+												 if(obj.catIsExist == false) {
+													 System.out.println("The Category is not exist !");
+												 }
+												 else {
+													 obj.deleteCat(Category);
+													 System.out.println("The Category Deleted Succeffuly:");
+													 
+												 }
+												 obj.PrintCat();
+												 System.out.println("\n"); 
+											 }
+											 if(AdminChoice == 7) {
+												 input.nextLine();
+												 obj.PrintUsers();
+												 System.out.print("Enter user username"); 
+												 Username = input.nextLine();
+												 obj.selectCustomerAcc(Username);
+												 if(obj.displayCustomerInfo == false) {
+													 System.out.println("User does not exist"); 
+												 }
+												 else {
+													 System.out.print("Enter New username: ");
+													 NewUsername = input.nextLine();
+													 obj.changeCustomerUsername(Username, NewUsername);
+													 System.out.println("Username change successfully");
+												 }
+												 
+												 
+												 
+											 }
+											 if(AdminChoice == 8) {
+												 input.nextLine();
+												 obj.PrintUsers();
+												 System.out.print("Enter user username"); 
+												 Username = input.nextLine();
+												 obj.selectCustomerAcc(Username);
+												 if(obj.displayCustomerInfo == false) {
+													 System.out.println("User does not exist"); 
+												 }
+												 else {
+													 System.out.print("Enter New username: ");
+													 obj.deleteCustomerAcc(Username);
+													 System.out.println("User had been deleted successfully");
+												 }
+												 
+												 
+												 
+											 }
+											 
+											 obj.PrintAdminMenu();
+											 AdminChoice = input.nextInt();
+											 if(AdminChoice == 0) {
+												 obj.PrintAdminMenu();
+											 }
+											 
+											
+			                        	}
+//		                        		if(AdminChoice == 0) {
+//		                        			 System.out.println("\t Menu");
+//											 System.out.println("1.Sign in");
+//											 System.out.println("2.Sign up");
+//		                        			
+//		                        		}
+		                        	}
+		                        	
+		                        	
+		                        }
+		                    }
+		                    else if(obj.isCustomer) {
+		                    	System.out.print("Enter your password:");
+		                        Password = input.nextLine();
+		                        obj.CustomerIncorrectPassword(Email, Password);
+		                        if(obj.isLogedin == false) {
+									System.out.print("Incorrect Password!, re-Enter your password:");
+									Password = input.next();
+								}
+		                        obj.Customerlogin(Email, Password);
+		                        if(obj.isLogedin) {
+		                        	
+		                        	int CustomerChoice = 0;
+		                        	obj.PrintCustomerMenu();
+		                        	CustomerChoice = input.nextInt();
+		                        	while(CustomerChoice != 0) {
+		                        		
+		                        		if(CustomerChoice == 1) {
+		                        			System.out.println("1.All Products");
+		                        			System.out.println("2.Interior Products");
+		                        			System.out.println("3.Exterior Products");
+		                        			System.out.println("4.Electronic Products");
+		                        			System.out.println("Enter Category you want");
+		                        			int Cat = input.nextInt();
+		                        			
+		                        			obj.PrintTheProducts(Cat);
+		                        			 input.nextLine();
+		                        			 System.out.print("Enter Product name you want to buy: ");
+		                        		        ProductName = input.nextLine();  // Use nextLine() instead of next()
+		                        		        obj.isProductNameExist(ProductName);
+		                        		        if(obj.prodIsExist == false) {
+		                        		            System.out.println("The Product is not exist !");
+		                        		        } else {
+		                        		        	System.out.print("Enter Car Model: ");
+			                                        String CarModel = input.nextLine();
+			                                        System.out.print("Enter Installer name: ");
+			                                        String InstName = input.nextLine();
+			                                        System.out.print("Enter Date: ");
+			                                        String Date = input.nextLine();                                    
+		                        		            obj.addProductToCustomerArray(Email, ProductName);
+		                        		            obj.addReq(Email, ProductName, CarModel, InstName, Date);
+		                        		            System.out.println("The Product is purchased successfully !");
+//		                        		            obj.displayCustomerOrders(Email);
+		                        		        }
+		                        		        obj.PrintCustomerMenu();
+//		                        		        CustomerChoice = input.nextInt();
+		                        		        
+
+		                        		        // Consume the newline character
+		                        		        CustomerChoice = input.nextInt();
+		                        			
+		                        		}
+		                        		if(CustomerChoice == 2) {
+		                        			System.out.println("1.My Orders");
+		                        			System.out.println("2.My Requests");
+		                        			System.out.println("3.Manage my account");
+		                        			System.out.println("0.Back");
+		                        			int innerChoice = input.nextInt(); // Use a different variable for inner loop
+
+		                                    if (innerChoice == 1) {
+		                                    	input.nextLine();
+		                                        obj.displayCustomerOrders(Email);
+		                                        
+		                                    }
+		                                    else if (innerChoice == 2) {
+		                                    	input.nextLine();
+		                                    	obj.displayInstallationRequests(Email);
+		                                    }
+		                                    else if(innerChoice == 3) {
+			                        			System.out.println("1.Change my username");
+			                        			System.out.println("2.Change my password");
+			                        			System.out.println("3.Change my phone number");
+			                        			
+			                        			System.out.println("0.Back");
+			                        			 int accountChoice = input.nextInt();
+			                                     input.nextLine(); // Consume the newline character
+			                                     if(accountChoice == 1) {
+			                                         System.out.print("Enter new Username: ");
+			                                         String newUsername = input.nextLine();
+			                                         obj.changeUsernameforCust(Email, newUsername);
+			                                         System.out.println("Username change successfully");
+			                                     }
+			                                     else if(accountChoice == 2) {
+			                                    	 System.out.print("Enter new Password: ");
+			                                         String newPassword = input.nextLine();
+			                                         obj.changePasswordforCust(Email, newPassword);
+			                                         System.out.println("Password change successfully");
+			                                     }
+			                                     else if(accountChoice == 3) {
+			                                    	 System.out.print("Enter new phone number: ");
+			                                         String newPhone = input.nextLine();
+			                                         obj.changePhoneforCust(Email, newPhone);
+			                                         System.out.println("Phone number change successfully");
+			                                     }
+			                                     else {
+			                                    	 obj.PrintCustomerMenu();
+			                                    	 
+			                                     }
+		                                    }
+		                                    else if(innerChoice == 0) {
+		                                    	 obj.PrintCustomerMenu();
+		                                    	 CustomerChoice = input.nextInt();
+		                                    	 if(CustomerChoice == 1) {
+		                                    		 obj.PrintTheProducts(1);
+		                                    	 }
+		                                    }
+		                                   
+		                        			
+		                        			
+		                        		}
+		                        		if(CustomerChoice == 0) {
+		                        			System.out.println("\t Menu");
+		                        			System.out.println("1.Sign in");
+		                        			System.out.println("2.Sign up");
+		                        			
+		                        			
+		                        		}
+		                        		
+		                        		 
+//		                                 CustomerChoice = input.nextInt();
+		                        	}
+		                        	
+		                        }
+		                        
+		                    	
+		                    	
+		                    }
+		                }
+		               
+		            }
+				 
+			}
 			
-}
 		}
 }
-
-	
-		
-//while(Choice != 0) {
-//	if(Choice == 1) {
-//		obj.PrintAdminDashoard();
-//		Choice = input.nextInt();
-//		if(Choice == 1) {
-//			System.out.print("Enter Product Name:");
-//			ProductName = input.next();
-//			System.out.print("Enter Product Description:");
-//			Description = input.next();
-//			System.out.print("Enter Product Price:");
-//			Price = input.next();
-//			System.out.print("Enter Product Avalibilty:");
-//			Avalibilty = input.next();
-//			System.out.print("Enter Product Category:");
-//			Category = input.next();
-//			obj.addProduct(ProductName,Description, Price, Avalibilty, Category );
-//			System.out.println("Add Done Successfully :)");
-//			
-//		}
-//		else if(Choice == 2) {
-//			obj.PrintEditChoices();
-//			System.out.print("What do you want to edit?:");
-//			Choice = input.nextInt();
-//			 
-//				if(Choice == 1) {
-//					obj.PrintTheProducts();
-//					System.out.print("Enter the product name that you want to edit:");
-//					ProductName = input.next();
-//					System.out.println("Enter the new product name:");
-//					NewProductName = input.next();
-//					obj.updateProdName(ProductName, NewProductName);
-//					System.out.println("Edit Done Successfully :)");
-//				}							
-//		}
-//		else if(Choice == 0) {
-//			obj.PrintAdminMenu();
-//			Choice = input.nextInt();
-//		}
-//	}
-//	
-//	
-//	}

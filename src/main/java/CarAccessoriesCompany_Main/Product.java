@@ -10,7 +10,7 @@ public class Product {
 	public String Review;
 	public int Rate;
 	
-	
+	//h
 	public Product(String ProductName, String Description, String Price, String Availability, String Category) {
 		this.Category = Category;
 		this.ProductName = ProductName;

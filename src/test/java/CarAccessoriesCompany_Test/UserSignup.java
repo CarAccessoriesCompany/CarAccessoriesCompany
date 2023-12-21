@@ -35,7 +35,7 @@ public class UserSignup {
 	public void theUserSignsUpSuccess() {
 	   assertTrue(app.isSignedup);
 	}
-
+	//h
 
 	@When("The user enters an existing email address {string}")
 	public void theUserEntersAnExistingEmailAddressAndPassword(String string) {

@@ -31,7 +31,7 @@ public class ProductCatalog {
 	public void iShouldBePromptedToEnterTheCategoryName() {
 	    assertTrue(app.validCommand);
 	}
-
+	//h
 	@When("I enter command {string}")
 	public void iEnterCommand(String string) {
 	   app.CategoryName("Exterior");

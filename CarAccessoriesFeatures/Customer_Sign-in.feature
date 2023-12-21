@@ -18,7 +18,7 @@ Feature: Customer sign-in
 			When The customer enters the invalid email "invalidcustomer@gmail.com"
 			Then The customer should stay on the sign-in page
 		
-		# Third Scenario	
+		# Third Scenario---	
 		Scenario: The customer enters an incorrect password
 			
 			Given The customer is on the sign-in page

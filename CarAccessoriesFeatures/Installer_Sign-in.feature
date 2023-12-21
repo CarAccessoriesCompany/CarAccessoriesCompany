@@ -11,7 +11,7 @@ Feature: Installer sign-in
 		Then The installer sign-in succeeded
 
 		
-		# Second Scenario
+		# Second Scenario--
 		Scenario: The installer enters an invalid email
 			
 			Given The installer is on the sign-in page

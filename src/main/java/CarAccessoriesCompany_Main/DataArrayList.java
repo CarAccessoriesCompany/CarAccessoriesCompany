@@ -3,7 +3,7 @@ package CarAccessoriesCompany_Main;
 import java.util.ArrayList;
 
 public class DataArrayList {
-	
+	//h
 	public static ArrayList<User> Admin = new ArrayList<User>();
 	public static ArrayList<Customer> Customers = new ArrayList<Customer>();
 	public static ArrayList<Installer> Installers = new ArrayList<Installer>();
@@ -16,6 +16,8 @@ public class DataArrayList {
 	public static ArrayList<Category> Categories = new ArrayList<Category>();
 	
 	public static ArrayList<Order> Orders = new ArrayList<Order>();
+	
+	public static ArrayList<Appointment> Appointments = new ArrayList<Appointment>();
 	
 //	public static String[] Category = {"Interior", "Exterior", "Electronics"};
 	
@@ -73,6 +75,12 @@ public class DataArrayList {
 		Order ord2 = new Order("Customer123", "Customer1@gmail.com", "Anti-lock Braking System", "450$", "Not Confirmed");
 		Orders.add(ord1);
 		Orders.add(ord2);
+		
+		
+		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM","Installer1","Customer1","Steering Wheel");
+		Appointment ap2=new Appointment("October 20, 2023, 10:00 PM","Installer2","Customer2","Body Shell");
+		Appointments.add(ap1);
+		Appointments.add(ap2);
 		
 	}
 }

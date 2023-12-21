@@ -31,7 +31,7 @@ public class ReviewAndRating {
 	public void cutomerShouldEnterReviewForTheProduct(String string) {
 		assertTrue(app.isReviewed);
 	}
-	
+	//h
 
 	@When("cutomer enters {string} then enter {string} to rating the product")
 	public void cutomerEntersThenEnterToRatingTheProduct(String string, String string2) {
