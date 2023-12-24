@@ -1,67 +1,65 @@
 package caraccessoriescompany_main;
 
 public class Product {
+	private String productName;
+	private String description;
+	private String price;
+	private String availability;
+	private String category;
+	private String review;
+	private int rate;
 	
-	public String ProductName;
-	public String Description;
-	public String Price;
-	public String Availability;
-	public String Category;
-	public String Review;
-	public int Rate;
-	
-	//h
-	public Product(String ProductName, String Description, String Price, String Availability, String Category) {
-		this.Category = Category;
-		this.ProductName = ProductName;
-		this.Description = Description;
-		this.Price = Price;
-		this.Availability = Availability;
+	public Product(String productName, String description, String price, String availability, String category) {
+		this.category = category;
+		this.productName = productName;
+		this.description = description;
+		this.price = price;
+		this.availability = availability;
 	}
-	public void setProductName(String ProductName ) {
-		this.ProductName = ProductName;
+	public void setProductName(String productName ) {
+		this.productName = productName;
 	}
 	public String getProductName() {
-		return ProductName;
+		return productName;
 	}
 	
-	public void setDescription(String Description) {
-		this.Description = Description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
-	public void setPrice(String Price) {
-		this.Price = Price;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	public String getPrice() {
-		return Price;
+		return price;
 	}
-	public void setAvailability(String Availability) {
-		this.Availability = Availability;
+	public void setAvailability(String availability) {
+		this.availability = availability;
 	}
 	public String getAvailability() {
-		return Availability;
+		return availability;
 	}
-	public void setCategory(String Category ) {
-		this.Category = Category;
+	public void setCategory(String category ) {
+		this.category = category;
 	}
 	public String getCategory() {
-		return Category;
+		return category;
 	}
 	
-	public void setReview(String Review) {
-		this.Review = Review;
+	public void setReview(String review) {
+		this.review = review;
 	}
 	public String getReview() {
-		return Review;
+		return review;
 	}
 	
 	public int getRating() {
-		return Rate;
+		return rate;
 	}
-	public void setRating(int Rate) {
-		this.Rate = Rate;
+	public void setRating(int rate) {
+		this.rate = rate;
 	}
 	
 }

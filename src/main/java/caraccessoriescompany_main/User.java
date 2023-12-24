@@ -1,29 +1,24 @@
 package caraccessoriescompany_main;
 
 public class User {
-	public  String Email;
-    public  String Password;
-    public String RealName;
-    public String PhoneNumber;
-//    public String Address;
-    
-	public User(String Email, String Password) {
-		// TODO Auto-generated constructor stub
-		this.Email = Email;
-		this.Password = Password;
-		//h
+	private  String email;
+	private  String password;
+   
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
-	public void setEmail(String Email) {
-		this.Email = Email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
-		return Password;
+		return password;
 	}
-	public void setPassword(String Password) {
-		this.Password = Password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

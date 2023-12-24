@@ -1,47 +1,48 @@
 package caraccessoriescompany_main;
 
 import java.util.ArrayList;
+import java.util.List;
 //j
 public class Installer {
-	public String Email;
-    public String Password;
-    public String Username;
-    public String InstallerAvalibilty;
-    public static ArrayList<String> schedule = new ArrayList<String>();
+	private String email;
+	private String password;
+    private String username;
+    private String installerAvalibilty;
+    protected List<String> schedule = new ArrayList<>();
    
     
     
-    public Installer(String Email, String Password, String Username, String InstallerAvalibilty) {
-    	this.Email = Email;
-    	this.Password = Password;
-    	this.Username = Username;
-    	this.InstallerAvalibilty = InstallerAvalibilty;
+    public Installer(String email, String password, String username, String installerAvalibilty) {
+    	this.email = email;
+    	this.password = password;
+    	this.username = username;
+    	this.installerAvalibilty = installerAvalibilty;
     }	
     public String getEmail() {
-		return Email;
+		return email;
 	}
-	public void setEmail(String Email) {
-		this.Email = Email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
-		return Password;
+		return password;
 	}
-	public void setPassword(String Password) {
-		this.Password = Password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getUsername() {
-		return Username;
+		return username;
 	}
-	public void setUsername(String Username) {
-		this.Username = Username;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	 public String getInstallerAvalibilty() {
-			return InstallerAvalibilty;
+			return installerAvalibilty;
 		}
-		public void setInstallerAvalibilty(String InstallerAvalibilty) {
-			this.InstallerAvalibilty = InstallerAvalibilty;
+		public void setInstallerAvalibilty(String installerAvalibilty) {
+			this.installerAvalibilty = installerAvalibilty;
 		}
-	public ArrayList<String> getschedule() {
+	public List<String> getschedule() {
 		return schedule;
 	}
 	

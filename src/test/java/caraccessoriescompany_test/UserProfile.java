@@ -1,4 +1,4 @@
-package CarAccessoriesCompany_Test;
+package caraccessoriescompany_test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,19 +20,19 @@ public class UserProfile {
 	
 	@Given("a customer is logged into their account")
 	public void aCustomerIsLoggedIntoTheirAccount() {
-	    assertTrue(app.inMenu);
+	    assertTrue(app.getInMenu());
 	}
 
 	@When("a cutomer enter command {string}")
 	public void aCutomerEnterCommand(String string) {
-		app.UserProfile("My Profile");
+		app.userProfile("My Profile");
 	}
 
 	@Then("a cutomer in his\\/her profile")
 	public void aCutomerInHisHerProfile() {
-		assertTrue(app.inProfile);
+		assertTrue(app.getInProfile());
 	}
-	//h
+	
 	@When("they choose to edit their profile")
 	public void theyChooseToEditTheirProfile() {
 	    app.EditCommand();
@@ -45,7 +45,7 @@ public class UserProfile {
 
 	@Then("their profile should be updated with the new contact information")
 	public void theirProfileShouldBeUpdatedWithTheNewContactInformation() {
-	    assertTrue(app.isupdated);
+	    assertTrue(app.getIsupdated());
 	}
 
 	@When("a cutomer enter specific number on the list \\(My Orders)")
@@ -55,16 +55,16 @@ public class UserProfile {
 
 	@Then("they should see a list of their past orders")
 	public void theyShouldSeeAListOfTheirPastOrders() {
-	    assertFalse(app.DisplayList); // here i put assertFalse because i dont have arraylist with orders (i Initialized that no order)
+	    assertFalse(app.getDisplayList()); // here i put assertFalse because i dont have arraylist with orders (i Initialized that no order)
 	}
 
 	@When("a cutomer enter specific number on the list \\(My Installation Requests)")
 	public void aCutomerEnterSpecificNumberOnTheListMyInstallationRequests() {
-	   app.displayInstallationRequests("Customer1@gmail.com");
+	   app.displayInstallationrequests("Customer1@gmail.com");
 	}
 
 	@Then("they should see a list of their installation requests")
 	public void theyShouldSeeAListOfTheirInstallationRequests() {
-		assertFalse(app.DisplayList); // here i put assertFalse because i dont have arraylist with Requests (i Initialized that no Request)
+		assertFalse(app.getDisplayList()); // here i put assertFalse because i dont have arraylist with Requests (i Initialized that no Request)
 	}
 }

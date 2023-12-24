@@ -2,40 +2,40 @@ package caraccessoriescompany_main;
 
 public class Order {
 	
-	public String Username;
-	public String CustomerEmail;
-	public String ProductName;
-	public String Price;
-	public String Status;
+	public String username;
+	public String customerEmail;
+	public String productName;
+	public String price;
+	public String status;
 	//h
-	public Order(String Username, String CustomerEmail, String ProductName, String Price, String Status) {
-		this.Username = Username;
-		this.CustomerEmail = CustomerEmail;
-		this.ProductName = ProductName;
-		this.Price = Price;
-		this.Status = Status;
+	public Order(String username, String customerEmail, String productName, String price, String status) {
+		this.username = username;
+		this.customerEmail = customerEmail;
+		this.productName = productName;
+		this.price = price;
+		this.status = status;
 	}
 	
 	public String GetUsername() {
-		return Username;
+		return username;
 	}
 	
 	public String GetCustomerEmail() {
-		return CustomerEmail;
+		return customerEmail;
 	}
 	public String GetProductName() {
-		return  ProductName;
+		return  productName;
 	}
 	public String GetPrice() {
-		return Price;
+		return price;
 	}
 	
 	public String GetStatus() {
-		return Status;
+		return status;
 	}
 	
-	public void setStatus(String Status ) {
-		this.Status = Status;
+	public void setStatus(String status ) {
+		this.status = status;
 	}
 	
 }

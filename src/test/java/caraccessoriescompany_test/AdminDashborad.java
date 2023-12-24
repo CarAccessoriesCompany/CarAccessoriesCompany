@@ -1,4 +1,4 @@
-package CarAccessoriesCompany_Test;
+package caraccessoriescompany_test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -20,19 +20,19 @@ public class AdminDashborad {
 
 @Given("the admin is on the product categories management page")
 public void theUserIsOnTheProductCategoriesManagementPage() {
-    assertTrue(app.inDashboard);
+    assertTrue(app.getInDashboard());
     
 }
 
 @When("the admin adds a new product category named {string}")
 public void theUserAddsANewProductCategoryNamed(String string) {
-    app.AddCategory("Ectrical");
+    app.addCategory("Ectrical");
     
 }
 
 @Then("the system should create a new product category {string}")
 public void theSystemShouldCreateANewProductCategory(String string) {
-    assertFalse(app.catIsExist);
+    assertFalse(app.getCatIsExist());
     
 }
 
@@ -43,7 +43,7 @@ public void theAdminEditsTheProductCategoryAndChangesItsNameTo(String string, St
 
 @Then("the system should update the product category to {string}")
 public void theSystemShouldUpdateTheProductCategoryTo(String string) {
-    assertTrue(app.catIsEdited);
+    assertTrue(app.getCatIsEdited());
 }
 
 
@@ -54,7 +54,7 @@ public void theAdminDeletesAnExsitingProductCategory(String string) {
 
 @Then("the system should remove the product category {string}")
 public void theSystemShouldRemoveTheProductCategory(String string) {
-	 assertFalse(app.catIsDeleted);
+	 assertFalse(app.getCatIsDeleted());
 }
 
 
@@ -69,7 +69,7 @@ public void theSystemShouldRemoveTheProductCategory(String string) {
 
 @Given("the Admin is on the product listings management page")
 public void theAdminIsOnTheProductListingsManagementPage() {
-	assertTrue(app.inDashboard);
+	assertTrue(app.getInDashboard());
 }
 
 @When("the Admin adds a new product with name {string},Description {string} ,price {string},Availability {string} ,category {string},")
@@ -79,7 +79,7 @@ public void theAdminAddsANewProductWithNameDescriptionPriceAvailabilityCategory(
 
 @Then("the product {string} should be added to the product listings")
 public void theProductShouldBeAddedToTheProductListings(String string) {
-    assertFalse(app.prodIsExist);
+    assertFalse(app.getProdIsExist());
 }
 
 @When("the Admin attempts to add a new product with name {string},Description {string} ,price {string},Availability {string} and category {string}")
@@ -89,7 +89,7 @@ public void theAdminAttemptsToAddANewProductWithNameDescriptionPriceAvailability
 
 @Then("the product should not be added to the product listings")
 public void theProductShouldNotBeAddedToTheProductListings() {
-    assertFalse(app.prodIsValid);
+    assertFalse(app.getProdIsValid());
 }
 
 @When("the Admin updates the product name to {string}, which the name of the product is {string}")
@@ -99,7 +99,7 @@ public void theAdminUpdatesTheProductNameToWhichTheNameOfTheProductIs(String str
 
 @Then("the product name should be updated to {string} in the product listings")
 public void theProductNameShouldBeUpdatedToInTheProductListings(String string) {
-	assertTrue(app.prodnameIsUpdated);
+	assertTrue(app.getProdnameIsUpdated());
 }
 
 @When("the Admin updates the product price to {string}, which the name of the product is {string}")
@@ -109,7 +109,7 @@ public void theAdminUpdatesTheProductPriceToWhichTheNameOfTheProductIs(String st
 
 @Then("the product  price of {string} should be updated to {string} in the product listings")
 public void theProductPriceOfShouldBeUpdatedToInTheProductListings(String string, String string2) {
-	assertFalse(app.prodpriceIsUpdated);
+	assertFalse(app.getProdpriceIsUpdated());
 }
 
 @When("the Admin updates the product Description to {string}, which the name of the product is {string}")
@@ -119,7 +119,7 @@ public void theAdminUpdatesTheProductDescriptionToWhichTheNameOfTheProductIs(Str
 
 @Then("the product Description of {string} should be updated to {string} in the product listings")
 public void theProductDescriptionOfShouldBeUpdatedToInTheProductListings(String string, String string2) {
-	assertTrue(app.proddescriptionIsUpdated);
+	assertTrue(app.getProddescriptionIsUpdated());
 }
 
 @When("the Admin updates the product Availability to {string}, which the name of the product is {string}")
@@ -129,17 +129,17 @@ public void theAdminUpdatesTheProductAvailabilityToWhichTheNameOfTheProductIs(St
 
 @Then("the product Availability of {string} should be updated to {string} in the product listings")
 public void theProductAvailabilityOfShouldBeUpdatedToInTheProductListings(String string, String string2) {
-	assertTrue(app.prodavlIsUpdated);
+	assertTrue(app.getProdavlIsUpdated());
 }
 
 @When("the Admin updates the product Category to {string}, which the name of the product is {string}")
 public void theAdminUpdatesTheProductCategoryToWhichTheNameOfTheProductIs(String string, String string2) {
-   app.updateProdCategory("Interior", "Steering Wheel");
+   app.updateProdcategory("Interior", "Steering Wheel");
 }
 
 @Then("the product Category of {string} should be updated to {string} in the product listings")
 public void theProductCategoryOfShouldBeUpdatedToInTheProductListings(String string, String string2) {
-	assertTrue(app.prodcatIsUpdated);
+	assertTrue(app.getProdcatIsUpdated());
 }
 
 
@@ -167,7 +167,7 @@ public void theProductCategoryOfShouldBeUpdatedToInTheProductListings(String str
 
 @Given("the Admin is on the customer accounts management page")
 public void theAdminIsOnTheCustomerAccountsManagementPage() {
-	assertTrue(app.inDashboard);
+	assertTrue(app.getInDashboard());
 }
 
 @When("the Admin selects a customer account with username {string}")
@@ -177,7 +177,7 @@ public void theAdminSelectsACustomerAccountWithUsername(String string) {
 
 @Then("the Admin should see the details of the customer account, including name, email, and contact information")
 public void theAdminShouldSeeTheDetailsOfTheCustomerAccountIncludingNameEmailAndContactInformation() {
-    assertTrue(app.displayCustomerInfo);
+    assertTrue(app.getDisplayCustomerInfo());
 }
 
 
@@ -189,7 +189,7 @@ public void theAdminUpdatesTheCustomerUsernameToANewUsername(String string, Stri
 
 @Then("the customer account’s should be updated with the new username")
 public void theCustomerAccountSShouldBeUpdatedWithTheNewUsername() {
-    assertTrue(app.customerNameUpdated);
+    assertTrue(app.getCustomerNameUpdated());
 }
 
 
@@ -201,7 +201,7 @@ public void theAdminDeletesTheCustomerAccountWithUsername(String string) {
 
 @Then("the customer account {string} should be deleted")
 public void theCustomerAccountShouldBeDeleted(String string) {
-    assertTrue(app.customerIsDeleted);
+    assertTrue(app.getCustomerIsDeleted());
 }
 
 @When("the Admin attempts to delete a customer account with username {string}")
@@ -211,7 +211,7 @@ public void theAdminAttemptsToDeleteACustomerAccountWithUsername(String string) 
 
 @Then("the customer account should not be deleted")
 public void theCustomerAccountShouldNotBeDeleted() {
-	assertFalse(app.customerIsDeleted);
+	assertFalse(app.getCustomerIsDeleted());
 }
 
 
@@ -220,7 +220,7 @@ public void theCustomerAccountShouldNotBeDeleted() {
 
 @Given("the Admin is on the appointment page")
 public void theAdminIsOnTheAppointmentPage(){
-	assertTrue(app.inDashboard);
+	assertTrue(app.getInDashboard());
 }
 
 
@@ -235,7 +235,7 @@ public void theAdminSchedulesANewInstallationAppointmentInWithTechnicianForCusto
 
 @Then("the appointment in {string} on {string} with technician {string} and with product name {string} should be scheduled")
 public void theAppointmentInOnWithTechnicianAndWithProductNameShouldBeScheduled(String string, String string2, String string3, String string4) {
-	assertTrue(app.appIsSechduled);
+	assertTrue(app.getAppIsSechduled());
 }
 
 
@@ -252,12 +252,12 @@ public void theAdminSelectsTheOptionToViewScheduledAppointmentsFor(String string
 
 @Then("the Admin should see a list of all scheduled appointments for {string}")
 public void theAdminShouldSeeAListOfAllScheduledAppointmentsFor(String string) {
-	assertTrue(app.viewAppointment);
+	assertTrue(app.getViewAppointment());
 }
 
 @Then("each appointment entry should display customer name, appointment time, assigned technician and prodcut name")
 public void eachAppointmentEntryShouldDisplayCustomerNameAppointmentTimeAssignedTechnicianAndProdcutName() {
-	assertTrue(app.viewAppointment);
+	assertTrue(app.getViewAppointment());
 }
 
 
@@ -270,7 +270,7 @@ public void theAdminReschedulesTheAppointmentDateForWithTechnicianForCustomerToA
 
 @Then("the appointment for {string} on {string} with technician {string} should be updated to {string}")
 public void theAppointmentForOnWithTechnicianShouldBeUpdatedTo(String string, String string2, String string3, String string4) {
-	assertTrue(app.appReschduled);
+	assertTrue(app.getAppReschduled());
 }
 
 
@@ -284,19 +284,19 @@ public void theAdminCancelsTheAppointmentForOnWithTechnician(String string, Stri
 
 @Then("the appointment for {string} on {string} with technician {string} should be canceled")
 public void theAppointmentForOnWithTechnicianShouldBeCanceled(String string, String string2, String string3) {
-	assertTrue(app.appCanceled);
+	assertTrue(app.getAppCanceled());
 }
 
 
 
 @When("the Admin selects to view {string}’s schedule")
 public void theAdminSelectsToViewSSchedule(String string){
-	app.ViewInstallerSchedule("Installer1");
+	app.viewInstallerSchedule("Installer1");
 }
 
 @Then("the Admin should see a list of all appointments assigned to {string}")
 public void theAdminShouldSeeAListOfAllAppointmentsAssignedTo(String string) {
-	 assertFalse(app.InstallerScheduleViewd);
+	 assertFalse(app.getInstallerScheduleViewd());
 }
 
 

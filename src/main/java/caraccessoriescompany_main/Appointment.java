@@ -2,56 +2,55 @@ package caraccessoriescompany_main;
 
 public class Appointment {
 
-	//hello//
-	public String Date;
-	public String InstallerName;
-	public String CustomerName;
-	public String ProductName;
+	private String date;
+	private String installerName;
+	private String customerName;
+	private String productName;
 	
 	
-	public Appointment(String date,String insName,String cusName,String proName) {
-		this.Date=date;
-		this.InstallerName=insName;
-		this.CustomerName=cusName;
-		this.ProductName=proName;
+	public Appointment(String date, String insName, String cusName, String proName) {
+		this.date = date;
+		this.installerName = insName;
+		this.customerName = cusName;
+		this.productName = proName;
 	}
 	
 	public Appointment() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public void setDate(String date) {
-		this.Date=date;
+		this.date=date;
 	}
 	
 	
 	public void setInsName(String name) {
-		this.InstallerName=name;
+		this.installerName=name;
 	}
 	
 	public void setCusName(String name) {
-		this.CustomerName=name;
+		this.customerName=name;
 	}
 	
 	public void setProName(String name) {
-		this.ProductName=name;
+		this.productName=name;
 	}
 	
 	
 	public String getDate() {
-		return this.Date;
+		return this.date;
 	}
 	
 	public String getInsName() {
-		return this.InstallerName;
+		return this.installerName;
 	}
 	
 	public String getCusName() {
-		return this.CustomerName;
+		return this.customerName;
 	}
 	
 	public String getProName() {
-		return this.ProductName;
+		return this.productName;
 	}
 	
 	

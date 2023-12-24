@@ -1,63 +1,56 @@
 package caraccessoriescompany_main;
 //h
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
 	
-	public  String Email;
-    public  String Password;
-    public String Username;
-    public String PhoneNumber;
-    public static ArrayList<String> Orders = new ArrayList<String>();
-    public static ArrayList<String> Request = new ArrayList<String>();
-    public static ArrayList<String> Inbox = new ArrayList<String>();
-//    public String Address;
+	private String email;
+	private String password;
+	private String username;
+	private String phoneNumber;
+    protected List<String> orders = new ArrayList<>();
+    protected List<String> request = new ArrayList<>();
+    protected List<String> inbox = new ArrayList<>();
     
-	public Customer(String Email, String Password, String Username, String PhoneNumber) {
-		// TODO Auto-generated constructor stub
-		this.Email = Email;
-		this.Password = Password;
-		this.Username = Username;
-		this.PhoneNumber = PhoneNumber;
+	public Customer(String email, String password, String username, String phoneNumber) {
+		this.email = email;
+		this.password = password;
+		this.username = username;
+		this.phoneNumber = phoneNumber;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
-	public void setEmail(String Email) {
-		this.Email = Email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
-		return Password;
+		return password;
 	}
-	public void setPassword(String Password) {
-		this.Password = Password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getUsername() {
-		return Username;
+		return username;
 	}
-	public void setUsername(String Username) {
-		this.Username = Username;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPhoneNumber() {
-		return PhoneNumber;
+		return phoneNumber;
 	}
-	public void setPhoneNumber(String PhoneNumber) {
-		this.PhoneNumber = PhoneNumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
-	public ArrayList<String> getOrders() {
-		return Orders;
+	public List<String> getOrders() {
+		return orders;
 	}
-	public ArrayList<String> getRequest() {
-		return Request;
+	public List<String> getRequest() {
+		return request;
 	}
-	public ArrayList<String> getInbox() {
-		return Inbox;
+	public List<String> getInbox() {
+		return inbox;
 	}
-//	public String getAddress() {
-//		return PhoneNumber;
-//	}
-//	public void setAddress(String Address) {
-//		this.Address = Address;
-//	}
 }
 

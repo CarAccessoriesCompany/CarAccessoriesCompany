@@ -1,4 +1,4 @@
-package CarAccessoriesCompany_Test;
+package caraccessoriescompany_test;
 
 import org.junit.runner.RunWith;
 

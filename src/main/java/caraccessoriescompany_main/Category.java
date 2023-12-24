@@ -1,19 +1,18 @@
 package caraccessoriescompany_main;
 
 public class Category {
-//h//
-	public String CatName;
+	private String catName;
 	
 	public Category(String name) {
-		this.CatName=name;
+		this.catName = name;
 		
 	}
 	
 	public void setCatName(String Name ) {
-		this.CatName = Name;
+		this.catName = Name;
 	}
 	public String getCatName() {
-		return CatName;
+		return catName;
 	}
 	
 }
