@@ -1,4 +1,4 @@
-package CarAccessoriesCompany_Main;
+package caraccessoriescompany_main;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

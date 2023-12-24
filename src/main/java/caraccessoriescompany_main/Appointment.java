@@ -1,8 +1,8 @@
-package CarAccessoriesCompany_Main;
+package caraccessoriescompany_main;
 
 public class Appointment {
 
-	//hello
+	//hello//
 	public String Date;
 	public String InstallerName;
 	public String CustomerName;

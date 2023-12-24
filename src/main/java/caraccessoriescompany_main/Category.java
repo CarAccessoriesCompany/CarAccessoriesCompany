@@ -1,7 +1,7 @@
-package CarAccessoriesCompany_Main;
+package caraccessoriescompany_main;
 
 public class Category {
-//h
+//h//
 	public String CatName;
 	
 	public Category(String name) {

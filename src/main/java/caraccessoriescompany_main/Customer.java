@@ -1,4 +1,4 @@
-package CarAccessoriesCompany_Main;
+package caraccessoriescompany_main;
 //h
 import java.util.ArrayList;
 
