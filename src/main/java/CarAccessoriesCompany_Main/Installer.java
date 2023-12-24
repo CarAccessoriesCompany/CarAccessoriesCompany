@@ -8,6 +8,7 @@ public class Installer {
     public String Username;
     public String InstallerAvalibilty;
     public static ArrayList<String> schedule = new ArrayList<String>();
+   
     
     
     public Installer(String Email, String Password, String Username, String InstallerAvalibilty) {
@@ -43,4 +44,5 @@ public class Installer {
 	public ArrayList<String> getschedule() {
 		return schedule;
 	}
+	
 }

@@ -26,6 +26,7 @@ public class Main {
 		String NewCategory;
 		
 		String NewUsername;
+	
 		
 		int Choice = 0;
 		Scanner input = new Scanner(System.in);
@@ -288,23 +289,34 @@ public class Main {
 												 
 												 
 											 }
-											 
+
 											 obj.PrintAdminMenu();
 											 AdminChoice = input.nextInt();
 											 if(AdminChoice == 0) {
-												 obj.PrintAdminMenu();
+												 System.out.println("\t Menu");
+												 System.out.println("1.Sign in");
+												 System.out.println("2.Sign up");
+												 obj.isAdmin = false;
+							                     Choice = input.nextInt();
+
 											 }
 											 
+										
 											
 			                        	}
-//		                        		if(AdminChoice == 0) {
-//		                        			 System.out.println("\t Menu");
-//											 System.out.println("1.Sign in");
-//											 System.out.println("2.Sign up");
-//		                        			
-//		                        		}
+		                        		
 		                        	}
 		                        	
+		                        	if(AdminChoice == 0) {
+	                        			 System.out.println("\t Menu");
+										 System.out.println("1.Sign in");
+										 System.out.println("2.Sign up");
+										 obj.isAdmin = false;
+					                     Choice = input.nextInt();
+					                     
+	                        			
+	                        		}
+									 
 		                        	
 		                        }
 		                    }
@@ -317,8 +329,7 @@ public class Main {
 									Password = input.next();
 								}
 		                        obj.Customerlogin(Email, Password);
-		                        if(obj.isLogedin) {
-		                        	
+		                        if(obj.isLogedin) {	
 		                        	int CustomerChoice = 0;
 		                        	obj.PrintCustomerMenu();
 		                        	CustomerChoice = input.nextInt();
@@ -360,15 +371,31 @@ public class Main {
 		                        			
 		                        		}
 		                        		if(CustomerChoice == 2) {
+		                        			
 		                        			System.out.println("1.My Orders");
 		                        			System.out.println("2.My Requests");
 		                        			System.out.println("3.Manage my account");
+		                        			System.out.println("4.Inbox");
 		                        			System.out.println("0.Back");
 		                        			int innerChoice = input.nextInt(); // Use a different variable for inner loop
 
 		                                    if (innerChoice == 1) {
 		                                    	input.nextLine();
 		                                        obj.displayCustomerOrders(Email);
+		                                        System.out.print("Do you want to confirm any order ?: ");
+		                                        String YesOrNo = input.nextLine();
+		                                        if(YesOrNo.equals("Yes")) {
+		                                        	System.out.print("Enter Product name: ");
+		                                        	 ProductName = input.nextLine();
+				                                        String Conf;
+				                                        System.out.print("Enter Confirm: ");
+				                                        Conf = input.nextLine();
+				                                        if(Conf.equals("Confirm")) {
+				                                        	obj.orderIsPlacedBy(Email, ProductName, Conf);
+				                                        	
+				                                        }
+		                                        }
+		                                       
 		                                        
 		                                    }
 		                                    else if (innerChoice == 2) {
@@ -401,10 +428,13 @@ public class Main {
 			                                         obj.changePhoneforCust(Email, newPhone);
 			                                         System.out.println("Phone number change successfully");
 			                                     }
-			                                     else {
-			                                    	 obj.PrintCustomerMenu();
-			                                    	 
-			                                     }
+//			                                     else {
+//			                                    	 obj.PrintCustomerMenu();
+//			                                    	 
+//			                                     }
+		                                    }
+		                                    else if(innerChoice == 4) {
+		                                    	obj.getorderIsPlacedBy(Email);
 		                                    }
 		                                    else if(innerChoice == 0) {
 		                                    	 obj.PrintCustomerMenu();
@@ -417,26 +447,122 @@ public class Main {
 		                        			
 		                        			
 		                        		}
-		                        		if(CustomerChoice == 0) {
-		                        			System.out.println("\t Menu");
-		                        			System.out.println("1.Sign in");
-		                        			System.out.println("2.Sign up");
-		                        			
-		                        			
-		                        		}
+		                        		
 		                        		
 		                        		 
 //		                                 CustomerChoice = input.nextInt();
 		                        	}
+		                        	if(CustomerChoice == 0) {
+	                        			System.out.println("\t Menu");
+	                        			System.out.println("1.Sign in");
+	                        			System.out.println("2.Sign up");
+	                        			obj.isCustomer = false;
+	                        			Choice = input.nextInt();
+	                        			
+	                        			
+	                        			
+	                        		}
 		                        	
 		                        }
 		                        
 		                    	
 		                    	
 		                    }
+		                    else if(obj.isInstaller) {
+		                    	System.out.print("Enter your password:");
+		                    	Password = input.nextLine();
+		                        obj.InstallerIncorrectPassword(Email, Password);
+		                        if(obj.isLogedin == false) {
+									System.out.print("Incorrect Password!, re-Enter your password:");
+									Password = input.next();
+								}
+		                        obj.Installerlogin(Email, Password);
+		                        if(obj.isLogedin) {
+		                        	 obj.PrintInstallerMenu();
+		                        	 
+		                        	 int InstallerChoice = 0;
+			                         InstallerChoice = input.nextInt();
+			                        	while(InstallerChoice != 0) {
+			                        		if(InstallerChoice == 1) {
+			                        			
+			                        			String[] UsernameSplit = Email.split("@");
+			                        			String un = UsernameSplit[0];
+//			                        			System.out.println(un);
+			                        			obj.ViewInstallerSchedule(un);
+			                        			Choice = input.nextInt();
+			                        		}
+			                        		 if(InstallerChoice == 0) {
+			                        			
+			                        			obj.isInstaller = false;
+			                        			
+			                        		}
+			                        		 	
+//			                        		obj.PrintInstallerMenu();
+//			                        		InstallerChoice = input.nextInt();
+			                        		
+			                        	}
+			                        	System.out.println("\t Menu");
+	                        			System.out.println("1.Sign in");
+	                        			System.out.println("2.Sign up");
+	                        			Choice = input.nextInt();
+		                        }
+		                       
+		                    }
 		                }
 		               
 		            }
+				 if (Choice == 2) {
+					    input.nextLine();
+					    System.out.print("Enter your email:");
+					    Email = input.nextLine();
+					    obj.InvalidEmailType(Email);
+
+					    if (obj.invalidEmail) {
+					        System.out.print("Invalid Email!, re-Enter your email:");
+					    } else {
+					        obj.ExistEmail(Email);
+					        if (obj.isSignedup == false) {
+					            System.out.print("Exist Email!, re-Enter non exist email: ");
+					        }
+
+					       
+					        System.out.print("Enter Password the password must have at least 8 characters: ");
+					        Password = input.nextLine();
+					        obj.SignupWeakPassword(Email, Password);
+
+					        if (obj.isSignedup == false) {
+					            System.out.print("Weak Password!, re-Enter Stronger Password: ");
+					        }
+
+					        System.out.print("Enter Username: ");
+					        Username = input.nextLine();
+					        obj.ExistUsername(Username);
+
+					        if (obj.isSignedup == false) {
+					            System.out.print("Exist Username!, re-Enter non exist Username: ");
+					        }
+
+					        System.out.print("Phone Number: ");
+					        PhoneNumber = input.nextLine();
+					        obj.ExistPhoneNumber(PhoneNumber);
+
+					        if (obj.isSignedup == false) {
+					            System.out.print("Exist Phone Number!, re-Enter non exist Phone Number: ");
+					        } else {
+					            obj.UserSignUp(Email, Password, Username, PhoneNumber);
+
+					            if (obj.isSignedup == true) {
+					                System.out.println("Signed Up success :)");
+					                System.out.println("\t Menu");
+					                System.out.println("1.Sign in");
+					                System.out.println("2.Sign up");
+					                obj.isSignedup = false;
+					                Choice = input.nextInt();
+					            }
+					        }
+					    }
+					}
+
 				 
 			}
 			

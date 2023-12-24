@@ -24,7 +24,7 @@ public class Notification {
 
 	@When("an order is placed by a customer and his email is {string}")
 	public void anOrderIsPlacedByACustomerAndHisEmailIs(String string) {
-	   app.orderIsPlacedBy("Customer1@gmail.com");
+	   app.orderIsPlacedBy("Customer1@gmail.com","Body Shell","Confirm");
 	}
 
 	@Then("the customer should receive an email with the subject {string}")

@@ -10,6 +10,7 @@ public class Customer {
     public String PhoneNumber;
     public static ArrayList<String> Orders = new ArrayList<String>();
     public static ArrayList<String> Request = new ArrayList<String>();
+    public static ArrayList<String> Inbox = new ArrayList<String>();
 //    public String Address;
     
 	public Customer(String Email, String Password, String Username, String PhoneNumber) {
@@ -48,6 +49,9 @@ public class Customer {
 	}
 	public ArrayList<String> getRequest() {
 		return Request;
+	}
+	public ArrayList<String> getInbox() {
+		return Inbox;
 	}
 //	public String getAddress() {
 //		return PhoneNumber;

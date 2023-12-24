@@ -1,7 +1,14 @@
 package CarAccessoriesCompany_Main;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
 import java.util.regex.Pattern;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MyCarApplication {
@@ -1032,6 +1039,10 @@ public boolean updateProdCategory(String cat, String name){
 		System.out.println("2.My Profile");
 		System.out.println("0.Sign out");
 	}
+	public void PrintInstallerMenu() {
+		System.out.println("1.My Installation Requests and Schedule Appointments");
+		System.out.println("0.Sign out");
+	}
 	
 	public void PrintTheProducts(int Cat) {
 		if(Cat == 1) {
@@ -1167,30 +1178,118 @@ public boolean updateProdCategory(String cat, String name){
 		return appCanceled;
 	}
 	
+	
 	public boolean ViewInstallerSchedule(String insName) {
-		for(Appointment ap:DataArrayList.Appointments) {
-			if(ap.getInsName().equals(insName)) {
-				InstallerScheduleViewd=true;
-			}
-		}
-		return InstallerScheduleViewd;
+
+	    boolean InstallerScheduleViewed = false;
+
+	    for (Installer in : DataArrayList.Installers) {
+	        List<String> InstallerRequest = in.getschedule();
+	        if (!insName.equals(in.getUsername())) {
+	            // System.out.println("No installer with this name! Re-enter new order with valid Installer");
+	        } else {
+	            int index = 1;
+
+	            // Custom comparator for sorting by date
+	            Comparator<String> dateComparator = new Comparator<String>() {
+	                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+	                @Override
+	                public int compare(String str1, String str2) {
+	                    if (isDate(str1) && isDate(str2)) {
+	                        try {
+	                            Date date1 = dateFormat.parse(str1);
+	                            Date date2 = dateFormat.parse(str2);
+	                            return date1.compareTo(date2);
+	                        } catch (ParseException e) {
+	                            e.printStackTrace(); // Handle the exception according to your needs
+	                        }
+	                    }
+	                    // If not both are dates, compare as strings
+	                    return str1.compareTo(str2);
+	                }
+
+	                private boolean isDate(String str) {
+	                    try {
+	                        dateFormat.parse(str);
+	                        return true;
+	                    } catch (ParseException e) {
+	                        return false;
+	                    }
+	                }
+	            };
+
+	            // Sort the schedule by date or as strings
+	            Collections.sort(InstallerRequest, dateComparator);
+
+	            for (int i = 0; i < InstallerRequest.size(); i += 3) {
+	                System.out.println(index + ". " +
+	                        InstallerRequest.get(i) + " " +
+	                        InstallerRequest.get(i + 1) + " " +
+	                        InstallerRequest.get(i + 2));
+	                index++;
+	            }
+	            System.out.println();
+
+	            InstallerScheduleViewed = true;
+	        }
+	    }
+
+	    return InstallerScheduleViewed;
+	}
+
+	
+	
+
+	
+	public boolean orderIsPlacedBy(String email, String prodname, String status) {
+	    boolean sendEmail = false;
+
+	    for (Customer customer : DataArrayList.Customers) {
+	        if (email.equals(customer.getEmail())) {
+	            for (Product product : DataArrayList.Products) {
+	                if (prodname.equals(product.getProductName())) {
+	                    List<String> customerRequest = customer.getRequest();
+	                    List<String> Inbox = customer.getInbox();
+	                    
+
+	                    if ("Confirm".equals(status)) { // Use equals() for string comparison
+	                        Inbox.add("Product Name: " + product.getProductName());
+	                        Inbox.add("Price: " + product.getPrice());
+	                        Inbox.add("Category: " + product.getCategory());
+	                        sendEmail = true; // Set sendEmail to true if the status is "Confirm"
+	                        
+	                    }
+	                    
+	                    
+	                    break; // Exit the product loop once a match is found
+	                }
+	            }
+	        }
+	    }
+
+	    return sendEmail;
 	}
 	
-	
-	
-	
-	
-	
-	public boolean orderIsPlacedBy(String email) {
-		for(Order r:DataArrayList.Orders) {
-			if(r.GetCustomerEmail().equals(email) && r.GetStatus().equalsIgnoreCase("Confirmed")) {
-				
-					 sendEmail = true;
-			}
-		}
-		return sendEmail;
+	public boolean getorderIsPlacedBy(String email) {
+	    for (Customer customer : DataArrayList.Customers) {
+	        List<String> Inbox = customer.getInbox();
+	        if (email.equals(customer.getEmail())) {
+	            int index = 1;
+	            for (int i = 0; i < Inbox.size(); i += 3) {
+	                System.out.println(index + ". " +
+	                        Inbox.get(i) + " " +
+	                        Inbox.get(i + 1) + " " +
+	                        Inbox.get(i + 2));
+	                index++;
+	            }
+	            System.out.println();
+	            return true; // Return true if the email is found
+	        }
+	    }
+	    return false; // Return false if the email is not found
 	}
-	
+
 	
 	
 	public boolean getAnInsallationReqFot(String name) {
@@ -1253,34 +1352,66 @@ public boolean updateProdCategory(String cat, String name){
 	        
 	    }
 	}
-	public void addReq(String email, String prodname, String CarModel, String installer, String date) {
-		 for (Customer customer : DataArrayList.Customers) {
-		        if (email.equals(customer.getEmail())) {
-		            for (Product product : DataArrayList.Products) {
-		                if (prodname.equals(product.getProductName())) {
-		                    // Assuming that the customer has a list to store orders
-		                    List<String> customerRequest = customer.getRequest();
-		                    
-		                    for(Installer in: DataArrayList.Installers) {
-		                    	if(!installer.equals(in.getUsername())) {
-//		                    		System.out.println("No installer with this name ! re-Enter new order with valid Installer");
-		                    		
-		                    	}
-		                    	else {
-		                    		
-		                    		customerRequest.add("Product Name: " + prodname);
-				                    customerRequest.add("Car Model: " + CarModel);
-		                    		customerRequest.add("Installer Name: " + installer);
-		                    		customerRequest.add("Preferd Date: " + date);
-		                    	}
-		                    }
-		                    // Add product information to the customer's orders
-		                    
-		                }
-		                
-		            }
-		        }
-		    }
+	
+	public void addReq(String email, String prodname, String carModel, String installer, String date) {
+	    for (Customer customer : DataArrayList.Customers) {
+	        if (email.equals(customer.getEmail())) {
+	            for (Product product : DataArrayList.Products) {
+	                if (prodname.equals(product.getProductName())) {
+	                    // Assuming that the customer has a list to store orders
+	                    List<String> customerRequest = customer.getRequest();
 
+	                    List<String> installerRequest = null; // Create a list to store installer requests
+
+	                    for (Installer in : DataArrayList.Installers) {
+	                        if (installer.equals(in.getUsername())) {
+	                            installerRequest = in.getschedule();
+	                            break; // Exit the loop once the installer is found
+	                        }
+	                    }
+
+	                    if (installerRequest == null) {
+	                        System.out.println("No installer with this name! Re-enter new order with a valid Installer");
+	                        return; // Exit the method if no valid installer is found
+	                    }
+
+	                    // Check if the preferred date is already booked for the installer
+	                    if (isDateBooked(installerRequest, date)) {
+	                        System.out.println("Installer is busy on the selected date.");
+	                        
+	                        return;
+	                    }
+
+	                    // Add the request to the customer
+	                    customerRequest.add("Product Name: " + prodname);
+	                    customerRequest.add("Car Model: " + carModel);
+	                    customerRequest.add("Installer Name: " + installer);
+	                    customerRequest.add("Preferred Date: " + date);
+
+	                    // Add the request to the installer
+	                    installerRequest.add("Customer Name: " + customer.getUsername());
+	                    installerRequest.add("Product Name: " + prodname);
+	                    installerRequest.add("Preferred Date: " + date);
+
+	                    // Add product information to the customer's orders
+	                }
+	            }
+	        }
+	    }
 	}
+
+	// Method to check if the preferred date is already booked for the installer
+	private boolean isDateBooked(List<String> installerSchedule, String date) {
+	    for (int i = 0; i < installerSchedule.size(); i++) {
+	        if (installerSchedule.get(i).contains("Preferred Date: " + date)) {
+	            return true; // Date is already booked
+	        }
+	    }
+	    return false; // Date is available
+	}
+	
+	
+	
+
+	
 }
