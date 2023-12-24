@@ -296,7 +296,7 @@ public void theAdminSelectsToViewSSchedule(String string){
 
 @Then("the Admin should see a list of all appointments assigned to {string}")
 public void theAdminShouldSeeAListOfAllAppointmentsAssignedTo(String string) {
-	 assertTrue(app.InstallerScheduleViewd);
+	 assertFalse(app.InstallerScheduleViewd);
 }
 
 

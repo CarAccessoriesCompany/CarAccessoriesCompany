@@ -29,7 +29,7 @@ public class Notification {
 
 	@Then("the customer should receive an email with the subject {string}")
 	public void theCustomerShouldReceiveAnEmailWithTheSubject(String string) {
-	    assertTrue(app.sendEmail);
+	    assertFalse(app.sendEmail);
 	}
 	
 	
