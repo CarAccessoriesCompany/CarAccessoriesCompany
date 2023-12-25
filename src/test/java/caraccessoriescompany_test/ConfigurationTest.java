@@ -14,7 +14,6 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 	snippets = SnippetType.CAMELCASE, 
 	glue = "caraccessoriescompany_test")
 
-public class Configuration {
+public class ConfigurationTest {
 
 }
-//h

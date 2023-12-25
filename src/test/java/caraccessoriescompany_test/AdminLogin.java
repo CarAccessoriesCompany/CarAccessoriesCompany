@@ -12,8 +12,7 @@ import io.cucumber.java.en.When;
 public class AdminLogin {
 
     MyCarApplication app;
-
-    //h
+    
     public AdminLogin(MyCarApplication obj) {
         super();
         this.app = obj;
