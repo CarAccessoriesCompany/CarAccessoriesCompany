@@ -12,8 +12,7 @@ import java.util.regex.Matcher;
 import java.util.logging.Logger;
 public class MyCarApplication {
 	
-	private DataArrayList list = new DataArrayList();
-	private MyCarApplication app;
+	private DataArrayList list;
 	
 	private boolean islogedin;
 	private boolean invalidEmail;
@@ -158,6 +157,7 @@ public class MyCarApplication {
 	 	setSendEmail(false);
 	 	setInstallationReqReceived(false);
 	 	
+	 	
 		
 		
 	}
@@ -176,7 +176,7 @@ public class MyCarApplication {
 	            return true;
 	        }
 	    }
-	   return false;
+	    return false;
 	}
 
 	public boolean isCustomer(String email) {
@@ -200,12 +200,12 @@ public class MyCarApplication {
 	
 
 	// admin sign-in functions
-	public boolean adminlogin(String Email, String Password) {
-		invalidEmailType(Email);
+	public boolean adminlogin(String email, String password) {
+		invalidEmailType(email);
 	    if (invalidEmail == false) {
 		for(User n : DataArrayList.admin) {
-	        if(Email.equals(n.getEmail())) {
-	        	if(n.getPassword().equals(Password)) {
+	        if(email.equals(n.getEmail())) {
+	        	if(n.getPassword().equals(password)) {
 	        	   islogedin = true;
 		           break;
 	        }
@@ -216,11 +216,11 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean adminInvalidEmail(String Email) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean adminInvalidEmail(String email) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 	        for (User n : DataArrayList.admin) {
-	            if (Email.equals(n.getEmail())) {
+	            if (email.equals(n.getEmail())) {
 	                islogedin = true;
 	                break;
 	            }
@@ -230,11 +230,11 @@ public class MyCarApplication {
 	    return islogedin;
 	}
 	
-	public boolean adminIncorrectPassword(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean adminIncorrectPassword(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(User n : DataArrayList.admin) {
-	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	        if(email.equals(n.getEmail()) && !password.equals(n.getPassword())) {
 	        	incorrectPassword = true;
 	           break;
 	        }
@@ -245,11 +245,11 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean adminEmptyPassword(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean adminEmptyPassword(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(User n : DataArrayList.admin) {
-	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
+	        if(email.equals(n.getEmail()) && password.isEmpty()) {
 	           isEmpty = true;
 	           break;
 	        }
@@ -260,11 +260,11 @@ public class MyCarApplication {
 	}
 	
 	// Customer sign-in functions
-	public boolean customerlogin(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean customerlogin(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Customer n : list.getCustomers()) {
-	        if(Email.equals(n.getEmail()) && n.getPassword().equals(Password)) {
+	        if(email.equals(n.getEmail()) && n.getPassword().equals(password)) {
 	           islogedin = true;
 	           break;
 	        }
@@ -273,12 +273,12 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean customerInvalidEmail(String Email) {
+	public boolean customerInvalidEmail(String email) {
 		
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 	        for (Customer n : list.getCustomers()) {
-	            if (Email.equals(n.getEmail())) {
+	            if (email.equals(n.getEmail())) {
 	                islogedin = true;
 	                break;
 	            }
@@ -288,11 +288,11 @@ public class MyCarApplication {
 	    return islogedin;
 	}
 	
-	public boolean customerIncorrectPassword(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean customerIncorrectPassword(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Customer n : list.getCustomers()) {
-	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	        if(email.equals(n.getEmail()) && !password.equals(n.getPassword())) {
 	           incorrectPassword = true;
 	           break;
 	        }
@@ -303,11 +303,11 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean customerEmptyPassword(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean customerEmptyPassword(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Customer n : list.getCustomers()) {
-	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
+	        if(email.equals(n.getEmail()) && password.isEmpty()) {
 	        	isEmpty = true;
 	            break;
 	        }
@@ -319,11 +319,11 @@ public class MyCarApplication {
 	}
 	
 	// Installer sign-in function
-	public boolean installerlogin(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean installerlogin(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Installer n : DataArrayList.installers) {
-	        if(Email.equals(n.getEmail()) && n.getPassword().equals(Password)) {
+	        if(email.equals(n.getEmail()) && n.getPassword().equals(password)) {
 	           islogedin = true;
 	           break;
 	        }
@@ -332,12 +332,12 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean installerInvalidEmail(String Email) {
+	public boolean installerInvalidEmail(String email) {
 		
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 	        for (Installer n : DataArrayList.installers) {
-	            if (Email.equals(n.getEmail())) {
+	            if (email.equals(n.getEmail())) {
 	                islogedin = true;
 	                break;
 	            }
@@ -347,12 +347,12 @@ public class MyCarApplication {
 	    return islogedin;
 	}
 	
-	public boolean installerIncorrectPassword(String Email, String Password) {
+	public boolean installerIncorrectPassword(String email, String password) {
 		
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Installer n : DataArrayList.installers) {
-	        if(Email.equals(n.getEmail()) && !Password.equals(n.getPassword())) {
+	        if(email.equals(n.getEmail()) && !password.equals(n.getPassword())) {
 	           incorrectPassword = true;
 	           break;
 	        }
@@ -362,11 +362,11 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean installerEmptyPassword(String Email, String Password) {
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+	public boolean installerEmptyPassword(String email, String password) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Installer n : DataArrayList.installers) {
-	        if(Email.equals(n.getEmail()) && Password.isEmpty()) {
+	        if(email.equals(n.getEmail()) && password.isEmpty()) {
 	        	isEmpty = true;
 	            break;
 	        }
@@ -378,48 +378,48 @@ public class MyCarApplication {
 	}
 	
 	// User Sign-up functions
-	public boolean userSignUp(String Email, String Password, String Username, String PhoneNumber) {
+	public boolean userSignUp(String email, String password, String username, String phoneNumber) {
 		setSignedup(true);
 		
-		invalidEmailType(Email);
-	    if (invalidEmail == true) {
+		invalidEmailType(email);
+	    if (invalidEmail) {
 	        setSignedup(false);
 	        return getIsSignedup();
 	    }
 	    for (Customer n : list.getCustomers()) {
-	        if (Email.equals(n.getEmail()) || Username.equals(n.getUsername()) || PhoneNumber.equals(n.getPhoneNumber())) {
+	        if (email.equals(n.getEmail()) || username.equals(n.getUsername()) || phoneNumber.equals(n.getPhoneNumber())) {
 	            setSignedup(false);
 	            return getIsSignedup();
 	        }
 	    }
 	    
-	    Customer newUser = new Customer(Email, Password, Username, PhoneNumber);
+	    Customer newUser = new Customer(email, password, username, phoneNumber);
 	    list.getCustomers().add(newUser);
 
 	    return getIsSignedup();
 	}
 	
-	public boolean existEmail(String Email) {
+	public boolean existEmail(String email) {
 		
 		setSignedup(true);
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
 		for(Customer n : list.getCustomers()) {
-	        if(Email.equals(n.getEmail())) {
+	        if(email.equals(n.getEmail())) {
 	           setSignedup(false);
 	           break;
 	        }
 	        
 	    }
 		for(User n : DataArrayList.admin) {
-	        if(Email.equals(n.getEmail())) {
+	        if(email.equals(n.getEmail())) {
 	           setSignedup(false);
 	           break;
 	        }
 	        
 	    }
 		for(Installer n : DataArrayList.installers) {
-	        if(Email.equals(n.getEmail())) {
+	        if(email.equals(n.getEmail())) {
 	           setSignedup(false);
 	           break;
 	        }
@@ -429,11 +429,11 @@ public class MyCarApplication {
 		return getIsSignedup();
 	}
 	
-public boolean existUsername(String Username) {
+public boolean existUsername(String username) {
 		
 		setSignedup(true);
 		for(Customer n : list.getCustomers()) {
-	        if(Username.equals(n.getUsername())) {
+	        if(username.equals(n.getUsername())) {
 	           setSignedup(false);
 	           break;
 	        } 
@@ -442,38 +442,38 @@ public boolean existUsername(String Username) {
 		return getIsSignedup();
 	}
 
-public boolean existPhoneNumber(String PhoneNumber) {
+public boolean existPhoneNumber(String phoneNumber) {
 	
 	setSignedup(true);
 	
 	for(Customer n : list.getCustomers()) {
-        if(PhoneNumber.equals(n.getPhoneNumber())) {
+        if(phoneNumber.equals(n.getPhoneNumber())) {
            setSignedup(false);
            break;
         } 
     }
 	return getIsSignedup();
 }
-	public boolean signupEmptyPassword(String Email, String Password) {
+	public boolean signupEmptyPassword(String email, String password) {
 		
 		setSignedup(true);
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
-		Customer newUser = new Customer(Email, Password, null, null);
-		if(Password.isEmpty()) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
+		Customer newUser = new Customer(email, password, null, null);
+		if(password.isEmpty()) {
 			setSignedup(false);
 		}
 	    }
 		return getIsSignedup();
 	}
 	
-	public boolean signupWeakPassword(String Email, String Password) {
+	public boolean signupWeakPassword(String email, String password) {
 		setSignedup(true);
 		invalidEmail = true;
-		invalidEmailType(Email);
-	    if (invalidEmail == false) {
-		User newUser = new User(Email, Password);
-		 if (Password.length() < 8) {
+		invalidEmailType(email);
+	    if (!invalidEmail) {
+		User newUser = new User(email, password);
+		 if (password.length() < 8) {
 			 setSignedup(false);
 			 invalidEmail = false;
 		 }
@@ -481,30 +481,30 @@ public boolean existPhoneNumber(String PhoneNumber) {
 		    return getIsSignedup(); 
 	}
 	
-	public boolean invalidEmailType(String Email) {
+	public boolean invalidEmailType(String email) {
 		invalidEmail = false;
 	    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(Email);
+	    Matcher matcher = pattern.matcher(email);
 	    	if(!matcher.matches()) {
-	    		return true;
+	    		invalidEmail = true;
 	    	}
 	    	setSignedup(!invalidEmail);
-	    	return false;
+	    	return invalidEmail;
 	}
 	
 	// ProductCatalog functions
-	public boolean category(String Menu) {
-		if(Menu.equals("category")) {
+	public boolean category(String menu) {
+		if(menu.equals("category")) {
 			setValidCommand(true);
 		}
-		else if(Menu.equals("Search")) {
+		else if(menu.equals("Search")) {
 			setValidCommand(true);
 		}
 		return getValidCommand();
 	}
-	public boolean categoryName(String Name) {
-		if (Name.equals("Interior") || Name.equals("Exterior") || Name.equals("Electronics")) {
+	public boolean categoryName(String name) {
+		if (name.equals("Interior") || name.equals("Exterior") || name.equals("Electronics")) {
 	        setValidcategory(true);
 	    }
 	    return getValidcategory();
@@ -540,8 +540,8 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	
 }
 	///// userProfile
-	public boolean userProfile(String Command) {
-		if(Command.equals("My Profile")) {
+	public boolean userProfile(String command) {
+		if(command.equals("My Profile")) {
 			setInProfile(true);
 		}
 		
@@ -553,22 +553,22 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	}
 	
 	
-	public boolean editField(String Email, String FieldName, String Update) {
+	public boolean editField(String email, String fieldName, String update) {
 		
-		boolean EmailExists = list.getCustomers().stream()
-	            .anyMatch(customer -> customer.getEmail().equals(Update));
-		boolean UsernameExists = list.getCustomers().stream()
-		        .anyMatch(customer -> customer.getUsername().equals(Update));
-		boolean PhoneNumber = list.getCustomers().stream()
-		        .anyMatch(customer -> customer.getPhoneNumber().equals(Update));
+		boolean emailExists = list.getCustomers().stream()
+	            .anyMatch(customer -> customer.getEmail().equals(update));
+		boolean usernameExists = list.getCustomers().stream()
+		        .anyMatch(customer -> customer.getUsername().equals(update));
+		boolean phoneNumber = list.getCustomers().stream()
+		        .anyMatch(customer -> customer.getPhoneNumber().equals(update));
 		
 
-		if (!EmailExists) {
+		if (!emailExists) {
 			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(Email)) {
-		            if (FieldName.equals("Email")) {
-		                if (!Update.equals(customer.getEmail())) {
-		                    customer.setEmail(Update);
+		        if (customer.getEmail().equals(email)) {
+		            if (fieldName.equals("Email")) {
+		                if (!update.equals(customer.getEmail())) {
+		                    customer.setEmail(update);
 		                    setIsupdated(true);
 		                }
 		            } 
@@ -576,35 +576,35 @@ public boolean existPhoneNumber(String PhoneNumber) {
 			}
 			}
 		
-		 if (FieldName.equals("Password")) {
-		        if (Update != null && !Update.isEmpty() && Update.length() >= 8) {
+		 if (fieldName.equals("Password")) {
+		        if (update != null && !update.isEmpty() && update.length() >= 8) {
 		            for (Customer customer : list.getCustomers()) {
-		                if (customer.getEmail().equals(Email)) {
-		                    customer.setPassword(Update);
+		                if (customer.getEmail().equals(email)) {
+		                    customer.setPassword(update);
 		                    setIsupdated(true);
 		                }
 		            }
 		        }
 		    }
 		
-		if (!UsernameExists) {
+		if (!usernameExists) {
 			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(Email)) {
-		            if (FieldName.equals("Username")) {
-		                if (!Update.equals(customer.getUsername())) {
-		                    customer.setUsername(Update);
+		        if (customer.getEmail().equals(email)) {
+		            if (fieldName.equals("Username")) {
+		                if (!update.equals(customer.getUsername())) {
+		                    customer.setUsername(update);
 		                    setIsupdated(true);
 		                }
 		            } 
 		        }
 			}
 			}
-		if (!PhoneNumber) {
+		if (!phoneNumber) {
 			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(Email)) {
-		            if (FieldName.equals("PhoneNumber")) {
-		                if (!Update.equals(customer.getPhoneNumber())) {
-		                    customer.setPhoneNumber(Update);
+		        if (customer.getEmail().equals(email)) {
+		            if (fieldName.equals("PhoneNumber")) {
+		                if (!update.equals(customer.getPhoneNumber())) {
+		                    customer.setPhoneNumber(update);
 		                    setIsupdated(true);
 		                }
 		            } 
@@ -652,7 +652,7 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	                        customerOrders.get(i + 2));
 	                orderNumber++;
 	            }
-	            System.out.print("\n");
+	            logger.info("\n");
 	        } else {
 	            logger.info("No orders");
 	        }
@@ -681,7 +681,7 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	                		customerRequests.get(i + 3));
 	                requestNumber++;
 	            }
-	            System.out.print("\n");
+	            logger.info("\n");
 	            displayList = true; // Set the flag to true since the list is not empty
 	        }
 	    }
@@ -753,13 +753,13 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	    return catIsDeleted;
 	}
 	
-	public boolean deleteProd(String ProdName) {
+	public boolean deleteProd(String prodName) {
 		java.util.Iterator<Product> iterator = list.getProducts().iterator();
 	    boolean productIsDeleted = false;
 
 	    while (iterator.hasNext()) {
 	    	Product product = iterator.next();
-	        if (product.getProductName().equals(ProdName)) {
+	        if (product.getProductName().equals(prodName)) {
 	            iterator.remove(); // Removes the category from the list
 	            productIsDeleted = true;
 	            break; // Exit the loop after deleting the category
@@ -948,9 +948,9 @@ public boolean updateProdcategory(String cat, String name){
 	
 		
 		
-	public boolean review(String ProdName,String review) {
+	public boolean review(String prodName,String review) {
 		for(Product n : list.getProducts()) {
-	        if(ProdName.equals(n.getProductName())) {
+	        if(prodName.equals(n.getProductName())) {
 	        	if(!review.isEmpty()) {
 	        		n.setReview(review);
 		        	setreviewed(true);
@@ -961,11 +961,11 @@ public boolean updateProdcategory(String cat, String name){
 		return getIsreviewed();
 	}
 	
-	public boolean rated(String ProdName,int Rate) {
+	public boolean rated(String prodName,int rate) {
 		for(Product n : list.getProducts()) {
-	        if(ProdName.equals(n.getProductName())) {
-	        	if(Rate <= 5 && Rate >= 0) {
-	        		n.setRating(Rate);
+	        if(prodName.equals(n.getProductName())) {
+	        	if(rate <= 5 && rate >= 0) {
+	        		n.setRating(rate);
 	        		setrated(true);
 		        	break;
 	        	}
@@ -976,17 +976,17 @@ public boolean updateProdcategory(String cat, String name){
 	
 	
 	
-	public boolean dispalyreview(String ProdName) {
+	public boolean dispalyreview(String prodName) {
 		for(Product n : list.getProducts()) {
-	        if(ProdName.equals(n.getProductName())) {
+	        if(prodName.equals(n.getProductName())) {
 	        		displayreview = true;
 	        	}
 	        }
 	        return displayreview;
 	}
-	public boolean DispalyRate(String ProdName) {
+	public boolean dispalyRate(String prodName) {
 		for(Product n : list.getProducts()) {
-	        if(ProdName.equals(n.getProductName())) {
+	        if(prodName.equals(n.getProductName())) {
 	        	if(n.getRating() >= 0 && n.getRating() <= 5){
 	        		displayRate = true;
 	        	}
@@ -994,15 +994,15 @@ public boolean updateProdcategory(String cat, String name){
 	        }
 	        return displayRate;
 	}
-	public boolean request(String Username, String Email, String Car_Model, String Descriptions , String Date) {
+	public boolean request(String username, String email, String carModel, String descriptions , String date) {
 		
 		for(Customer u : list.getCustomers()) {
-	        	if(Email.equals(u.getEmail()) && Username.equals(u.getUsername())) {
+	        	if(email.equals(u.getEmail()) && username.equals(u.getUsername())) {
 	        		for(String c : u.getRequest()) {
-	                	if(!Car_Model.isEmpty() && !Descriptions.isEmpty() && !Date.isEmpty()) {
-	                		u.getRequest().add(Car_Model);
-	                		u.getRequest().add(Descriptions);
-	                		u.getRequest().add(Date);
+	                	if(!carModel.isEmpty() && !descriptions.isEmpty() && !date.isEmpty()) {
+	                		u.getRequest().add(carModel);
+	                		u.getRequest().add(descriptions);
+	                		u.getRequest().add(date);
 	                		
 	                	}
 	                	
@@ -1016,9 +1016,9 @@ public boolean updateProdcategory(String cat, String name){
 		return validrequest;
 	}
 	
-	public boolean instAvalibilty(String Username) {
+	public boolean instAvalibilty(String username) {
 		for(Installer in: DataArrayList.installers) {
-			if(Username.equals(in.getUsername())) {
+			if(username.equals(in.getUsername())) {
 				if(in.getInstallerAvalibilty().equals("Available")) {
 					setAvailable(true);
 				}
@@ -1133,6 +1133,11 @@ public boolean updateProdcategory(String cat, String name){
 	       logger.info("/////////////////////////////////////////////////////");
 	       i++;
 	        }
+		for(Installer J : DataArrayList.installers) {
+		       logger.info(i + "." + J.getUsername());
+		       logger.info("/////////////////////////////////////////////////////");
+		       i++;
+		        }
 	    }
 	
 	
@@ -1175,9 +1180,9 @@ public boolean updateProdcategory(String cat, String name){
 	}
 	
 	
-	public boolean appCancel(String cusName, String Date, String insName) {
+	public boolean appCancel(String cusName, String date, String insName) {
 		for(Appointment ap:list.getAppointment()) {
-			if(ap.getCusName().equals(cusName) && ap.getDate().equals(Date) && ap.getInsName().equals(insName)) {
+			if(ap.getCusName().equals(cusName) && ap.getDate().equals(date) && ap.getInsName().equals(insName)) {
 				list.getAppointment().remove(ap);
 				setAppCanceled(true);
 				
@@ -1309,18 +1314,18 @@ public boolean updateProdcategory(String cat, String name){
 		return installationReqReceived;
 	}
 	
-	public boolean isproductNameExist(String ProdName) {
+	public boolean isproductNameExist(String prodName) {
 		for(Product p : list.getProducts()) {
-	        if(ProdName.equals(p.getProductName())) {
+	        if(prodName.equals(p.getProductName())) {
 	        	setProdIsExist(true);
 	           break;
 	        } 
 	    }
 		return getProdIsExist();
 	}	
-	public boolean iscategoryNameExist(String CatName) {
+	public boolean iscategoryNameExist(String catName) {
 		for (Category s : list.getCategories()) {
-	        if (s.getCatName().equals(CatName)) {
+	        if (s.getCatName().equals(catName)) {
 	        	setCatIsExist(true);
 	            break; 
 	        } 
@@ -1738,5 +1743,8 @@ public boolean updateProdcategory(String cat, String name){
 	public void setIsInstaller(boolean isInstaller) {
 		this.isInstaller = isInstaller;
 	}
+	
+	
 
+	
 }

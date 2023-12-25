@@ -9,28 +9,13 @@ public class Main {
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
 	public static void main(String[] args) {
 		
+		
 		Main mn = new Main();
-		
-		
-		String username;
-		String phoneNumber;
-		
-		String productName;
-		String description;
-		String price;
-		String avalibilty;
-		String category;
-		
-		String newproductName;
-		String newProductDisc;
-		String newprice;
-		String newAvalibility;
-		String newcategory;
-		String newusername;
 		
 		mn.start();
 	
 }
+	String emailMsg = "Enter your email: ";
 	public void printMenu() {
 		logger.info("\t Menu");
         logger.info("1.Sign in");
@@ -40,16 +25,27 @@ public class Main {
 	public void start() {
 		Scanner input = new Scanner(System.in);
 	    int choice;
-
+	    
 	    printMenu();
-
+	   
 	    do {
 	        logger.info("Enter your choice (0 to exit): ");
 	        choice = input.nextInt();
-
+	        input.nextLine();
 	        switch (choice) {
-	            case 1:
-	                signInMenu();
+	            case 1: 
+	            	logger.info(emailMsg);
+	            	String idEmail = input.nextLine();
+	            	if(obj.isadmin(idEmail)) {
+	            		 adminSignInMenu(idEmail);
+	            	}
+	            	else if(obj.isCustomer(idEmail)) {
+	            		customerSignInMenu(idEmail);
+	            	}
+	            	else if(obj.isInstaller(idEmail)) {
+//	            		installerSignInMenu();
+	            	}
+	               
 	                break;
 	            case 2:
 	                // Add logic for sign-up
@@ -63,16 +59,13 @@ public class Main {
 	    } while (choice != 0);
 	
 	}
-	public String signInMenu() {
+	public String adminSignInMenu(String email) {
 	    Scanner stringInput = new Scanner(System.in);
-	    String emailMsg = "Enter your email: ";
+	  
 	    String emailInvalid = "Invalid email!, re-Enter your email: ";
-	    String email;
 	    String password;
 
 	    do {
-	        logger.info(emailMsg);
-	        email = stringInput.nextLine();
 	        obj.invalidEmailType(email);
 
 	        if (obj.getInvalidEmail()) {
@@ -103,7 +96,7 @@ public class Main {
 	        		obj.printadminDashoard();
 	        		logger.info("Enter your choice: ");
 	        		int innerAdmin = stringInput.nextInt();
-	        		do
+	        		
 	        		switch(innerAdmin) {
 	        		case 1:
 	        			stringInput.nextLine();
@@ -241,8 +234,10 @@ public class Main {
 								obj.deleteProd(delProductName);
 								 logger.info("The Product Deleted Succeffuly");
 								 obj.printTheProducts(1);
-								 break;
+								
 							}
+							logger.info("\n");
+							break;
 	        		case 4:
 	        			stringInput.nextLine();
 						 logger.info("Enter new category name: ");
@@ -326,49 +321,176 @@ public class Main {
 						 }
 						 break;
 	        		case 0:
-	        			
-	        	        obj.printadminMenu();
+	        			obj.printadminMenu();
 	        	        break;
 						 
         		    	default: logger.info("Invalid Choice");
 	        		} while(innerAdmin != 0);
 	        		 } 	
-	        }
-	        else if (obj.getIsCustomer()) {
-	            logger.info(passwordMsg);
-	            password = stringInput.nextLine();
-	            obj.customerIncorrectPassword(email, password);
-	            if (!obj.getIsLogedin()) {
-	                logger.info(passwordInvalid);
-	                password = stringInput.nextLine();
-	            }
-	            obj.customerlogin(email, password);
-	            if (obj.getIsCustomer()) {
-//	            	logger.info(obj.getIsCustomer());
-	                obj.printCustomerMenu();
-	                int customerChoice;
-	                do {
-	                    logger.info("Enter your choice: ");
-	                    customerChoice = stringInput.nextInt();
-
-	                    switch (customerChoice) {
-	                        case 1:
-	                            // Implement customer menu option 1
-	                            break;
-	                        case 2:
-	                            // Implement customer menu option 2
-	                            break;
-	                        // Add more cases for other menu options
-	                        case 0:
-	                            logger.info("Exiting customer menu...");
-	                            break;
-	                        default:
-	                            logger.info("Invalid choice. Please try again.");
-	                    }
-	                } while (customerChoice != 0);
-	            }
-	        }
+	        }        
 	    } while (obj.getInvalidEmail());
+	   
+
+	    return email;
+	}
+	
+	public String customerSignInMenu(String email) {
+		Scanner stringInput = new Scanner(System.in);
+		  
+	    String emailInvalid = "Invalid email!, re-Enter your email: ";
+	    String password;
+
+	    do {
+	        obj.invalidEmailType(email);
+
+	        if (obj.getInvalidEmail()) {
+	            logger.info(emailInvalid);
+	        }
+	        
+	        String passwordMsg = "Enter your password: ";
+	        String passwordInvalid = "Incorrect password!, re-Enter your password: ";
+	        String prName = "Enter product name: ";
+	        String prExist = "The Product is not exist !";
+	        String prodEnter = "Enter the product name that you want to edit:";
+	        String editSuccess = "Edit Done Successfully :)";
+	        String catExist = "The category is not exist !";
+	        String userNotExist = "The user does not exist";
+	        logger.info(passwordMsg);
+	        password = stringInput.nextLine();
+	        
+	        obj.customerIncorrectPassword(email, password);
+	        if(!obj.getIsLogedin()) {
+	        	logger.info(passwordInvalid);
+	        	password = stringInput.next();
+	        }
+	        obj.customerlogin(email, password);
+	        if(obj.isCustomer(email)) {
+	        	obj.printCustomerMenu();
+	        	int customerChoice = stringInput.nextInt();
+	        	if(customerChoice == 1) {
+	        		logger.info("1.All Products");
+        			logger.info("2.Interior Products");
+        			logger.info("3.Exterior Products");
+        			logger.info("4.Electronic Products");
+        			logger.info("Enter category you want");
+        			
+	        		logger.info("Enter your choice: ");
+	        		int innerCustomer = stringInput.nextInt();
+	        		
+	        		switch(innerCustomer) {
+	        		case 1:
+						obj.printTheProducts(1);
+						logger.info("Enter Product name you want to buy: ");
+						String productName = stringInput.nextLine(); 
+        		        obj.isproductNameExist(productName);
+        		        if(!obj.getProdIsExist()) {
+        		            logger.info(prExist);
+        		        } else {
+        		        	logger.info("Enter Car Model: ");
+                            String carModel = stringInput.nextLine();
+                            logger.info("Enter Installer name: ");
+                            String instName = stringInput.nextLine();
+                            logger.info("Enter Date: ");
+                            String date = stringInput.nextLine();                                    
+        		            obj.addProductToCustomerArray(email, productName);
+        		            obj.addReq(email, productName, carModel, instName, date);
+        		            logger.info("The Product is purchased successfully !");
+//        		            obj.displayCustomerOrders(email);
+        		        }
+						break;
+	        		case 2:
+	        			obj.printTheProducts(2);
+		        		    break;
+	        		case 3:
+	        			obj.printTheProducts(3);
+	        		    break;
+	        		case 4:
+	        			obj.printTheProducts(4);
+	        		    break;
+	        							 
+        		    	default: logger.info("Invalid Choice");
+	        		} while(innerCustomer != 0);
+	        		 } 	
+        		if(customerChoice == 2) {
+    			
+    			logger.info("1.My Orders");
+    			logger.info("2.My Requests");
+    			logger.info("3.Manage my account");
+    			logger.info("4.Inbox");
+    			logger.info("0.Back");
+    			int innerchoice = stringInput.nextInt(); // Use a different variable for inner loop
+
+                if (innerchoice == 1) {
+                	stringInput.nextLine();
+                    obj.displayCustomerOrders(email);
+                    logger.info("Do you want to confirm any order ?: ");
+                    String YesOrNo = stringInput.nextLine();
+                    if(YesOrNo.equals("Yes")) {
+                    	logger.info(prName);
+                    	 String productName = stringInput.nextLine();
+                            String conf;
+                            logger.info("Enter Confirm: ");
+                            conf = stringInput.nextLine();
+                            if(conf.equals("Confirm")) {
+                            	obj.orderIsPlacedBy(email, productName, conf);
+                            	
+                            }
+                    }
+                   
+                    
+                }
+                else if (innerchoice == 2) {
+                	stringInput.nextLine();
+                	obj.displayInstallationrequests(email);
+                }
+                else if(innerchoice == 3) {
+        			logger.info("1.Change my username");
+        			logger.info("2.Change my password");
+        			logger.info("3.Change my phone number");
+        			
+        			logger.info("0.Back");
+        			 int accountchoice = stringInput.nextInt();
+        			 stringInput.nextLine(); // Consume the newline character
+                     if(accountchoice == 1) {
+                         logger.info("Enter new username: ");
+                         String nusername = stringInput.nextLine();
+                         obj.changeUsernameforCust(email, nusername);
+                         logger.info("username change successfully");
+                     }
+                     else if(accountchoice == 2) {
+                    	 logger.info("Enter new password: ");
+                         String newpassword = stringInput.nextLine();
+                         obj.changePasswordforCust(email, newpassword);
+                         logger.info("password change successfully");
+                     }
+                     else if(accountchoice == 3) {
+                    	 logger.info("Enter new phone number: ");
+                         String newPhone = stringInput.nextLine();
+                         obj.changePhoneforCust(email, newPhone);
+                         logger.info("Phone number change successfully");
+                     }
+//                     else {
+//                    	 obj.PrintCustomerMenu();
+//                    	 
+//                     }
+                }
+                else if(innerchoice == 4) {
+                	obj.getorderIsPlacedBy(email);
+                }
+                else if(innerchoice == 0) {
+                	 obj.printCustomerMenu();
+                	 customerChoice = stringInput.nextInt();
+                	 if(customerChoice == 1) {
+                		 obj.printTheProducts(1);
+                	 }
+                }
+               
+    			
+    			
+    		}
+	        }        
+	    } while (obj.getInvalidEmail());
+	   
 
 	    return email;
 	}
