@@ -17,4 +17,3 @@ Feature: User Profile
     When a cutomer enter specific number on the list (My Installation Requests)
     Then they should see a list of their installation requests
     
-    #---
