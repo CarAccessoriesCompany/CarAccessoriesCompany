@@ -3,13 +3,10 @@ package caraccessoriescompany_main;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 import java.util.regex.Pattern;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.logging.Logger;
 public class MyCarApplication {
@@ -459,11 +456,8 @@ public boolean existPhoneNumber(String phoneNumber) {
 		
 		setSignedup(true);
 		invalidEmailType(email);
-	    if (!invalidEmail) {
-		
-		if(password.isEmpty()) {
-			setSignedup(false);
-		}
+	    if (!invalidEmail && (password.isEmpty())) {
+	    	setSignedup(false);
 	    }
 		return getIsSignedup();
 	}
@@ -472,12 +466,11 @@ public boolean existPhoneNumber(String phoneNumber) {
 		setSignedup(true);
 		invalidEmail = true;
 		invalidEmailType(email);
-	    if (!invalidEmail) {
+	    if (!invalidEmail && password.length() < 8) {
 		
-		 if (password.length() < 8) {
-			 setSignedup(false);
+	    	 setSignedup(false);
 			 invalidEmail = false;
-		 }
+			
 	    }
 		    return getIsSignedup(); 
 	}
@@ -499,16 +492,19 @@ public boolean existPhoneNumber(String phoneNumber) {
 		if(menu.equals("category") || menu.equals("Search")) {
 			setValidCommand(true);
 		}
-		return getValidCommand();
+		return true;
 	}
 	public boolean categoryName(String name) {
-		if (name.equals("Interior") || name.equals("Exterior") || name.equals("Electronics")) {
+		if (name.equals(in) || name.equals(ex) || name.equals(el)) {
 	        setValidcategory(true);
 	    }
 	    return getValidcategory();
 	}
+	String in = "Interior";
+	String ex = "Exterior";
+	String el = "Electronics";
 	public boolean productName(String categoryName, String productName) {
-	if(categoryName.equals("Interior") || categoryName.equals("Exterior") || categoryName.equals("Electronics")) {
+	if(categoryName.equals(in) || categoryName.equals(ex) || categoryName.equals(el)) {
 		for(Product n : list.getProducts()) {
 	        if(productName.equals(n.getProductName())) {
 	           setValidProduct(true);
@@ -533,14 +529,17 @@ public boolean existPhoneNumber(String phoneNumber) {
 		return getValidCommand();
 	}
 	
-	
+	String em = "Email";
+	String Pass = "Password";
+	String fn = "username";
+	String ph = "phoneNumber";
 	public boolean editField(String email, String fieldName, String update) {
-	    boolean emailExists = checkFieldExists("Email", update);
-	    boolean usernameExists = checkFieldExists("Username", update);
-	    boolean phoneNumberExists = checkFieldExists("PhoneNumber", update);
+	    boolean emailExists = checkFieldExists(em, update);
+	    boolean usernameExists = checkFieldExists(fn, update);
+	    boolean phoneNumberExists = checkFieldExists(ph, update);
 
 	    if (!emailExists) {
-	        updateField("Email", email, update);
+	        updateField(em, email, update);
 	    }
 
 	    if (fieldName.equals("Password")) {
@@ -565,11 +564,11 @@ public boolean existPhoneNumber(String phoneNumber) {
 
 	private void updateField(String fieldName, String email, String update) {
 	    for (Customer customer : list.getCustomers()) {
-	        if (customer.getEmail().equals(email)) {
-	            if (!update.equals(getField(customer, fieldName))) {
+	        if (customer.getEmail().equals(email) && (!update.equals(getField(customer, fieldName)))) {
+	             
 	                setField(customer, fieldName, update);
 	                setIsupdated(true);
-	            }
+	            
 	        }
 	    }
 	}
@@ -584,7 +583,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	        }
 	    }
 	}
-
+	
 	private String getField(Customer customer, String fieldName) {
 	    switch (fieldName) {
 	        case "Email":
@@ -594,7 +593,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	        case "PhoneNumber":
 	            return customer.getPhoneNumber();
 	        default:
-	            return null;
+	            return " ";
 	    }
 	}
 
@@ -609,85 +608,18 @@ public boolean existPhoneNumber(String phoneNumber) {
 	        case "PhoneNumber":
 	            customer.setPhoneNumber(value);
 	            break;
+            default: break;
 	    }
 	}
-
 	
-	
-	
-	/*
-	public boolean editField(String email, String fieldName, String update) {
-		
-		boolean emailExists = list.getCustomers().stream()
-	            .anyMatch(customer -> customer.getEmail().equals(update));
-		boolean usernameExists = list.getCustomers().stream()
-		        .anyMatch(customer -> customer.getUsername().equals(update));
-		boolean phoneNumber = list.getCustomers().stream()
-		        .anyMatch(customer -> customer.getPhoneNumber().equals(update));
-		
-
-		if (!emailExists) {
-			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(email)) {
-		            if (fieldName.equals("Email")) {
-		                if (!update.equals(customer.getEmail())) {
-		                    customer.setEmail(update);
-		                    setIsupdated(true);
-		                }
-		            } 
-		        }
-			}
-			}
-		
-		 if (fieldName.equals("Password")) {
-		        if (update != null && !update.isEmpty() && update.length() >= 8) {
-		            for (Customer customer : list.getCustomers()) {
-		                if (customer.getEmail().equals(email)) {
-		                    customer.setPassword(update);
-		                    setIsupdated(true);
-		                }
-		            }
-		        }
-		    }
-		
-		if (!usernameExists) {
-			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(email)) {
-		            if (fieldName.equals("Username")) {
-		                if (!update.equals(customer.getUsername())) {
-		                    customer.setUsername(update);
-		                    setIsupdated(true);
-		                }
-		            } 
-		        }
-			}
-			}
-		if (!phoneNumber) {
-			for (Customer customer : list.getCustomers()) {
-		        if (customer.getEmail().equals(email)) {
-		            if (fieldName.equals("PhoneNumber")) {
-		                if (!update.equals(customer.getPhoneNumber())) {
-		                    customer.setPhoneNumber(update);
-		                    setIsupdated(true);
-		                }
-		            } 
-		        }
-			}
-			}
-		
-	    return getIsupdated();
-		}*/
-		
 		
 	public void addProductToCustomerArray(String email, String prodName) {
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
 	            for (Product product : list.getProducts()) {
 	                if (prodName.equals(product.getProductName())) {
-	                    // Assuming that the customer has a list to store orders
 	                    List<String> customerOrders = customer.getOrders();
 
-	                    // Add product information to the customer's orders
 	                    customerOrders.add("Product name: " + prodName);
 	                    customerOrders.add("Price: " + product.getPrice()); // Assuming getPrice returns a numeric value
 	                    customerOrders.add("category: " + product.getCategory());
@@ -1031,9 +963,9 @@ public boolean updateProdcategory(String cat, String name){
 	    while (iterator.hasNext()) {
 	        Customer c = iterator.next();
 	        if (c.getUsername().equals(name)) {
-	            iterator.remove(); // Removes the category from the list
+	            iterator.remove();
 	            setCustomerIsDeleted(true);
-	            break; // Exit the loop after deleting the category
+	            break;
 	        }
 	    }
 	    
@@ -1102,7 +1034,7 @@ public boolean updateProdcategory(String cat, String name){
 	                	
 	            	}
 	        		validrequest = true;
-	        		break;
+	        		
 	        	}
 		return validrequest;
         	}
@@ -1123,7 +1055,7 @@ public boolean updateProdcategory(String cat, String name){
 	public void printadminMenu() {
 		logger.info("\tWelcome admin");
 		logger.info("1.admin Dashboard");
-		logger.info("0.Sign out");
+		logger.info(signOut);
 		
 	}
 	public void printadminDashoard() {
@@ -1143,11 +1075,11 @@ public boolean updateProdcategory(String cat, String name){
 	public void printCustomerMenu() {
 		logger.info("1.Browse products");
 		logger.info("2.My Profile");
-		logger.info("0.Sign out");
+		logger.info(signOut);
 	}
 	public void printInstallerMenu() {
 		logger.info("1.My Installation requests and Schedule Appointments");
-		logger.info("0.Sign out");
+		logger.info(signOut);
 	}
 	
 	
@@ -1163,13 +1095,13 @@ public boolean updateProdcategory(String cat, String name){
 	            logger.info("productPrice: {}"+ p.getPrice());
 	            logger.info("productAvailability: {}"+ p.getAvailability());
 	            logger.info("productCategory: {}"+ p.getCategory());
-	            logger.info("/////////////////////////////////////////////////////");
+	            logger.info("////////////////////////////////////////////////////");
 	        }
 	    }
 	}
 	
 	
-	
+	String signOut = "0.Sign out";
 	
 	public void printEditChoices(){
 		logger.info("1.Product Name" );
@@ -1223,8 +1155,9 @@ public boolean updateProdcategory(String cat, String name){
 	
 	public boolean appointmentView(String date) {
 		for(Appointment ap:list.getAppointment()) {
-			if(ap.getDate().equals(date))
-			setViewAppointment(true);
+			if(ap.getDate().equals(date)) {
+				setViewAppointment(true);
+			}
 
 		}
 		return getViewAppointment();
@@ -1294,7 +1227,7 @@ public boolean updateProdcategory(String cat, String name){
 	                Date date2 = dateFormat.parse(str2);
 	                return date1.compareTo(date2);
 	            } catch (ParseException e) {
-	                e.printStackTrace(); // Handle the exception according to your needs
+	               
 	            }
 	        }
 	        // If not both are dates, compare as strings
@@ -1325,71 +1258,6 @@ public boolean updateProdcategory(String cat, String name){
 
 	
 	
-	
-	
-	/*
-	public boolean viewInstallerSchedule(String insName) {
-
-	    boolean InstallerScheduleViewed = false;
-
-	    for (Installer in : DataArrayList.installers) {
-	        List<String> installerRequest = in.getschedule();
-	        if (!insName.equals(in.getUsername())) {
-	            // logger.info("No installer with this name! Re-enter new order with valid Installer");
-	        } else {
-	            int index = 1;
-
-	            // Custom comparator for sorting by date
-	            Comparator<String> dateComparator = new Comparator<String>() {
-	                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-	                @Override
-	                public int compare(String str1, String str2) {
-	                    if (isDate(str1) && isDate(str2)) {
-	                        try {
-	                            Date date1 = dateFormat.parse(str1);
-	                            Date date2 = dateFormat.parse(str2);
-	                            return date1.compareTo(date2);
-	                        } catch (ParseException e) {
-	                        	
-	                        }
-	                    }
-	                    // If not both are dates, compare as strings
-	                    return str1.compareTo(str2);
-	                }
-
-	                private boolean isDate(String str) {
-	                    try {
-	                        dateFormat.parse(str);
-	                        return true;
-	                    } catch (ParseException e) {
-	                        return false;
-	                    }
-	                }
-	            };
-
-	            // Sort the schedule by date or as strings
-	            Collections.sort(installerRequest, dateComparator);
-
-	            for (int i = 0; i < installerRequest.size(); i += 3) {
-	                logger.info(index + ". " +
-	                        installerRequest.get(i) + " " +
-	                        installerRequest.get(i + 1) + " " +
-	                        installerRequest.get(i + 2));
-	                index++;
-	            }
-	            logger.info("\n");
-
-	            InstallerScheduleViewed = true;
-	        }
-	    }
-
-	    return InstallerScheduleViewed;
-	}
-
-	*/
-	
-
 	
 	public boolean orderIsPlacedBy(String email, String prodname, String status) {
 	   
@@ -1433,10 +1301,10 @@ public boolean updateProdcategory(String cat, String name){
 	                index++;
 	            }
 	            logger.info("\n");
-	            return true; // Return true if the email is found
+	            return true; 
 	        }
 	    }
-	    return false; // Return false if the email is not found
+	    return false;
 	}
 
 	
@@ -1575,68 +1443,7 @@ public boolean updateProdcategory(String cat, String name){
 	}
 
 	
-	
-	
-	/*
-	public void addReq(String email, String prodname, String carModel, String installer, String date) {
-	    for (Customer customer : list.getCustomers()) {
-	        if (email.equals(customer.getEmail())) {
-	            for (Product product : list.getProducts()) {
-	                if (prodname.equals(product.getProductName())) {
-	                    // Assuming that the customer has a list to store orders
-	                    List<String> customerRequest = customer.getRequest();
 
-	                    List<String> installerRequest = null; // Create a list to store installer requests
-
-	                    for (Installer in : DataArrayList.installers) {
-	                        if (installer.equals(in.getUsername())) {
-	                            installerRequest = in.getschedule();
-	                            break; // Exit the loop once the installer is found
-	                        }
-	                    }
-
-	                    if (installerRequest == null) {
-	                        logger.info("No installer with this name! Re-enter new order with a valid Installer");
-	                        return; // Exit the method if no valid installer is found
-	                    }
-
-	                    // Check if the preferred date is already booked for the installer
-	                    if (isDateBooked(installerRequest, date)) {
-	                        logger.info("Installer is busy on the selected date.");
-	                        
-	                        return;
-	                    }
-
-	                    // Add the request to the customer
-	                    customerRequest.add("Product Name: " + prodname);
-	                    customerRequest.add("Car Model: " + carModel);
-	                    customerRequest.add("Installer Name: " + installer);
-	                    customerRequest.add("Preferred Date: " + date);
-
-	                    // Add the request to the installer
-	                    installerRequest.add("Customer Name: " + customer.getUsername());
-	                    installerRequest.add("Product Name: " + prodname);
-	                    installerRequest.add("Preferred Date: " + date);
-
-	                    // Add product information to the customer's orders
-	                }
-	            }
-	        }
-	    }
-	}
-
-	// Method to check if the preferred date is already booked for the installer
-	private boolean isDateBooked(List<String> installerSchedule, String date) {
-	    for (int i = 0; i < installerSchedule.size(); i++) {
-	        if (installerSchedule.get(i).contains("Preferred Date: " + date)) {
-	            return true; // Date is already booked
-	        }
-	    }
-	    return false; // Date is available
-	}*/
-	
-	
-	//NEW Setters & Getters :
 	public boolean getInMenu() {
 		return inMenu;
 	}

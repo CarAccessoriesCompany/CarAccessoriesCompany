@@ -12,7 +12,7 @@ public class DataArrayList {
 	private List<Order> orders = new ArrayList<>();
 	private List<Appointment> appointments = new ArrayList<>();
 	
-	private static final String defaultEmail = "Customer1@gmail.com";
+	private static final String DEFAULTEMAIL = "Customer1@gmail.com";
 	private static String ir = "Interior";
 	private static String ex = "Exterior";
 	private static String el = "Electronic";
@@ -27,8 +27,8 @@ public class DataArrayList {
 		User secondadmin = new User("Hameedo@gmail.com","Hameedo123");
 		admin.add(firstadmin);
 		admin.add(secondadmin);
-		Customer firstCustomer = new Customer(defaultEmail, "Customer123", firscustomer,"056-1234567");
-		Customer secondCustomer = new Customer(defaultEmail,"Customer456", secscustomer,"056-345678");
+		Customer firstCustomer = new Customer(DEFAULTEMAIL, "Customer123", firscustomer,"056-1234567");
+		Customer secondCustomer = new Customer(DEFAULTEMAIL,"Customer456", secscustomer,"056-345678");
 		customers.add(firstCustomer);
 		customers.add(secondCustomer);
 		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", FIRSTIN, "Available");
@@ -57,8 +57,8 @@ public class DataArrayList {
 		categories.add(cat1);
 		categories.add(cat2);
 		categories.add(cat3);
-		Order ord1 = new Order(firscustomer, defaultEmail, bodyShell, "150$", "Confirmed");
-		Order ord2 = new Order(firscustomer, defaultEmail, "Anti-lock Braking System", "450$", "Not Confirmed");
+		Order ord1 = new Order(firscustomer, DEFAULTEMAIL, bodyShell, "150$", "Confirmed");
+		Order ord2 = new Order(firscustomer, DEFAULTEMAIL, "Anti-lock Braking System", "450$", "Not Confirmed");
 		orders.add(ord1);
 		orders.add(ord2);
 		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM",FIRSTIN,firscustomer,"Steering Wheel");

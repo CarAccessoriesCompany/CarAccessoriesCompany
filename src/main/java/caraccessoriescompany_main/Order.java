@@ -16,21 +16,21 @@ public class Order {
 		this.status = status;
 	}
 	
-	public String GetUsername() {
+	public String getUsername() {
 		return username;
 	}
 	
-	public String GetCustomerEmail() {
+	public String getCustomerEmail() {
 		return customerEmail;
 	}
-	public String GetProductName() {
+	public String getProductName() {
 		return  productName;
 	}
-	public String GetPrice() {
+	public String getPrice() {
 		return price;
 	}
 	
-	public String GetStatus() {
+	public String getStatus() {
 		return status;
 	}
 	

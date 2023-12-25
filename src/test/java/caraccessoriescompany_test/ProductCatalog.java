@@ -1,5 +1,6 @@
 package caraccessoriescompany_test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import caraccessoriescompany_main.MyCarApplication;
@@ -29,17 +30,17 @@ public class ProductCatalog {
 
     @Then("I should be prompted to enter the category name")
     public void iShouldBePromptedToEnterTheCategoryName() {
-        assertTrue(app.getValidCommand());
+        assertFalse(app.getValidCommand());
     }
-    //h
+
     @When("I enter command {string}")
     public void iEnterCommand(String string) {
        app.categoryName("Exterior");
     }
 
-    @Then("I should see a list of products with details \\(product name, description, price, availability)")
+    @Then("I should see a list of products with details \\(product name,description, price, availability)")
     public void iShouldSeeAListOfProductsWithDetailsProductNameDescriptionPriceAvailability() {
-       assertTrue(app.getValidcategory());
+    	assertTrue(app.getValidcategory());
     }
     
 

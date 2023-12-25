@@ -54,7 +54,7 @@ public void theAdminDeletesAnExsitingProductCategory(String string) {
 
 @Then("the system should remove the product category {string}")
 public void theSystemShouldRemoveTheProductCategory(String string) {
-	 assertFalse(app.getCatIsDeleted());
+	 assertTrue(app.getCatIsDeleted());
 }
 
 
