@@ -43,7 +43,7 @@ public class Main {
 	            		customerSignInMenu(idEmail);
 	            	}
 	            	else if(obj.isInstaller(idEmail)) {
-//	            		installerSignInMenu();
+	            		installerSignInMenu(idEmail);
 	            	}
 	               
 	                break;
@@ -351,10 +351,6 @@ public class Main {
 	        String passwordInvalid = "Incorrect password!, re-Enter your password: ";
 	        String prName = "Enter product name: ";
 	        String prExist = "The Product is not exist !";
-	        String prodEnter = "Enter the product name that you want to edit:";
-	        String editSuccess = "Edit Done Successfully :)";
-	        String catExist = "The category is not exist !";
-	        String userNotExist = "The user does not exist";
 	        logger.info(passwordMsg);
 	        password = stringInput.nextLine();
 	        
@@ -376,9 +372,10 @@ public class Main {
         			
 	        		logger.info("Enter your choice: ");
 	        		int innerCustomer = stringInput.nextInt();
-	        		
+	        		if(innerCustomer == 1) {
 	        		switch(innerCustomer) {
 	        		case 1:
+	        			stringInput.nextLine();
 						obj.printTheProducts(1);
 						logger.info("Enter Product name you want to buy: ");
 						String productName = stringInput.nextLine(); 
@@ -395,22 +392,75 @@ public class Main {
         		            obj.addProductToCustomerArray(email, productName);
         		            obj.addReq(email, productName, carModel, instName, date);
         		            logger.info("The Product is purchased successfully !");
-//        		            obj.displayCustomerOrders(email);
         		        }
 						break;
 	        		case 2:
 	        			obj.printTheProducts(2);
+	        			stringInput.nextLine();
+						logger.info("Enter Product name you want to buy: ");
+						String productNamein = stringInput.nextLine(); 
+        		        obj.isproductNameExist(productNamein);
+        		        if(!obj.getProdIsExist()) {
+        		            logger.info(prExist);
+        		        } else {
+        		        	logger.info("Enter Car Model: ");
+                            String carModel = stringInput.nextLine();
+                            logger.info("Enter Installer name: ");
+                            String instName = stringInput.nextLine();
+                            logger.info("Enter Date: ");
+                            String date = stringInput.nextLine();                                    
+        		            obj.addProductToCustomerArray(email, productNamein);
+        		            obj.addReq(email, productNamein, carModel, instName, date);
+        		            logger.info("The Product is purchased successfully !");
+        		        }
 		        		    break;
 	        		case 3:
 	        			obj.printTheProducts(3);
+	        			stringInput.nextLine();
+						logger.info("Enter Product name you want to buy: ");
+						String productNameex = stringInput.nextLine(); 
+        		        obj.isproductNameExist(productNameex);
+        		        if(!obj.getProdIsExist()) {
+        		            logger.info(prExist);
+        		        } else {
+        		        	logger.info("Enter Car Model: ");
+                            String carModel = stringInput.nextLine();
+                            logger.info("Enter Installer name: ");
+                            String instName = stringInput.nextLine();
+                            logger.info("Enter Date: ");
+                            String date = stringInput.nextLine();                                    
+        		            obj.addProductToCustomerArray(email, productNameex);
+        		            obj.addReq(email, productNameex, carModel, instName, date);
+        		            logger.info("The Product is purchased successfully !");
+        		        }
 	        		    break;
 	        		case 4:
 	        			obj.printTheProducts(4);
+	        			stringInput.nextLine();
+						logger.info("Enter Product name you want to buy: ");
+						String productNameel = stringInput.nextLine(); 
+        		        obj.isproductNameExist(productNameel);
+        		        if(!obj.getProdIsExist()) {
+        		            logger.info(prExist);
+        		        } else {
+        		        	logger.info("Enter Car Model: ");
+                            String carModel = stringInput.nextLine();
+                            logger.info("Enter Installer name: ");
+                            String instName = stringInput.nextLine();
+                            logger.info("Enter Date: ");
+                            String date = stringInput.nextLine();                                    
+        		            obj.addProductToCustomerArray(email, productNameel);
+        		            obj.addReq(email, productNameel, carModel, instName, date);
+        		            logger.info("The Product is purchased successfully !");
+        		        }
 	        		    break;
 	        							 
         		    	default: logger.info("Invalid Choice");
-	        		} while(innerCustomer != 0);
-	        		 } 	
+	        		} while(customerChoice != 0);
+	        		
+	        		 } 
+	        	}
+	        	
         		if(customerChoice == 2) {
     			
     			logger.info("1.My Orders");
@@ -419,7 +469,7 @@ public class Main {
     			logger.info("4.Inbox");
     			logger.info("0.Back");
     			int innerchoice = stringInput.nextInt(); // Use a different variable for inner loop
-
+    			
                 if (innerchoice == 1) {
                 	stringInput.nextLine();
                     obj.displayCustomerOrders(email);
@@ -469,10 +519,7 @@ public class Main {
                          obj.changePhoneforCust(email, newPhone);
                          logger.info("Phone number change successfully");
                      }
-//                     else {
-//                    	 obj.PrintCustomerMenu();
-//                    	 
-//                     }
+//            
                 }
                 else if(innerchoice == 4) {
                 	obj.getorderIsPlacedBy(email);
@@ -494,196 +541,62 @@ public class Main {
 
 	    return email;
 	}
+	public String installerSignInMenu(String email) {
+		Scanner stringInput = new Scanner(System.in);
+		  
+	    String emailInvalid = "Invalid email!, re-Enter your email: ";
+	    String password;
+
+	    do {
+	        obj.invalidEmailType(email);
+
+	        if (obj.getInvalidEmail()) {
+	            logger.info(emailInvalid);
+	        }
+	        
+	        String passwordMsg = "Enter your password: ";
+	        String passwordInvalid = "Incorrect password!, re-Enter your password: ";
+	        String prName = "Enter product name: ";
+	        String prExist = "The Product is not exist !";
+	        String prodEnter = "Enter the product name that you want to edit:";
+	        String editSuccess = "Edit Done Successfully :)";
+	        String catExist = "The category is not exist !";
+	        String userNotExist = "The user does not exist";
+	        logger.info(passwordMsg);
+	        password = stringInput.nextLine();
+	        
+	        obj.installerIncorrectPassword(email, password);
+	        if(!obj.getIsLogedin()) {
+	        	logger.info(passwordInvalid);
+	        	password = stringInput.next();
+	        }
+	        obj.installerlogin(email, password);
+	        if(obj.isInstaller(email)) {
+	        	obj.printInstallerMenu();
+	        	int installerChoice = stringInput.nextInt();
+	        	if(installerChoice == 1) {
+	        		String[] usernameSplit = email.split("@");
+        			String un = usernameSplit[0];
+        			obj.viewInstallerSchedule(un);
+        			installerChoice = stringInput.nextInt();
+	        		
+        			if(installerChoice == 0) {            			
+            			obj.setIsInstaller(false);            			
+            		}           		 	
+            		obj.printInstallerMenu();
+            		installerChoice = stringInput.nextInt();
+                   
+                    
+                }
+                
+	        }        
+	    } while (obj.getInvalidEmail());
+	   
+
+	    return email;
+	}
 }
 
-//            }
-//            else if(obj.getIsCustomer()) {
-//            	logger.info(passwordMsg);
-//                password = input.nextLine();
-//                obj.customerIncorrectPassword(email, password);
-//                if(!obj.getIsLogedin()) {
-//					logger.info(passwordInvalid);
-//					password = input.next();
-//				}
-//                obj.customerlogin(email, password);
-//                if(obj.getIsLogedin()) {	
-//                	int customerChoice = 0;
-//                	obj.printCustomerMenu();
-//                	customerChoice = input.nextInt();
-//                	while(customerChoice != 0) {
-//                		
-//                		if(customerChoice == 1) {
-//                			logger.info("1.All Products");
-//                			logger.info("2.Interior Products");
-//                			logger.info("3.Exterior Products");
-//                			logger.info("4.Electronic Products");
-//                			logger.info("Enter category you want");
-//                			int cat = input.nextInt();
-//                			
-//                			obj.printTheProducts(cat);
-//                			 input.nextLine();
-//                			 logger.info("Enter Product name you want to buy: ");
-//                		        productName = input.nextLine();  // Use nextLine() instead of next()
-//                		        obj.isproductNameExist(productName);
-//                		        if(!obj.getProdIsExist()) {
-//                		            logger.info(prExist);
-//                		        } else {
-//                		        	logger.info("Enter Car Model: ");
-//                                    String carModel = input.nextLine();
-//                                    logger.info("Enter Installer name: ");
-//                                    String instName = input.nextLine();
-//                                    logger.info("Enter Date: ");
-//                                    String date = input.nextLine();                                    
-//                		            obj.addProductToCustomerArray(email, productName);
-//                		            obj.addReq(email, productName, carModel, instName, date);
-//                		            logger.info("The Product is purchased successfully !");
-////                		            obj.displayCustomerOrders(email);
-//                		        }
-//                		        obj.printCustomerMenu();
-////                		        customerChoice = input.nextInt();
-//                		        
-//
-//                		        // Consume the newline character
-//                		        customerChoice = input.nextInt();
-//                			
-//                		}
-//                		if(customerChoice == 2) {
-//                			
-//                			logger.info("1.My Orders");
-//                			logger.info("2.My Requests");
-//                			logger.info("3.Manage my account");
-//                			logger.info("4.Inbox");
-//                			logger.info("0.Back");
-//                			int innerchoice = input.nextInt(); // Use a different variable for inner loop
-//
-//                            if (innerchoice == 1) {
-//                            	input.nextLine();
-//                                obj.displayCustomerOrders(email);
-//                                logger.info("Do you want to confirm any order ?: ");
-//                                String YesOrNo = input.nextLine();
-//                                if(YesOrNo.equals("Yes")) {
-//                                	logger.info(prName);
-//                                	 productName = input.nextLine();
-//                                        String conf;
-//                                        logger.info("Enter Confirm: ");
-//                                        conf = input.nextLine();
-//                                        if(conf.equals("Confirm")) {
-//                                        	obj.orderIsPlacedBy(email, productName, conf);
-//                                        	
-//                                        }
-//                                }
-//                               
-//                                
-//                            }
-//                            else if (innerchoice == 2) {
-//                            	input.nextLine();
-//                            	obj.displayInstallationrequests(email);
-//                            }
-//                            else if(innerchoice == 3) {
-//                    			logger.info("1.Change my username");
-//                    			logger.info("2.Change my password");
-//                    			logger.info("3.Change my phone number");
-//                    			
-//                    			logger.info("0.Back");
-//                    			 int accountchoice = input.nextInt();
-//                                 input.nextLine(); // Consume the newline character
-//                                 if(accountchoice == 1) {
-//                                     logger.info("Enter new username: ");
-//                                     String nusername = input.nextLine();
-//                                     obj.changeUsernameforCust(email, nusername);
-//                                     logger.info("username change successfully");
-//                                 }
-//                                 else if(accountchoice == 2) {
-//                                	 logger.info("Enter new password: ");
-//                                     String newpassword = input.nextLine();
-//                                     obj.changePasswordforCust(email, newpassword);
-//                                     logger.info("password change successfully");
-//                                 }
-//                                 else if(accountchoice == 3) {
-//                                	 logger.info("Enter new phone number: ");
-//                                     String newPhone = input.nextLine();
-//                                     obj.changePhoneforCust(email, newPhone);
-//                                     logger.info("Phone number change successfully");
-//                                 }
-////                                 else {
-////                                	 obj.PrintCustomerMenu();
-////                                	 
-////                                 }
-//                            }
-//                            else if(innerchoice == 4) {
-//                            	obj.getorderIsPlacedBy(email);
-//                            }
-//                            else if(innerchoice == 0) {
-//                            	 obj.printCustomerMenu();
-//                            	 customerChoice = input.nextInt();
-//                            	 if(customerChoice == 1) {
-//                            		 obj.printTheProducts(1);
-//                            	 }
-//                            }
-//                           
-//                			
-//                			
-//                		}
-//                		
-//                		
-//                		 
-////                         customerChoice = input.nextInt();
-//                	}
-//                	if(customerChoice == 0) {
-//                		mn.printMenu();
-//            			obj.setIsCustomer(false);
-//            			choice = input.nextInt();
-//            			
-//            			
-//            			
-//            		}
-//                	
-//                }
-//                
-//            	
-//            	
-//            }
-//            else if(obj.getIsInstaller()) {
-//            	logger.info(passwordMsg);
-//            	password = input.nextLine();
-//                obj.installerIncorrectPassword(email, password);
-//                if(!obj.getIsLogedin()) {
-//					logger.info(passwordInvalid);
-//					password = input.next();
-//				}
-//                obj.installerlogin(email, password);
-//                if(obj.getIsLogedin()) {
-//                	 obj.printInstallerMenu();
-//                	 
-//                	 int installerChoice = 0;
-//                     installerChoice = input.nextInt();
-//                    	while(installerChoice != 0) {
-//                    		if(installerChoice == 1) {
-//                    			
-//                    			String[] usernameSplit = email.split("@");
-//                    			String un = usernameSplit[0];
-////                    			logger.info(un);
-//                    			obj.viewInstallerSchedule(un);
-//                    			choice = input.nextInt();
-//                    		}
-//                    		 if(installerChoice == 0) {
-//                    			
-//                    			obj.setIsInstaller(false);
-//                    			
-//                    		}
-//                    		 	
-////                    		obj.PrintInstallerMenu();
-////                    		installerChoice = input.nextInt();
-//                    		
-//                    	}
-//                    	mn.printMenu();
-//            			choice = input.nextInt();
-//                }
-//               
-//            }
-//        }
-//       
-//    }
 // if (choice == 2) {
 //	    input.nextLine();
 //	    logger.info(emailMsg);

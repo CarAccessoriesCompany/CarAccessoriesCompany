@@ -55,7 +55,7 @@ public class ReviewAndRating {
 
     @When("cutomer enters {string} to display rating")
     public void cutomerEntersToDisplayRating(String string) {
-        app.DispalyRate("Body Shell");
+        app.dispalyRate("Body Shell");
     }
 
     @Then("cutomer should see the rating for the product")

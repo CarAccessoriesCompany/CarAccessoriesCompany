@@ -35,7 +35,7 @@ public class UserProfile {
 	
 	@When("they choose to edit their profile")
 	public void theyChooseToEditTheirProfile() {
-	    app.EditCommand();
+	    app.editCommand();
 	}
 
 	@When("Choose what field he\\/she want to edit {string}")

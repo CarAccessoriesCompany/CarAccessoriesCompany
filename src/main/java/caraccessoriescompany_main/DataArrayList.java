@@ -19,8 +19,8 @@ public class DataArrayList {
 	private static String bodyShell = "Body Shell";
 	private static String firscustomer = "Customer1";
 	private static String secscustomer = "Customer2";
-	private static final String firstin = "Installer1";
-	private static final String secstin = "Installer2";
+	private static final String FIRSTIN = "Installer1";
+	private static final String SECIN = "Installer2";
 	
 	public DataArrayList() {
 		User firstadmin = new User("Ahmaddweikat@gmail.com","Ahmad123");
@@ -31,8 +31,8 @@ public class DataArrayList {
 		Customer secondCustomer = new Customer(defaultEmail,"Customer456", secscustomer,"056-345678");
 		customers.add(firstCustomer);
 		customers.add(secondCustomer);
-		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", firstin, "Available");
-		Installer secondInstaller = new Installer("Installer2@gmail.com","Installer456", secstin, "Busy");
+		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", FIRSTIN, "Available");
+		Installer secondInstaller = new Installer("Installer2@gmail.com","Installer456", SECIN, "Busy");
 		installers.add(firstInstaller);
 		installers.add(secondInstaller);
 		Product  interiorPart1 = new Product("Steering Wheel", "The wheel which the driver holds when he or she is driving", "100$", "Yes",ir);
@@ -61,8 +61,8 @@ public class DataArrayList {
 		Order ord2 = new Order(firscustomer, defaultEmail, "Anti-lock Braking System", "450$", "Not Confirmed");
 		orders.add(ord1);
 		orders.add(ord2);
-		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM",firstin,firscustomer,"Steering Wheel");
-		Appointment ap2=new Appointment("October 20, 2023, 10:00 PM",secstin,secscustomer, bodyShell);
+		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM",FIRSTIN,firscustomer,"Steering Wheel");
+		Appointment ap2=new Appointment("October 20, 2023, 10:00 PM",SECIN,secscustomer, bodyShell);
 		appointments.add(ap1);
 		appointments.add(ap2);
 	}

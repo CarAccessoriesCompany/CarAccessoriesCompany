@@ -8,11 +8,13 @@ import java.util.Date;
 
 import java.util.regex.Pattern;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.logging.Logger;
 public class MyCarApplication {
 	
-	private DataArrayList list;
+	private DataArrayList list = new DataArrayList();
 	
 	private boolean islogedin;
 	private boolean invalidEmail;
@@ -202,13 +204,13 @@ public class MyCarApplication {
 	// admin sign-in functions
 	public boolean adminlogin(String email, String password) {
 		invalidEmailType(email);
-	    if (invalidEmail == false) {
+	    if (!invalidEmail) {
 		for(User n : DataArrayList.admin) {
-	        if(email.equals(n.getEmail())) {
-	        	if(n.getPassword().equals(password)) {
+	        if(email.equals(n.getEmail()) && n.getPassword().equals(password)) {
+	        	
 	        	   islogedin = true;
 		           break;
-	        }
+	        
 	          
 	        }
 	    }
@@ -399,32 +401,31 @@ public class MyCarApplication {
 	    return getIsSignedup();
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	public boolean existEmail(String email) {
-		
+	
 		setSignedup(true);
-		invalidEmailType(email);
 	    if (!invalidEmail) {
-		for(Customer n : list.getCustomers()) {
-	        if(email.equals(n.getEmail())) {
+	    	
+		if(isCustomer(email)) {
 	           setSignedup(false);
-	           break;
 	        }
 	        
-	    }
-		for(User n : DataArrayList.admin) {
-	        if(email.equals(n.getEmail())) {
-	           setSignedup(false);
-	           break;
-	        }
-	        
-	    }
-		for(Installer n : DataArrayList.installers) {
-	        if(email.equals(n.getEmail())) {
-	           setSignedup(false);
-	           break;
-	        }
-	        
-	    }
+		if(isadmin(email)) {
+			 setSignedup(false);
+		}
+		
+		if(isInstaller(email)) {
+			setSignedup(false);
+		}
+	    
 	    }
 		return getIsSignedup();
 	}
@@ -459,7 +460,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 		setSignedup(true);
 		invalidEmailType(email);
 	    if (!invalidEmail) {
-		Customer newUser = new Customer(email, password, null, null);
+		
 		if(password.isEmpty()) {
 			setSignedup(false);
 		}
@@ -472,7 +473,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 		invalidEmail = true;
 		invalidEmailType(email);
 	    if (!invalidEmail) {
-		User newUser = new User(email, password);
+		
 		 if (password.length() < 8) {
 			 setSignedup(false);
 			 invalidEmail = false;
@@ -495,10 +496,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	
 	// ProductCatalog functions
 	public boolean category(String menu) {
-		if(menu.equals("category")) {
-			setValidCommand(true);
-		}
-		else if(menu.equals("Search")) {
+		if(menu.equals("category") || menu.equals("Search")) {
 			setValidCommand(true);
 		}
 		return getValidCommand();
@@ -510,7 +508,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	    return getValidcategory();
 	}
 	public boolean productName(String categoryName, String productName) {
-	if(categoryName.equals("Interior")) {
+	if(categoryName.equals("Interior") || categoryName.equals("Exterior") || categoryName.equals("Electronics")) {
 		for(Product n : list.getProducts()) {
 	        if(productName.equals(n.getProductName())) {
 	           setValidProduct(true);
@@ -518,24 +516,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	        }
 	    }
 	}
-		else if(categoryName.equals("Exterior")) {
-			for(Product n : list.getProducts()) {
-		        if(productName.equals(n.getProductName())) {
-		           setValidProduct(true);
-		           break;
-		        }
-		    }
-		}
-		else if(categoryName.equals("Electronics")) {
-			for(Product n : list.getProducts()) {
-		        if(productName.equals(n.getProductName())) {
-		           setValidProduct(true);
-		           break;
-		        }
-		    }
-		}
-	
-	
+		
 	return getValidProduct();
 	
 }
@@ -547,12 +528,94 @@ public boolean existPhoneNumber(String phoneNumber) {
 		
 		return getInProfile();
 	}
-	public boolean EditCommand() {
+	public boolean editCommand() {
 		setValidCommand(true);
 		return getValidCommand();
 	}
 	
 	
+	public boolean editField(String email, String fieldName, String update) {
+	    boolean emailExists = checkFieldExists("Email", update);
+	    boolean usernameExists = checkFieldExists("Username", update);
+	    boolean phoneNumberExists = checkFieldExists("PhoneNumber", update);
+
+	    if (!emailExists) {
+	        updateField("Email", email, update);
+	    }
+
+	    if (fieldName.equals("Password")) {
+	        updatePasswordField(email, update);
+	    }
+
+	    if (!usernameExists) {
+	        updateField("Username", email, update);
+	    }
+
+	    if (!phoneNumberExists) {
+	        updateField("PhoneNumber", email, update);
+	    }
+
+	    return getIsupdated();
+	}
+
+	private boolean checkFieldExists(String fieldName, String update) {
+	    return list.getCustomers().stream()
+	            .anyMatch(customer -> getField(customer, fieldName).equals(update));
+	}
+
+	private void updateField(String fieldName, String email, String update) {
+	    for (Customer customer : list.getCustomers()) {
+	        if (customer.getEmail().equals(email)) {
+	            if (!update.equals(getField(customer, fieldName))) {
+	                setField(customer, fieldName, update);
+	                setIsupdated(true);
+	            }
+	        }
+	    }
+	}
+
+	private void updatePasswordField(String email, String update) {
+	    if (update != null && !update.isEmpty() && update.length() >= 8) {
+	        for (Customer customer : list.getCustomers()) {
+	            if (customer.getEmail().equals(email)) {
+	                customer.setPassword(update);
+	                setIsupdated(true);
+	            }
+	        }
+	    }
+	}
+
+	private String getField(Customer customer, String fieldName) {
+	    switch (fieldName) {
+	        case "Email":
+	            return customer.getEmail();
+	        case "Username":
+	            return customer.getUsername();
+	        case "PhoneNumber":
+	            return customer.getPhoneNumber();
+	        default:
+	            return null;
+	    }
+	}
+
+	private void setField(Customer customer, String fieldName, String value) {
+	    switch (fieldName) {
+	        case "Email":
+	            customer.setEmail(value);
+	            break;
+	        case "Username":
+	            customer.setUsername(value);
+	            break;
+	        case "PhoneNumber":
+	            customer.setPhoneNumber(value);
+	            break;
+	    }
+	}
+
+	
+	
+	
+	/*
 	public boolean editField(String email, String fieldName, String update) {
 		
 		boolean emailExists = list.getCustomers().stream()
@@ -613,7 +676,9 @@ public boolean existPhoneNumber(String phoneNumber) {
 			}
 		
 	    return getIsupdated();
-		}
+		}*/
+		
+		
 	public void addProductToCustomerArray(String email, String prodName) {
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
@@ -624,7 +689,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 
 	                    // Add product information to the customer's orders
 	                    customerOrders.add("Product name: " + prodName);
-	                    customerOrders.add("Price: " + String.valueOf(product.getPrice())); // Assuming getPrice returns a numeric value
+	                    customerOrders.add("Price: " + product.getPrice()); // Assuming getPrice returns a numeric value
 	                    customerOrders.add("category: " + product.getCategory());
 
 	                    
@@ -635,6 +700,35 @@ public boolean existPhoneNumber(String phoneNumber) {
 	}
 
 	
+	
+	
+	public void displayCustomerOrders(String email) {
+	    Customer customer = findCustomerByEmail(email);
+
+	    if (customer != null) {
+	        List<String> customerOrders = customer.getOrders();
+
+	        if (!customerOrders.isEmpty()) {
+	            int orderNumber = 1;
+
+	            for (int i = 0; i < customerOrders.size(); i += 3) {
+	            	logger.info(orderNumber + ". " +
+	            	        customerOrders.get(i)+ " " + customerOrders.get(i + 1)+ " " + customerOrders.get(i + 2));
+	                orderNumber++;
+	            }
+	            logger.info("\n");
+	        } else {
+	            logger.info("No orders");
+	        }
+	    } else {
+	        logger.info("Customer not found with email: ");
+	    }
+	}
+	
+	
+	
+	
+	/*
 	public void displayCustomerOrders(String email) {
 	    Customer customer = findCustomerByEmail(email);
 
@@ -659,12 +753,12 @@ public boolean existPhoneNumber(String phoneNumber) {
 	    } else {
 	        logger.info("Customer not found with email: ");
 	    }
-	}
+	}*/
 
 	public boolean displayInstallationrequests(String email) {
 	    Customer customer = findCustomerByEmail(email);
 
-	    boolean displayList = false; // Initialize the variable outside the conditions
+	    
 
 	    if (customer != null) {
 	        // Assuming that the customer has a list of requests
@@ -739,7 +833,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	
 	public boolean deleteCat(String catName) {
 		java.util.Iterator<Category> iterator = list.getCategories().iterator();
-	    boolean catIsDeleted = false;
+	   
 
 	    while (iterator.hasNext()) {
 	    	Category category = iterator.next();
@@ -755,7 +849,7 @@ public boolean existPhoneNumber(String phoneNumber) {
 	
 	public boolean deleteProd(String prodName) {
 		java.util.Iterator<Product> iterator = list.getProducts().iterator();
-	    boolean productIsDeleted = false;
+	    
 
 	    while (iterator.hasNext()) {
 	    	Product product = iterator.next();
@@ -950,12 +1044,12 @@ public boolean updateProdcategory(String cat, String name){
 		
 	public boolean review(String prodName,String review) {
 		for(Product n : list.getProducts()) {
-	        if(prodName.equals(n.getProductName())) {
-	        	if(!review.isEmpty()) {
+	        if(prodName.equals(n.getProductName()) && !review.isEmpty()) {
+	        	
 	        		n.setReview(review);
 		        	setreviewed(true);
 		        	break;
-	        	}
+	        	
 	        }
 	        }
 		return getIsreviewed();
@@ -963,12 +1057,12 @@ public boolean updateProdcategory(String cat, String name){
 	
 	public boolean rated(String prodName,int rate) {
 		for(Product n : list.getProducts()) {
-	        if(prodName.equals(n.getProductName())) {
-	        	if(rate <= 5 && rate >= 0) {
+	        if(prodName.equals(n.getProductName()) && rate <= 5 && rate >= 0) {
+	        	
 	        		n.setRating(rate);
 	        		setrated(true);
 		        	break;
-	        	}
+	        	
 	        }
 	        }
 		return getIsrated();
@@ -986,10 +1080,10 @@ public boolean updateProdcategory(String cat, String name){
 	}
 	public boolean dispalyRate(String prodName) {
 		for(Product n : list.getProducts()) {
-	        if(prodName.equals(n.getProductName())) {
-	        	if(n.getRating() >= 0 && n.getRating() <= 5){
+	        if(prodName.equals(n.getProductName()) && n.getRating() >= 0 && n.getRating() <= 5) {
+	        	
 	        		displayRate = true;
-	        	}
+	        	
 	        	}
 	        }
 	        return displayRate;
@@ -997,31 +1091,30 @@ public boolean updateProdcategory(String cat, String name){
 	public boolean request(String username, String email, String carModel, String descriptions , String date) {
 		
 		for(Customer u : list.getCustomers()) {
-	        	if(email.equals(u.getEmail()) && username.equals(u.getUsername())) {
-	        		for(String c : u.getRequest()) {
-	                	if(!carModel.isEmpty() && !descriptions.isEmpty() && !date.isEmpty()) {
+	        	if(email.equals(u.getEmail()) && username.equals(u.getUsername()) && !carModel.isEmpty() && !descriptions.isEmpty() && !date.isEmpty()) {
+	        		
+	                	
 	                		u.getRequest().add(carModel);
 	                		u.getRequest().add(descriptions);
 	                		u.getRequest().add(date);
 	                		
-	                	}
+	                	
 	                	
 	            	}
 	        		validrequest = true;
 	        		break;
 	        	}
-	        	
+		return validrequest;
         	}
 	
-		return validrequest;
-	}
+		
 	
 	public boolean instAvalibilty(String username) {
 		for(Installer in: DataArrayList.installers) {
-			if(username.equals(in.getUsername())) {
-				if(in.getInstallerAvalibilty().equals("Available")) {
+			if(username.equals(in.getUsername()) && in.getInstallerAvalibilty().equals("Available")) {
+				
 					setAvailable(true);
-				}
+				
 			}
 		}
 		return getIsAvailable();
@@ -1057,56 +1150,27 @@ public boolean updateProdcategory(String cat, String name){
 		logger.info("0.Sign out");
 	}
 	
-	public void printTheProducts(int Cat) {
-		if(Cat == 1) {
-			for(Product p:list.getProducts()) {
-				logger.info("Product Name:" + p.getProductName());
-				logger.info("Product Discription:" + p.getDescription());
-				logger.info("Product Price:" + p.getPrice());
-				logger.info("Product Availability:" + p.getAvailability());
-				logger.info("Product category:" + p.getCategory());
-				logger.info("/////////////////////////////////////////////////////");
-				}
-		}
-		else if(Cat == 2) {
-			for(Product p:list.getProducts()) {
-				if (p.getCategory().equals("Interior")) {
-				logger.info("Product Name:" + p.getProductName());
-				logger.info("Product Discription:" + p.getDescription());
-				logger.info("Product Price:" + p.getPrice());
-				logger.info("Product Availability:" + p.getAvailability());
-				logger.info("Product category:" + p.getCategory());
-				logger.info("/////////////////////////////////////////////////////");
-				}
-			}
-		}
-		else if(Cat == 3) {
-			for(Product p:list.getProducts()) {
-				if (p.getCategory().equals("Exterior")) {
-				logger.info("Product Name:" + p.getProductName());
-				logger.info("Product Discription:" + p.getDescription());
-				logger.info("Product Price:" + p.getPrice());
-				logger.info("Product Availability:" + p.getAvailability());
-				logger.info("Product category:" + p.getCategory());
-				logger.info("/////////////////////////////////////////////////////");
-				}
-			}
-		}
-		else if(Cat == 4) {
-			for(Product p:list.getProducts()) {
-				if (p.getCategory().equals("Electronic")) {
-				logger.info("Product Name:" + p.getProductName());
-				logger.info("Product Discription:" + p.getDescription());
-				logger.info("Product Price:" + p.getPrice());
-				logger.info("Product Availability:" + p.getAvailability());
-				logger.info("Product category:" + p.getCategory());
-				logger.info("/////////////////////////////////////////////////////");
-				}
-			}
-		}
-		
-		
+	
+	
+	
+	public void printTheProducts(int cat) {
+	    for (Product p : list.getProducts()) {
+	        if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
+	                || (cat == 3 && p.getCategory().equals("Exterior"))
+	                || (cat == 4 && p.getCategory().equals("Electronic"))) {
+	            logger.info("productName: {}"+ p.getProductName());
+	            logger.info("productDescription: {}"+ p.getDescription());
+	            logger.info("productPrice: {}"+ p.getPrice());
+	            logger.info("productAvailability: {}"+ p.getAvailability());
+	            logger.info("productCategory: {}"+ p.getCategory());
+	            logger.info("/////////////////////////////////////////////////////");
+	        }
+	    }
 	}
+	
+	
+	
+	
 	public void printEditChoices(){
 		logger.info("1.Product Name" );
 		logger.info("2.Product Discription");
@@ -1120,7 +1184,7 @@ public boolean updateProdcategory(String cat, String name){
 		logger.info("Categories:");
 		int index = 1;
 		for(Category cat:list.getCategories()) {
-			logger.info(index +"." + cat.getCatName());
+			logger.info(index + ". " + cat.getCatName());
 			index++;
 			}
 		
@@ -1159,7 +1223,7 @@ public boolean updateProdcategory(String cat, String name){
 	
 	public boolean appointmentView(String date) {
 		for(Appointment ap:list.getAppointment()) {
-			if(ap.getDate().equals(date));
+			if(ap.getDate().equals(date))
 			setViewAppointment(true);
 
 		}
@@ -1192,6 +1256,78 @@ public boolean updateProdcategory(String cat, String name){
 	}
 	
 	
+	
+	
+	
+	public boolean viewInstallerSchedule(String insName) {
+	    Installer installer = findInstallerByName(insName);
+
+	    if (installer == null) {
+	        // Logger.info("No installer with this name! Re-enter new order with a valid Installer");
+	        return false;
+	    }
+
+	    List<String> installerSchedule = installer.getschedule();
+	    sortInstallerSchedule(installerSchedule);
+
+	    displayInstallerSchedule(installerSchedule);
+
+	    return true;
+	}
+
+	private Installer findInstallerByName(String insName) {
+	    for (Installer installer : DataArrayList.installers) {
+	        if (insName.equals(installer.getUsername())) {
+	            return installer;
+	        }
+	    }
+	    return null;
+	}
+
+	private void sortInstallerSchedule(List<String> installerSchedule) {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+	    Collections.sort(installerSchedule, (str1, str2) -> {
+	        if (isDate(str1, dateFormat) && isDate(str2, dateFormat)) {
+	            try {
+	                Date date1 = dateFormat.parse(str1);
+	                Date date2 = dateFormat.parse(str2);
+	                return date1.compareTo(date2);
+	            } catch (ParseException e) {
+	                e.printStackTrace(); // Handle the exception according to your needs
+	            }
+	        }
+	        // If not both are dates, compare as strings
+	        return str1.compareTo(str2);
+	    });
+	}
+
+	private void displayInstallerSchedule(List<String> installerSchedule) {
+	    int index = 1;
+
+	    for (int i = 0; i < installerSchedule.size(); i += 3) {
+	        logger.info(index + " "+
+	                installerSchedule.get(i)+ " "+ installerSchedule.get(i + 1)+ " "+ installerSchedule.get(i + 2));
+	        index++;
+	    }
+
+	    logger.info("\n");
+	}
+
+	private boolean isDate(String str, SimpleDateFormat dateFormat) {
+	    try {
+	        dateFormat.parse(str);
+	        return true;
+	    } catch (ParseException e) {
+	        return false;
+	    }
+	}
+
+	
+	
+	
+	
+	/*
 	public boolean viewInstallerSchedule(String insName) {
 
 	    boolean InstallerScheduleViewed = false;
@@ -1215,7 +1351,7 @@ public boolean updateProdcategory(String cat, String name){
 	                            Date date2 = dateFormat.parse(str2);
 	                            return date1.compareTo(date2);
 	                        } catch (ParseException e) {
-	                            e.printStackTrace(); // Handle the exception according to your needs
+	                        	
 	                        }
 	                    }
 	                    // If not both are dates, compare as strings
@@ -1251,25 +1387,25 @@ public boolean updateProdcategory(String cat, String name){
 	    return InstallerScheduleViewed;
 	}
 
-	
+	*/
 	
 
 	
 	public boolean orderIsPlacedBy(String email, String prodname, String status) {
-	    boolean sendEmail = false;
+	   
 
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
 	            for (Product product : list.getProducts()) {
 	                if (prodname.equals(product.getProductName())) {
 	                    
-	                    List<String> Inbox = customer.getInbox();
+	                    List<String> inbox = customer.getInbox();
 	                    
 
 	                    if ("Confirm".equals(status)) { // Use equals() for string comparison
-	                        Inbox.add("Product Name: " + product.getProductName());
-	                        Inbox.add("Price: " + product.getPrice());
-	                        Inbox.add("category: " + product.getCategory());
+	                    	inbox.add("productName: " + product.getProductName());
+	                    	inbox.add("Price: " + product.getPrice());
+	                    	inbox.add("category: " + product.getCategory());
 	                        sendEmail = true; // Set sendEmail to true if the status is "Confirm"
 	                        
 	                    }
@@ -1286,14 +1422,14 @@ public boolean updateProdcategory(String cat, String name){
 	
 	public boolean getorderIsPlacedBy(String email) {
 	    for (Customer customer : list.getCustomers()) {
-	        List<String> Inbox = customer.getInbox();
+	        List<String> inbox = customer.getInbox();
 	        if (email.equals(customer.getEmail())) {
 	            int index = 1;
-	            for (int i = 0; i < Inbox.size(); i += 3) {
+	            for (int i = 0; i < inbox.size(); i += 3) {
 	                logger.info(index + ". " +
-	                        Inbox.get(i) + " " +
-	                        Inbox.get(i + 1) + " " +
-	                        Inbox.get(i + 2));
+	                		inbox.get(i) + " " +
+	                		inbox.get(i + 1) + " " +
+	                		inbox.get(i + 2));
 	                index++;
 	            }
 	            logger.info("\n");
@@ -1366,6 +1502,82 @@ public boolean updateProdcategory(String cat, String name){
 	    }
 	}
 	
+	
+	public void addReq(String email, String prodname, String carModel, String installer, String date) {
+	    Customer customer = findCustomerByEmaill(email);
+
+	    if (customer == null) {
+	        logger.info("Customer not found with email: " + email);
+	        return;
+	    }
+
+	    Product product = findProductByName(prodname);
+
+	    if (product == null) {
+	        logger.info("Product not found with name: " + prodname);
+	        return;
+	    }
+
+	    Installer selectedInstaller = findInstallerByNamee(installer);
+
+	    if (selectedInstaller == null) {
+	        logger.info("No installer with this name! Re-enter new order with a valid Installer");
+	        return;
+	    }
+
+	    if (isDateBookedd(selectedInstaller.getschedule(), date)) {
+	        logger.info("Installer is busy on the selected date.");
+	        return;
+	    }
+
+	    addRequestToCustomer(customer, prodname, carModel, installer, date);
+	    addRequestToInstaller(selectedInstaller, customer.getUsername(), prodname, date);
+	}
+
+	private Customer findCustomerByEmaill(String email) {
+	    return list.getCustomers().stream()
+	            .filter(c -> email.equals(c.getEmail()))
+	            .findFirst()
+	            .orElse(null);
+	}
+
+	private Product findProductByName(String prodname) {
+	    return list.getProducts().stream()
+	            .filter(p -> prodname.equals(p.getProductName()))
+	            .findFirst()
+	            .orElse(null);
+	}
+
+	private Installer findInstallerByNamee(String installerName) {
+	    return DataArrayList.installers.stream()
+	            .filter(in -> installerName.equals(in.getUsername()))
+	            .findFirst()
+	            .orElse(null);
+	}
+
+	private void addRequestToCustomer(Customer customer, String prodname, String carModel, String installer, String date) {
+	    List<String> customerRequest = customer.getRequest();
+	    customerRequest.add("productName: " + prodname);
+	    customerRequest.add("carModel: " + carModel);
+	    customerRequest.add("installerName: " + installer);
+	    customerRequest.add("preferredDate: " + date);
+	}
+
+	private void addRequestToInstaller(Installer installer, String customerName, String prodname, String date) {
+	    List<String> installerRequest = installer.getschedule();
+	    installerRequest.add("customerName: " + customerName);
+	    installerRequest.add("productName: " + prodname);
+	    installerRequest.add("preferredDate: " + date);
+	}
+
+	private boolean isDateBookedd(List<String> installerSchedule, String date) {
+	    return installerSchedule.contains("Preferred Date: " + date);
+	}
+
+	
+	
+	
+	/*
 	public void addReq(String email, String prodname, String carModel, String installer, String date) {
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
@@ -1421,7 +1633,7 @@ public boolean updateProdcategory(String cat, String name){
 	        }
 	    }
 	    return false; // Date is available
-	}
+	}*/
 	
 	
 	//NEW Setters & Getters :

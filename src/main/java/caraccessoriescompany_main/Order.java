@@ -2,12 +2,12 @@ package caraccessoriescompany_main;
 
 public class Order {
 	
-	public String username;
-	public String customerEmail;
-	public String productName;
-	public String price;
-	public String status;
-	//h
+	private String username;
+	private String customerEmail;
+	private String productName;
+	private String price;
+	private String status;
+	
 	public Order(String username, String customerEmail, String productName, String price, String status) {
 		this.username = username;
 		this.customerEmail = customerEmail;
