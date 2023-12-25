@@ -452,16 +452,7 @@ public boolean existPhoneNumber(String phoneNumber) {
     }
 	return getIsSignedup();
 }
-	public boolean signupEmptyPassword(String email, String password) {
-		
-		setSignedup(true);
-		invalidEmailType(email);
-	    if (!invalidEmail && (password.isEmpty())) {
-	    	setSignedup(false);
-	    }
-		return getIsSignedup();
-	}
-	
+
 	public boolean signupWeakPassword(String email, String password) {
 		setSignedup(true);
 		invalidEmail = true;

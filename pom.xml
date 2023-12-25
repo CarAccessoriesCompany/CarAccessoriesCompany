@@ -22,22 +22,26 @@
 
     <build>
         <plugins>
-            <!-- Other plugins ... -->
 
-            <!-- Add the Jacoco plugin configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version> <!-- Specify the desired version -->
+                <version>0.8.11</version>
                 <executions>
                     <execution>
-                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>report</id>
+                        <id>generate-report</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -45,29 +49,7 @@
                 </executions>
             </plugin>
 
-            <!-- Add the SonarCloud plugin configuration -->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version> <!-- Specify the desired version -->
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sonar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- SonarCloud token -->
-                    <sonar.login>${env.SONAR_TOKEN}</sonar.login>
-                    <!-- SonarCloud project key -->
-                    <sonar.projectKey>your-sonarcloud-project-key</sonar.projectKey>
-                    <!-- Other SonarCloud configurations... -->
-                </configuration>
-            </plugin>
 
-            <!-- Other plugins ... -->
         </plugins>
     </build>
 

@@ -16,13 +16,6 @@ Feature: User Sign-Up
 		 When The user enters an existing email address "existinguser@gmail.com"
 		 Then The user should stay on the sign-up page
 		
-	 # Third Scenario
-	 Scenario: The user leaves the password field empty
-		
-		 Given User in the sign-up page
-		 When The user enters the email address "useremail@gmail.com" and leaves the password field empty
-		 Then The user should stay on the sign-up page
-			
 #	 # Fourth Scenario--
 #	 Scenario: The user leaves the email field empty
 #		

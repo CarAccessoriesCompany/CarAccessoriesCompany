@@ -46,10 +46,6 @@ public class UserSignup {
 	    assertFalse(app.getIsSignedup());
 	}
 
-	@When("The user enters the email address {string} and leaves the password field empty")
-	public void theUserEntersTheEmailAddressAndLeavesThePasswordFieldEmpty(String string) {
-	    app.signupEmptyPassword("NewUser@gmail.com", "");
-	}
 
 	@When("The user enters a valid email address {string} and a weak password {string}")
 	public void theUserEntersAValidEmailAddressAndAWeakPassword(String string, String string2) {
