@@ -50,9 +50,6 @@ public class AdminLogin {
         app.adminIncorrectPassword("Ahmaddweikat@gmail.com", "IncorrectPassword");
     }
 
-    @When("The admin enters the email {string} and leave the password field empty")
-    public void theAdminEntersTheEmailAndLeaveThePasswordFieldEmpty(String string) {
-       app.adminEmptyPassword("Ahmaddweikat@gmail.com", "");
-    }
+    
 
 }

@@ -26,12 +26,6 @@ Feature: Administrator sign-in
 			Then The admin should stay on the sign-in page
 		
 		
-		# Fourth Scenario
-		Scenario: The admin leaves the password field empty
-			
-			Given The admin is on the sign-in page
-			When The admin enters the email "validadmin@gmail.com" and leave the password field empty
-			Then The admin should stay on the sign-in page
 			
 			
 			

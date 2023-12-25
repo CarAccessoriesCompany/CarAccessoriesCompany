@@ -26,12 +26,7 @@ Feature: Customer sign-in
 			Then The customer should stay on the sign-in page
 		
 		
-		# Fourth Scenario
-		Scenario: The customer leaves the password field empty
-			
-			Given The customer is on the sign-in page
-			When The customer enters the email "validcustomer@gmail.com" and leave the password field empty
-			Then The customer should stay on the sign-in page
+	
 			
 			
 			

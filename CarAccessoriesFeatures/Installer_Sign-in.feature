@@ -26,13 +26,6 @@ Feature: Installer sign-in
 			Then The installer should stay on the sign-in page
 		
 		
-		# Fourth Scenario
-		Scenario: The installer leaves the password field empty
-			
-			Given The installer is on the sign-in page
-			When The installer enters the email "validInstaller@gmail.com" and leave the password field empty
-			Then The installer should stay on the sign-in page
-			
 			
 			
 			

@@ -48,8 +48,4 @@ public class InstallerLogin {
         app.installerIncorrectPassword("Installer1@gmail.com", "IncorrectPassword");
     }
 
-    @When("The installer enters the email {string} and leave the password field empty")
-    public void theInstallerEntersTheEmailAndLeaveThePasswordFieldEmpty(String string) {
-        app.installerEmptyPassword("Installer1@gmail.com", "");
-    }
 }

@@ -244,19 +244,6 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean adminEmptyPassword(String email, String password) {
-		invalidEmailType(email);
-	    if (!invalidEmail) {
-		for(User n : DataArrayList.admin) {
-	        if(email.equals(n.getEmail()) && password.isEmpty()) {
-	           isEmpty = true;
-	           break;
-	        }
-	    }
-	    }
-	    islogedin = !isEmpty;
-		return islogedin;
-	}
 	
 	// Customer sign-in functions
 	public boolean customerlogin(String email, String password) {
@@ -302,20 +289,6 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean customerEmptyPassword(String email, String password) {
-		invalidEmailType(email);
-	    if (!invalidEmail) {
-		for(Customer n : list.getCustomers()) {
-	        if(email.equals(n.getEmail()) && password.isEmpty()) {
-	        	isEmpty = true;
-	            break;
-	        }
-	    }
-	    }
-		
-	    islogedin = !isEmpty;
-		return islogedin;
-	}
 	
 	// Installer sign-in function
 	public boolean installerlogin(String email, String password) {
@@ -361,20 +334,6 @@ public class MyCarApplication {
 		return islogedin;
 	}
 	
-	public boolean installerEmptyPassword(String email, String password) {
-		invalidEmailType(email);
-	    if (!invalidEmail) {
-		for(Installer n : DataArrayList.installers) {
-	        if(email.equals(n.getEmail()) && password.isEmpty()) {
-	        	isEmpty = true;
-	            break;
-	        }
-	    }
-	    }
-		
-	    islogedin = !isEmpty;
-		return islogedin;
-	}
 	
 	// User Sign-up functions
 	public boolean userSignUp(String email, String password, String username, String phoneNumber) {
@@ -453,30 +412,27 @@ public boolean existPhoneNumber(String phoneNumber) {
 	return getIsSignedup();
 }
 
-	public boolean signupWeakPassword(String email, String password) {
-		setSignedup(true);
-		invalidEmail = true;
-		invalidEmailType(email);
-	    if (!invalidEmail && password.length() < 8) {
-		
-	    	 setSignedup(false);
-			 invalidEmail = false;
-			
-	    }
-		    return getIsSignedup(); 
-	}
-	
-	public boolean invalidEmailType(String email) {
-		invalidEmail = false;
-	    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(email);
-	    	if(!matcher.matches()) {
-	    		invalidEmail = true;
-	    	}
-	    	setSignedup(!invalidEmail);
-	    	return invalidEmail;
-	}
+public boolean signupWeakPassword(String email, String password) {
+    setSignedup(true);
+    boolean invalidEmail = invalidEmailType(email);
+
+    if (invalidEmail || password.length() < 8) {
+        setSignedup(false);
+    }
+
+    return getIsSignedup();
+}
+
+public boolean invalidEmailType(String email) {
+    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(email);
+    
+    boolean invalidEmail = !matcher.matches();
+    setSignedup(!invalidEmail);
+
+    return invalidEmail;
+}
 	
 	// ProductCatalog functions
 	public boolean category(String menu) {

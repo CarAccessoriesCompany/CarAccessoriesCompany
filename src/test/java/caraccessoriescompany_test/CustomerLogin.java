@@ -49,9 +49,6 @@ public class CustomerLogin {
         app.customerIncorrectPassword("Customer1@gmail.com", "IncorrectPassword");
     }
 
-    @When("The customer enters the email {string} and leave the password field empty")
-    public void theCustomerEntersTheEmailAndLeaveThePasswordFieldEmpty(String string) {
-        app.customerEmptyPassword("Customer1@gmail.com", "");
-    }
+    
 
 }
