@@ -12,7 +12,8 @@ import java.util.regex.Matcher;
 import java.util.logging.Logger;
 public class MyCarApplication {
 	
-	private DataArrayList list;
+	private DataArrayList list = new DataArrayList();
+	private MyCarApplication app;
 	
 	private boolean islogedin;
 	private boolean invalidEmail;
@@ -157,7 +158,6 @@ public class MyCarApplication {
 	 	setSendEmail(false);
 	 	setInstallationReqReceived(false);
 	 	
-	 	
 		
 		
 	}
@@ -170,16 +170,16 @@ public class MyCarApplication {
 	    return isadmin(email) || isCustomer(email) || isInstaller(email);
 	}
 
-	private boolean isadmin(String email) {
+	public boolean isadmin(String email) {
 	    for (User user : DataArrayList.admin) {
 	        if (email.equals(user.getEmail())) {
 	            return true;
 	        }
 	    }
-	    return false;
+	   return false;
 	}
 
-	private boolean isCustomer(String email) {
+	public boolean isCustomer(String email) {
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
 	            return true;
@@ -188,7 +188,7 @@ public class MyCarApplication {
 	    return false;
 	}
 
-	private boolean isInstaller(String email) {
+	public boolean isInstaller(String email) {
 	    for (Installer installer : DataArrayList.installers) {
 	        if (email.equals(installer.getEmail())) {
 	            return true;
@@ -487,10 +487,10 @@ public boolean existPhoneNumber(String PhoneNumber) {
 	    Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(Email);
 	    	if(!matcher.matches()) {
-	    		invalidEmail = true;
+	    		return true;
 	    	}
 	    	setSignedup(!invalidEmail);
-	    	return invalidEmail;
+	    	return false;
 	}
 	
 	// ProductCatalog functions
@@ -1133,11 +1133,6 @@ public boolean updateProdcategory(String cat, String name){
 	       logger.info("/////////////////////////////////////////////////////");
 	       i++;
 	        }
-		for(Installer J : DataArrayList.installers) {
-		       logger.info(i + "." + J.getUsername());
-		       logger.info("/////////////////////////////////////////////////////");
-		       i++;
-		        }
 	    }
 	
 	
@@ -1743,8 +1738,5 @@ public boolean updateProdcategory(String cat, String name){
 	public void setIsInstaller(boolean isInstaller) {
 		this.isInstaller = isInstaller;
 	}
-	
-	
 
-	
 }

@@ -8,8 +8,8 @@ public class Category {
 		
 	}
 	
-	public void setCatName(String Name ) {
-		this.catName = Name;
+	public void setCatName(String name ) {
+		this.catName = name;
 	}
 	public String getCatName() {
 		return catName;

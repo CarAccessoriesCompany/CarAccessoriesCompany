@@ -17,24 +17,22 @@ public class DataArrayList {
 	private static String ex = "Exterior";
 	private static String el = "Electronic";
 	private static String bodyShell = "Body Shell";
-	private static String Firscustomer = "Customer1";
-	private static String Secscustomer = "Customer2";
-	private static final String Firstin = "Installer1";
-	private static final String Secstin = "Installer2";
-
+	private static String firscustomer = "Customer1";
+	private static String secscustomer = "Customer2";
+	private static final String firstin = "Installer1";
+	private static final String secstin = "Installer2";
 	
-	
-	private DataArrayList() {
+	public DataArrayList() {
 		User firstadmin = new User("Ahmaddweikat@gmail.com","Ahmad123");
 		User secondadmin = new User("Hameedo@gmail.com","Hameedo123");
 		admin.add(firstadmin);
 		admin.add(secondadmin);
-		Customer firstCustomer = new Customer(defaultEmail, "Customer123", Firscustomer,"056-1234567");
-		Customer secondCustomer = new Customer(defaultEmail,"Customer456", Secscustomer,"056-345678");
+		Customer firstCustomer = new Customer(defaultEmail, "Customer123", firscustomer,"056-1234567");
+		Customer secondCustomer = new Customer(defaultEmail,"Customer456", secscustomer,"056-345678");
 		customers.add(firstCustomer);
 		customers.add(secondCustomer);
-		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", Firstin, "Available");
-		Installer secondInstaller = new Installer("Installer2@gmail.com","Installer456", Secstin, "Busy");
+		Installer firstInstaller = new Installer("Installer1@gmail.com","Installer123", firstin, "Available");
+		Installer secondInstaller = new Installer("Installer2@gmail.com","Installer456", secstin, "Busy");
 		installers.add(firstInstaller);
 		installers.add(secondInstaller);
 		Product  interiorPart1 = new Product("Steering Wheel", "The wheel which the driver holds when he or she is driving", "100$", "Yes",ir);
@@ -59,12 +57,12 @@ public class DataArrayList {
 		categories.add(cat1);
 		categories.add(cat2);
 		categories.add(cat3);
-		Order ord1 = new Order(Firscustomer, defaultEmail, bodyShell, "150$", "Confirmed");
-		Order ord2 = new Order(Firscustomer, defaultEmail, "Anti-lock Braking System", "450$", "Not Confirmed");
+		Order ord1 = new Order(firscustomer, defaultEmail, bodyShell, "150$", "Confirmed");
+		Order ord2 = new Order(firscustomer, defaultEmail, "Anti-lock Braking System", "450$", "Not Confirmed");
 		orders.add(ord1);
 		orders.add(ord2);
-		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM",Firstin,Firscustomer,"Steering Wheel");
-		Appointment ap2=new Appointment("October 20, 2023, 10:00 PM",Secstin,Secscustomer, bodyShell);
+		Appointment ap1=new Appointment("October 20, 2023, 10:00 AM",firstin,firscustomer,"Steering Wheel");
+		Appointment ap2=new Appointment("October 20, 2023, 10:00 PM",secstin,secscustomer, bodyShell);
 		appointments.add(ap1);
 		appointments.add(ap2);
 	}
