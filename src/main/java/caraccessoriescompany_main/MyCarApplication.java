@@ -443,6 +443,7 @@ public boolean invalidEmailType(String email) {
 	String in = "Interior";
 	String ex = "Exterior";
 	String el = "Electronics";
+	
 	public boolean productName(String categoryName, String productName) {
 	if(categoryName.equals(in) || categoryName.equals(ex) || categoryName.equals(el)) {
 		for(Product n : list.getProducts()) {

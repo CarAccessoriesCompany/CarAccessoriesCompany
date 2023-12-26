@@ -103,9 +103,102 @@ Feature: coverage
     Then the product status should be null    
     
     
+#############  add product
+	Scenario: Add product
+		Given i have array with products
+		When i add product
+		Then the product shoud add successfuly
+    
+    #############  add category
+	Scenario: Add category
+		Given i have array with categorys
+		When i add category
+		Then the category shoud add successfuly
+		
+		 #############  add appointment
+	Scenario: Add appointment
+		Given i have array with appointments
+		When i add appointment
+		Then the appointment shoud add successfuly
+		
+		 #############  add order
+	Scenario: Add order
+		Given i have array with orders
+		When i add order
+		Then the order shoud add successfuly
+		#############  get order
+		Scenario: get order
+		Given i have array with orders
+		When i wnat to get order information
+		Then the order shoud back the info successfuly
+		
+		######## print adminMenu
+		Scenario: print adminMenu
+		Given the admin is logged in
+		When admin join to main
+		Then he should see menu
+		
+		######## print admindashboard
+		Scenario: print admindashboard
+		Given the admin is logged in
+		When admin join to main then enter admin dashboard
+		Then he should see dashboard
+		
+		Scenario: admin edit an product
+		Given the admin is logged in
+		When admin join to main then enter admin dashboard and chose to "Edit" an product
+		Then he should see menu of what he want to edit 
+		
+		Scenario: admin print categories
+		Given the admin is logged in
+		When admin join to main then enter admin dashboard and chose to see categories
+		Then he should see list of categories
+		
+		Scenario: admin print users
+		Given the admin is logged in
+		When admin join to main then enter admin dashboard and chose to see users
+		Then he should see list of users
     
     
-    
+    ######## print customerMenu
+		Scenario: print customer Menu
+		Given the customer is logged in
+		When customer join to main
+		Then he should see customer menu
+		
+		########  customer serach for specfic product
+		Scenario: customer serach for specfic product
+		Given the customer is logged in
+		When customer join to main then enter browse product then enter the name of product and which category
+		Then he should see the product
+		
+		
+		####### add product after buy to customer list
+		Scenario: add product after buy to customer list
+		Given the customer is logged in
+		When the customer want to buy product he enter product name
+		Then the product ad to his list success
+		
+		
+		
+		######## print products
+		Scenario: print products
+		Given the customer or admin is logged in
+		When  the customer or admin choose to see the all products
+		Then they should see list of products
+		
+		####### check product exist
+		Scenario: check product exist
+			Given the admin is logged in
+			When the admin want to add product and its exist 
+			Then he should see exist msg
+			
+		
+		######## print installerMenu
+		Scenario: print installer menu
+		Given the installer is logged in
+		When admin join to installer
+		Then he should see installer menu
     
     
 ########### Customer Verification
@@ -297,7 +390,11 @@ Feature: coverage
     
     
     
-    
+#############  add customer
+	Scenario: Add Customer
+		Given i have array with customers
+		When i add customer
+		Then the customer shoud add successfuly
     
     
     

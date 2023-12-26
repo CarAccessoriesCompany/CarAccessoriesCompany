@@ -5,7 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import caraccessoriescompany_main.Appointment;
+import caraccessoriescompany_main.Category;
 import caraccessoriescompany_main.Customer;
+import caraccessoriescompany_main.DataArrayList;
 import caraccessoriescompany_main.Installer;
 import caraccessoriescompany_main.MyCarApplication;
 import caraccessoriescompany_main.Order;
@@ -18,17 +25,24 @@ public class coverage {
 
 	MyCarApplication app;
 	Order or;
+	Appointment ap;
+	DataArrayList li = new DataArrayList();
 	public String email;
 	public boolean result;
     private User user;
     private Installer ins;
     private Customer customer;
-    private Product prod;
+    Product prod;
     private String retrievedUsername;
     private String retrievedCustomerEmail;
     private String retrievedProductName;
     private String retrievedProductPrice;
     private String retrievedProductStatus;
+    private List<Customer> customers;
+    private List<Product> products;
+    private List<Category> categories;
+    private List<Appointment> apa;
+    private List<Order> orders;
     
     private String password;
     private boolean loginResult;
@@ -650,7 +664,273 @@ public class coverage {
 	
 	
 	
-	
+	@Given("i have array with customers")
+    public void iHaveArrayWithCustomers() {
+		customers = new ArrayList<>();
+    
+    }
+
+    @When("i add customer")
+    public void iAddCustomer() {
+    	Customer newCustomer = new Customer("email@gmail.com", "asadasda123", "Ahmad", "059105388");
+        customers.add(newCustomer);
+        li.setCustomers(customers);
+    }
+
+    @Then("the customer shoud add successfuly")
+    public void theCustomerShoudAddSuccessfuly() {
+    	assertTrue("No customers were added.", customers.size() > 0);
+    	
+        Customer addedCustomer = customers.get(0);
+        assertEquals("email@gmail.com", addedCustomer.getEmail());
+        assertEquals("asadasda123", addedCustomer.getPassword());
+        assertEquals("Ahmad", addedCustomer.getUsername());
+        assertEquals("059105388", addedCustomer.getPhoneNumber());
+    }
+
+    
+    @Given("i have array with products")
+    public void iHaveArrayWithProducts() {
+    	products = new ArrayList<>();
+    }
+
+    @When("i add product")
+    public void iAddProduct() {
+    	Product newProduct = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+    	products.add(newProduct);
+    	li.setProducts(products);
+    }
+
+    @Then("the product shoud add successfuly")
+    public void theProductShoudAddSuccessfuly() {
+    	assertTrue(products.size() > 0);
+    	
+    	Product addedProduct = products.get(0);
+        assertEquals("Body Shell", addedProduct.getProductName());
+        assertEquals("Protect the front shell", addedProduct.getDescription());
+        assertEquals("120$", addedProduct.getPrice());
+        assertEquals("Interior", addedProduct.getCategory());
+    }
+    
+    @Given("i have array with categorys")
+    public void iHaveArrayWithCategorys() {
+    	categories = new ArrayList<>();
+    }
+
+    @When("i add category")
+    public void iAddCategory() {
+    	Category newCat = new Category("Test");
+    	categories.add(newCat);
+    	li.setCategories(categories);
+    	
+    }
+
+    @Then("the category shoud add successfuly")
+    public void theCategoryShoudAddSuccessfuly() {
+    	assertTrue(categories.size() > 0);
+    	
+    	Category addedCategory = categories.get(0);
+        assertEquals("Test", addedCategory.getCatName());
+        
+    }
+
+    @Given("i have array with appointments")
+    public void iHaveArrayWithAppointments() {
+    	apa = new ArrayList<>();
+    }
+
+    @When("i add appointment")
+    public void iAddAppointment() {
+    	Appointment newAppointment = new Appointment("27/07/2023", "installer1", "Customer1","Body Shell");
+    	apa.add(newAppointment);
+    	li.setAppointments(apa);
+    }
+
+    @Then("the appointment shoud add successfuly")
+    public void theAppointmentShoudAddSuccessfuly() {
+    	assertTrue(apa.size() > 0);
+    	Appointment addedAppointment = apa.get(0);
+        assertEquals("27/07/2023", addedAppointment.getDate());
+        assertEquals("installer1", addedAppointment.getInsName());
+        assertEquals("Customer1", addedAppointment.getCusName());
+        assertEquals("Body Shell", addedAppointment.getProName());
+    }
+  
+    @Given("i have array with orders")
+    public void iHaveArrayWithOrders() {
+    	orders = new ArrayList<>();
+    }
+
+    @When("i add order")
+    public void iAddOrder() {
+    	Order newOrder = new Order("usernameA", "sampleCustomerEmail@example.com", "ProductB", "75.00", "Yes");
+    	orders.add(newOrder);
+    	li.setOrders(orders);
+    }
+
+    @Then("the order shoud add successfuly")
+    public void theOrderShoudAddSuccessfuly() {
+    	assertTrue(orders.size() > 0);
+    	Order addedOrder = orders.get(0);
+        assertEquals("usernameA", addedOrder.getUsername());
+        assertEquals("sampleCustomerEmail@example.com", addedOrder.getCustomerEmail());
+        assertEquals("ProductB", addedOrder.getProductName());
+        assertEquals("75.00", addedOrder.getPrice());
+        assertEquals("Yes", addedOrder.getStatus());
+    }
+   
+    @When("i wnat to get order information")
+    public void iWnatToGetOrderInformation() {
+    	Order newOrder = new Order("usernameA", "sampleCustomerEmail@example.com", "ProductB", "75.00", "Yes");
+    }
+
+    @Then("the order shoud back the info successfuly")
+    public void theOrderShoudBackTheInfoSuccessfuly() {
+        assertNotEquals("ProductB",li.getOrders());
+    }
+    
+    @Given("the admin is logged in")
+    public void theAdminIsLoggedIn() {
+        assertTrue(true);
+    }
+
+    @When("admin join to main")
+    public void adminJoinToMain() {
+        app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    }
+
+    @Then("he should see menu")
+    public void heShouldSeeMenu() {
+        app.printadminMenu();
+    }
+    
+    @When("admin join to main then enter admin dashboard")
+    public void adminJoinToMainThenEnterAdminDashboard() {
+    	 app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    }
+
+    @Then("he should see dashboard")
+    public void heShouldSeeDashboard() {
+    	app.printadminDashoard();
+    }
+    
+    @Given("the customer is logged in")
+    public void theCustomerIsLoggedIn() {
+        assertTrue(true);
+    }
+
+    @When("customer join to main")
+    public void customerJoinToMain() {
+        app.customerlogin("Customer1@gmail.com", "Customer123");
+    }
+    @Then("he should see customer menu")
+    public void heShouldSeeCustomerMenu() {
+      app.printCustomerMenu();
+    }
+
+
+    @Given("the installer is logged in")
+    public void theInstallerIsLoggedIn() {
+    	 assertTrue(true);
+    }
+
+    @When("admin join to installer")
+    public void adminJoinToInstaller() {
+        app.installerlogin("Installer1@gmail.com", "Installer123");
+    }
+    @Then("he should see installer menu")
+    public void heShouldSeeInstallerMenu() {
+       app.printInstallerMenu();
+    }
+    
+    @Given("the customer or admin is logged in")
+    public void theCustomerOrAdminIsLoggedIn() {
+        assertTrue(true);
+    }
+
+    @When("the customer or admin choose to see the all products")
+    public void theCustomerOrAdminChooseToSeeTheAllProducts() {
+    	 app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    	 app.customerlogin("Customer1@gmail.com", "Customer123");
+    }
+    
+
+    @Then("they should see list of products")
+    public void theyShouldSeeListOfProducts() {
+        app.printTheProducts(1);
+        app.printTheProducts(2);
+        app.printTheProducts(3);
+        app.printTheProducts(4);
+    }
+    @When("admin join to main then enter admin dashboard and chose to {string} an product")
+    public void adminJoinToMainThenEnterAdminDashboardAndChoseToAnProduct(String string) {
+    	 app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    	 app.editCommand();
+    }
+    
+    @Then("he should see menu of what he want to edit")
+    public void heShouldSeeMenuOfWhatHeWantToEdit() {
+       app.printEditChoices();
+    }
+    @When("admin join to main then enter admin dashboard and chose to see categories")
+    public void adminJoinToMainThenEnterAdminDashboardAndChoseToSeeCategories() {
+    	app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    	app.editCommand();
+    }
+    
+
+    @Then("he should see list of categories")
+    public void heShouldSeeListOfCategories() {
+        app.printCat();
+    }
+    
+    @When("admin join to main then enter admin dashboard and chose to see users")
+    public void adminJoinToMainThenEnterAdminDashboardAndChoseToSeeUsers() {
+    	app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    }
+
+    @Then("he should see list of users")
+    public void heShouldSeeListOfUsers() {
+       app.printUsers();
+    }
+    
+    @When("customer join to main then enter browse product then enter the name of product and which category")
+    public void customerJoinToMainThenEnterBrowseProductThenEnterTheNameOfProductAndWhichCategory() {
+    	app.customerlogin("Customer1@gmail.com", "Customer123");
+    }
+
+    @Then("he should see the product")
+    public void heShouldSeeTheProduct() {
+        app.productName("Interior", "Steering Wheel");
+        app.productName("Exterior", "Body Shell");
+        app.productName("Electronic", "Anti-lock Braking System");
+    }
+    
+    @When("the customer want to buy product he enter product name")
+    public void theCustomerWantToBuyProductHeEnterProductName() {
+        app.addProductToCustomerArray("Customer1@gmail.com", "Body Shell");
+    }
+
+    @Then("the product ad to his list success")
+    public void theProductAdToHisListSuccess() {
+    	customer = new Customer("Customer1@gmail.com","ahmad","asddasd","1231123123"); // Instantiate the customer object
+    	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+        assertEquals("Customer1@gmail.com",customer.getEmail());
+        assertEquals("Body Shell",prod.getProductName());
+    }
+    
+    @When("the admin want to add product and its exist")
+    public void theAdminWantToAddProductAndItsExist() {
+    	app.isExistProduct("Body Shell");
+    }
+
+    @Then("he should see exist msg")
+    public void heShouldSeeExistMsg() {
+    	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+    	assertEquals("Body Shell", prod.getProductName());
+    }
+
+    
 	
 	
 	

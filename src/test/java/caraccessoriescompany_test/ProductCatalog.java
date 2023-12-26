@@ -36,6 +36,8 @@ public class ProductCatalog {
     @When("I enter command {string}")
     public void iEnterCommand(String string) {
        app.categoryName("Exterior");
+       app.categoryName("Interior");
+       app.categoryName("Electronic");
     }
 
     @Then("I should see a list of products with details \\(product name,description, price, availability)")
