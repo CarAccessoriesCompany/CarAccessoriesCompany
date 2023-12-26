@@ -358,13 +358,6 @@ public class MyCarApplication {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	public boolean existEmail(String email) {
 	
 		setSignedup(true);
@@ -604,48 +597,15 @@ public boolean invalidEmailType(String email) {
 	    }
 	}
 	
-	
-	
-	
-	/*
-	public void displayCustomerOrders(String email) {
-	    Customer customer = findCustomerByEmail(email);
-
-	    if (customer != null) {
-	        List<String> customerOrders = customer.getOrders();
-
-	        if (!customerOrders.isEmpty()) {
-	           
-	            int orderNumber = 1;
-
-	            for (int i = 0; i < customerOrders.size(); i += 3) {
-	                logger.info(orderNumber + ". " +
-	                        customerOrders.get(i) + " " +
-	                        customerOrders.get(i + 1) + " " +
-	                        customerOrders.get(i + 2));
-	                orderNumber++;
-	            }
-	            logger.info("\n");
-	        } else {
-	            logger.info("No orders");
-	        }
-	    } else {
-	        logger.info("Customer not found with email: ");
-	    }
-	}*/
 
 	public boolean displayInstallationrequests(String email) {
 	    Customer customer = findCustomerByEmail(email);
 
-	    
-
 	    if (customer != null) {
-	        // Assuming that the customer has a list of requests
 	        List<String> customerRequests = customer.getRequest();
 
 	        if (!customerRequests.isEmpty()) {
 	            int requestNumber = 1;
-	            // Iterate through the list of requests and print them
 	            for (int i = 0; i < customerRequests.size(); i += 4) {
 	                logger.info(requestNumber + ". " +
 	                		customerRequests.get(i) + " " +
@@ -972,12 +932,10 @@ public boolean updateProdcategory(String cat, String name){
 		for(Customer u : list.getCustomers()) {
 	        	if(email.equals(u.getEmail()) && username.equals(u.getUsername()) && !carModel.isEmpty() && !descriptions.isEmpty() && !date.isEmpty()) {
 	        		
-	                	
+
 	                		u.getRequest().add(carModel);
 	                		u.getRequest().add(descriptions);
 	                		u.getRequest().add(date);
-	                		
-	                	
 	                	
 	            	}
 	        		validrequest = true;
@@ -1037,11 +995,11 @@ public boolean updateProdcategory(String cat, String name){
 	        if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
 	                || (cat == 3 && p.getCategory().equals("Exterior"))
 	                || (cat == 4 && p.getCategory().equals("Electronic"))) {
-	            logger.info("productName: {}"+ p.getProductName());
-	            logger.info("productDescription: {}"+ p.getDescription());
-	            logger.info("productPrice: {}"+ p.getPrice());
-	            logger.info("productAvailability: {}"+ p.getAvailability());
-	            logger.info("productCategory: {}"+ p.getCategory());
+	            logger.info("productName: "+ p.getProductName());
+	            logger.info("productDescription: "+ p.getDescription());
+	            logger.info("productPrice: "+ p.getPrice());
+	            logger.info("productAvailability: "+ p.getAvailability());
+	            logger.info("productCategory: "+ p.getCategory());
 	            logger.info("////////////////////////////////////////////////////");
 	        }
 	    }
