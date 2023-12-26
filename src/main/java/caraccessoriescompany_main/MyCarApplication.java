@@ -512,7 +512,7 @@ public boolean invalidEmailType(String email) {
 	    }
 	}
 
-	private void updatePasswordField(String email, String update) {
+	public void updatePasswordField(String email, String update) {
 	    if (update != null && !update.isEmpty() && update.length() >= 8) {
 	        for (Customer customer : list.getCustomers()) {
 	            if (customer.getEmail().equals(email)) {
@@ -523,7 +523,7 @@ public boolean invalidEmailType(String email) {
 	    }
 	}
 	
-	private String getField(Customer customer, String fieldName) {
+	public String getField(Customer customer, String fieldName) {
 	    switch (fieldName) {
 	        case "Email":
 	            return customer.getEmail();
@@ -536,7 +536,7 @@ public boolean invalidEmailType(String email) {
 	    }
 	}
 
-	private void setField(Customer customer, String fieldName, String value) {
+	public void setField(Customer customer, String fieldName, String value) {
 	    switch (fieldName) {
 	        case "Email":
 	            customer.setEmail(value);
@@ -569,9 +569,6 @@ public boolean invalidEmailType(String email) {
 	        }
 	    }
 	}
-
-	
-	
 	
 	public void displayCustomerOrders(String email) {
 	    Customer customer = findCustomerByEmail(email);
@@ -755,9 +752,8 @@ public boolean invalidEmailType(String email) {
 	}
 	
 	public boolean updateProdPrice(String nprice, String name) {
-		
-		 double parsedPrice = Double.parseDouble(nprice);
-        if(parsedPrice <=0) {
+		double parsedPrice = Double.parseDouble(nprice);
+        if(parsedPrice >=0) {
 			for(Product p:list.getProducts()) {
 				if(p.getProductName().equals(name)) {
 					p.setPrice(nprice);
@@ -1111,7 +1107,7 @@ public boolean updateProdcategory(String cat, String name){
 	    return true;
 	}
 
-	private Installer findInstallerByName(String insName) {
+	public Installer findInstallerByName(String insName) {
 	    for (Installer installer : DataArrayList.installers) {
 	        if (insName.equals(installer.getUsername())) {
 	            return installer;
@@ -1120,7 +1116,7 @@ public boolean updateProdcategory(String cat, String name){
 	    return null;
 	}
 
-	private void sortInstallerSchedule(List<String> installerSchedule) {
+	public void sortInstallerSchedule(List<String> installerSchedule) {
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	    Collections.sort(installerSchedule, (str1, str2) -> {
@@ -1138,7 +1134,7 @@ public boolean updateProdcategory(String cat, String name){
 	    });
 	}
 
-	private void displayInstallerSchedule(List<String> installerSchedule) {
+	public void displayInstallerSchedule(List<String> installerSchedule) {
 	    int index = 1;
 
 	    for (int i = 0; i < installerSchedule.size(); i += 3) {
@@ -1150,7 +1146,7 @@ public boolean updateProdcategory(String cat, String name){
 	    logger.info("\n");
 	}
 
-	private boolean isDate(String str, SimpleDateFormat dateFormat) {
+	public boolean isDate(String str, SimpleDateFormat dateFormat) {
 	    try {
 	        dateFormat.parse(str);
 	        return true;

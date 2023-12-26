@@ -101,7 +101,7 @@ public void theAdminUpdatesTheProductPriceToWhichTheNameOfTheProductIs(String st
 
 @Then("the product  price of {string} should be updated to {string} in the product listings")
 public void theProductPriceOfShouldBeUpdatedToInTheProductListings(String string, String string2) {
-	assertFalse(app.getProdpriceIsUpdated());
+	assertTrue(app.getProdpriceIsUpdated());
 }
 
 @When("the Admin updates the product Description to {string}, which the name of the product is {string}")

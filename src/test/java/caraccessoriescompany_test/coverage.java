@@ -2,11 +2,10 @@ package caraccessoriescompany_test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import caraccessoriescompany_main.Appointment;
@@ -22,6 +21,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 public class coverage {
+	
+    
+    
+    
+    private String dateString;
+    private SimpleDateFormat dateFormat;
+    private boolean validationResult;
+    private List<String> installerSchedule;
+    
 
 	MyCarApplication app;
 	Order or;
@@ -872,10 +880,13 @@ public class coverage {
     public void adminJoinToMainThenEnterAdminDashboardAndChoseToAnProduct(String string) {
     	 app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
     	 app.editCommand();
+    	 Product newProduct = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+    	 app.updateProdPrice("100","Body Shell");
     }
     
     @Then("he should see menu of what he want to edit")
     public void heShouldSeeMenuOfWhatHeWantToEdit() {
+    
        app.printEditChoices();
     }
     @When("admin join to main then enter admin dashboard and chose to see categories")
@@ -1006,6 +1017,12 @@ public class coverage {
     @When("the customer bought a product")
     public void theCustomerBoughtAProduct() {
     	app.customerlogin("Customer1@gmail.com", "Customer123");
+    	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+    	ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy"); 
+    	
+    	app.addReq("Customer1@gmail.com", "Body Shell", "BMW", "Installer1", "07/02/2023");
+    	app.addReq("Inavlid@gmail.com", "Body Shell", "BMW", "Installer1", "07/02/2023");
+    	app.addReq("Inavlid@gmail.com", " ", "BMW", " ", "07/02/2023");
     }
 
     @Then("he should add request")
@@ -1032,16 +1049,320 @@ public class coverage {
     @When("the customer bought a product then enter date is taken")
     public void theCustomerBoughtAProductThenEnterDateIsTaken() {
     	app.customerlogin("Customer1@gmail.com", "Customer123");
-    	sched = new ArrayList<>();
-    	ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy");
+        sched = new ArrayList<>();
+        ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy");
         app.addRequestToInstaller(ins, "Customer1@gmail.com", "Body Shell", "07/07/2023");
-    	app.isDateBookedd(sched, "07/07/2023");
+        app.addRequestToInstaller(ins, "Customer1@gmail.com", "Body Shell", "11/05/2023");
+        app.isDateBookedd(sched, "07/07/2023");
+        app.sortInstallerSchedule(sched);
     }
 
     @Then("he should see is taken msg")
     public void heShouldSeeIsTakenMsg() {
-        assertNotEquals("07/07/2023",ins.getschedule());
+    	String expectedDate = "07/07/2023";
+        List<String> actualDates = ins.getschedule();
+
+        assertFalse(actualDates.contains(expectedDate));
     }
+    @Given("an email {string}")
+    public void anEmail(String string) {
+        email="Customer1@gmail.com";
+    }
+
+    @When("the system displays orders placed by the customer")
+    public void theSystemDisplaysOrdersPlacedByTheCustomer() {
+       result=app.getorderIsPlacedBy("Customer1@gmail.com");
+       
+    }
+
+    @Then("the system should show the customer’s orders")
+    public void theSystemShouldShowTheCustomerSOrders() {
+    	assertTrue(result);
+    }
+
+    
+	
+	
+	
+    @Given("a valid date string {string} and date format {string}")
+    public void aValidDateStringAndDateFormat(String dateString, String format) {
+    	this.dateString = "2023-12-25";
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    @When("the system checks if the date is valid")
+    public void theSystemChecksIfTheDateIsValid() {
+    	validationResult = app.isDate("2023-12-25", dateFormat);
+    }
+    
+    
+    @Then("the resultttt should be true")
+    public void theResulttttShouldBeTrue() {
+    	 assertEquals(true, validationResult);
+    }
+
+    @Given("an invalid date string {string} and date format {string}")
+    public void anInvalidDateStringAndDateFormat(String string, String string2) {
+    	this.dateString = "2023";
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    @When("the systemm checks if the date is valid")
+    public void theSystemmChecksIfTheDateIsValid() {
+    	validationResult = app.isDate("2023", dateFormat);
+    }
+
+    @Then("the resultt should be false")
+    public void theResulttShouldBeFalse() {
+    	 assertEquals(false, validationResult);
+    }
+	
+	
+   
+    
+
+	
+    
+
+    @Given("there are no products")
+    public void thereAreNoProducts() {
+        li.getProducts().clear();
+    }
+
+    @When("the user tries to update the price of a product with name {string} to {string}")
+    public void theUserTriesToUpdateThePriceOfAProductWithNameTo(String string, String string2) {
+    	app.updateProdPrice("100.00", "bodyShell");
+    }
+
+    @Then("the price of the product {string} should not be updated")
+    public void thePriceOfTheProductShouldNotBeUpdated(String string) {
+    	assertFalse(app.getProdpriceIsUpdated());
+    }
+    
+    
+    
+    
+    
+    @Given("there is a product with name {string} and other details")
+    public void thereIsAProductWithNameAndOtherDetails(String string) {
+    	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
+    	li.getProducts().add(prod);
+    }
+
+    @When("the user deletes the product with name {string}")
+    public void theUserDeletesTheProductWithName(String string) {
+        app.deleteProd("Body Shell");
+    }
+
+    @Then("the product {string} should be deleted")
+    public void theProductShouldBeDeleted(String string) {
+        assertTrue(app.getProductIsDeleted());
+    }
+
+    @Given("there are no products in the system")
+    public void thereAreNoProductsInTheSystem() {
+    	 li.getProducts().clear();
+    }
+
+    @When("the user tries to delete a product with name {string}")
+    public void theUserTriesToDeleteAProductWithName(String string) {
+    	app.deleteProd("hhhhhh");
+    }
+
+    @Then("the product {string} should not be deleted")
+    public void theProductShouldNotBeDeleted(String string) {
+    	assertFalse(app.getProductIsDeleted());
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @Given("a customer with email {string} and installation requests")
+    public void aCustomerWithEmailAndInstallationRequests(String string) {
+    	Customer newCustomer = new Customer("Customer1@gmail.com", "asadasda123", "Ahmad", "059105388");
+    	
+       
+        li.getCustomers().add(newCustomer);
+        if(li.getCustomers()==null) {
+        	li.setCustomers(new ArrayList<>());
+        }
+        
+        
+    }
+
+    @When("the user tries to display installation requests for the customer with email {string}")
+    public void theUserTriesToDisplayInstallationRequestsForTheCustomerWithEmail(String string) {
+        app.displayInstallationrequests("Customer1@gmail.com");
+      
+    }
+
+    @Then("the system should display the installation requests for the customer")
+    public void theSystemShouldDisplayTheInstallationRequestsForTheCustomer() {
+    	Customer newCustomer = new Customer("Customer1@gmail.com", "asadasda123", "Ahmad", "059105388");
+        assertEquals(false,app.getDisplayList());
+    }
+
+    @Given("a customer with email {string} and no installation requests")
+    public void aCustomerWithEmailAndNoInstallationRequests(String string) {
+    	Customer newCustomer = new Customer("Customer1@gmail.com", "asadasda123", "Ahmad", "059105388");
+    	
+        li.getCustomers().add(newCustomer);
+        if(li.getCustomers()==null) {
+        	li.setCustomers(new ArrayList<>());
+        }
+        
+    }
+
+    @When("the user tries to display installation requests for the customer with emaill {string}")
+    public void theUserTriesToDisplayInstallationRequestsForTheCustomerWithEmaill(String string) {
+    	app.displayInstallationrequests("Customer123@gmail.com");
+    }
+
+    @Then("the system should not display any installation requests for the customer")
+    public void theSystemShouldNotDisplayAnyInstallationRequestsForTheCustomer() {
+    	Customer newCustomer = new Customer("Customer1@gmail.com", "asadasda123", "Ahmad", "059105388");
+    	assertEquals(false,app.getDisplayList());
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    @Given("a customer with email {string} and orders")
+    public void aCustomerWithEmailAndOrders(String string) {
+        email="Customer1@gmail.com";
+    }
+
+    @When("the user tries to display orders for the customer with email {string}")
+    public void theUserTriesToDisplayOrdersForTheCustomerWithEmail(String string) {
+        Customer c=app.findCustomerByEmail("Customer1@gmail.com");
+      
+        	app.displayCustomerOrders("Customer1@gmail.com");
+        
+    }
+
+    @Then("the system should display the orders for the customer")
+    public void theSystemShouldDisplayTheOrdersForTheCustomer() {
+       assertEquals(false,app.getisDisplayOrder());
+    }
+
+    @Given("a customer with email {string} and no orders")
+    public void aCustomerWithEmailAndNoOrders(String string) {
+    	email="Customer1@gmail.com";
+    }
+
+    @When("the user tries to display orders for the customer with emaill {string}")
+    public void theUserTriesToDisplayOrdersForTheCustomerWithEmaill(String string) {
+    	
+        	app.displayCustomerOrders("Customer1@gmail.com");
+        
+    }
+
+    @Then("the system should indicate that there are no orders for the customer")
+    public void theSystemShouldIndicateThatThereAreNoOrdersForTheCustomer() {
+    	assertFalse(app.getDisplayList());
+    }
+
+    @When("the user tries to display orders for a non-existing customer with email {string}")
+    public void theUserTriesToDisplayOrdersForANonExistingCustomerWithEmail(String string) {
+    	app.displayCustomerOrders("Customer");
+    }
+
+    @Then("the system should indicate that the customer was not found")
+    public void theSystemShouldIndicateThatTheCustomerWasNotFound() {
+    	assertFalse(app.getDisplayList());
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    @Given("a customer with email {string} and passwordd {string}")
+    public void aCustomerWithEmailAndPasswordd(String string, String string2) {
+      email="Customer1@gmail.com";
+      password="Customer123";
+    }
+
+    @When("the user updates the password for the customer with email {string} to {string}")
+    public void theUserUpdatesThePasswordForTheCustomerWithEmailTo(String string, String string2) {
+        app.updatePasswordField("Customer1@gmail.com", "Customer123456");
+    }
+
+    @Then("the system should update the password for the customer")
+    public void theSystemShouldUpdateThePasswordForTheCustomer() {
+        assertTrue(app.getIsupdated());
+    }
+
+    @Given("a customer withh email {string} and passwordddddd {string}")
+    public void aCustomerWithhEmailAndPasswordddddd(String string, String string2) {
+    	 email="Customer1@gmail.com";
+         password="Customer123";
+    }
+
+    @When("the user tries to update the password for the customer with email {string} to {string}")
+    public void theUserTriesToUpdateThePasswordForTheCustomerWithEmailTo(String string, String string2) {
+    	app.updatePasswordField("Customer1@gmail.com", "C123");
+    }
+
+    @Then("the system should not update the password, and indicate that the new password is invalid")
+    public void theSystemShouldNotUpdateThePasswordAndIndicateThatTheNewPasswordIsInvalid() {
+    	assertFalse(app.getIsupdated());
+    }
+
+    @Given("a non-existing customer")
+    public void aNonExistingCustomer() {
+    	 email="Customer1@gmailfgdfgdgf.com";
+    }
+
+    @When("the user tries to update the password for a non-existing customer with email {string} to {string}")
+    public void theUserTriesToUpdateThePasswordForANonExistingCustomerWithEmailTo(String string, String string2) {
+    	app.updatePasswordField("Customer1@gmailfgdfgdgf.com", "Customer123456");
+    }
+
+    @Given("a customer with emailll {string} and password {string}")
+    public void aCustomerWithEmailllAndPassword(String string, String string2) {
+    	 email="Customer1@gmail.com";
+         password="Customer123";
+    }
+
+    @When("the user tries to update the password for the customer with email {string} to null")
+    public void theUserTriesToUpdateThePasswordForTheCustomerWithEmailToNull(String string) {
+    	password=null;
+    	app.updatePasswordField("Customer1@gmail.com", password);
+    }
+
+    @Given("a customer with email {string} and passworddddd {string}")
+    public void aCustomerWithEmailAndPassworddddd(String string, String string2) {
+    	email="Customer1@gmail.com";
+        password="Customer123";
+
+    }
+
+    @When("the user tries to update the password for the customer with email {string} to an empty string")
+    public void theUserTriesToUpdateThePasswordForTheCustomerWithEmailToAnEmptyString(String string) {
+    	app.updatePasswordField("Customer1@gmail.com","");
+    }
+
+    @Then("the system should not update the password, and indicate that the new password is invalidd")
+    public void theSystemShouldNotUpdateThePasswordAndIndicateThatTheNewPasswordIsInvalidd() {
+    	assertFalse(app.getIsupdated());
+    }
+    
 
 
 

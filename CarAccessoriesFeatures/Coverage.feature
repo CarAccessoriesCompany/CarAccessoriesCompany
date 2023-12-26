@@ -464,4 +464,122 @@ Feature: coverage
     When the system checks if the phonenumber exists
     Then the Signedupp should be false  
     
+  ######### Display Customer Orders
+
+  Scenario: Display orders for an existing customer
+    Given an email "existingCustomer@example.com"
+    When the system displays orders placed by the customer
+    Then the system should show the customer’s orders
+    And the result should be true
+
+ 
+
+  
+
+############### Date Validation
+
+  Scenario: Valid date string
+    Given a valid date string "2023-12-25" and date format "yyyy-MM-dd"
+    When the system checks if the date is valid
+    Then the resultttt should be true
+
+  Scenario: Invalid date string
+    Given an invalid date string "invalid-date" and date format "yyyy-MM-dd"
+    When the systemm checks if the date is valid
+    Then the resultt should be false
+
+
+  
+
+#################### Update Product Price
+
+  
+  Scenario: User tries to update the price of a non-existent product
+    Given there are no products
+    When the user tries to update the price of a product with name "Non-existent Product" to "150.00"
+    Then the price of the product "Non-existent Product" should not be updated
+
+
+ 
+
+  
+############ Product Management
+
+  Scenario: Delete an existing product
+    Given there is a product with name "bodyShell" and other details
+    When the user deletes the product with name "bodyShell"
+    Then the product "bodyShell" should be deleted
+
+  Scenario: Try to delete a non-existing product
+    Given there are no products in the system
+    When the user tries to delete a product with name "NonExistingProduct"
+    Then the product "NonExistingProduct" should not be deleted
+  
+  
+  
+  
+  
+###########Display Installation Requests
+
+  Scenario: Display installation requests for a customer with requests
+    Given a customer with email "customer@example.com" and installation requests
+    When the user tries to display installation requests for the customer with email "customer@example.com"
+    Then the system should display the installation requests for the customer
+
+  Scenario: Display installation requests for a customer with no requests
+    Given a customer with email "customer@example.com" and no installation requests
+    When the user tries to display installation requests for the customer with emaill "customer@example.com"
+    Then the system should not display any installation requests for the customer
+  
+  
+  
+  
+  
+##############Display Customer Orders
+
+  Scenario: Customer has orders and they are displayed
+    Given a customer with email "customer@example.com" and orders
+    When the user tries to display orders for the customer with email "customer@example.com"
+    Then the system should display the orders for the customer
+
+  Scenario: Customer has no orders
+    Given a customer with email "customer@example.com" and no orders
+    When the user tries to display orders for the customer with emaill "customer@example.com"
+    Then the system should indicate that there are no orders for the customer
+
+  Scenario: Customer not found
+    When the user tries to display orders for a non-existing customer with email "nonexistent@example.com"
+    Then the system should indicate that the customer was not found
+  
+  
+  
+  
+  
+########## Password Update Functionality
+
+  Scenario: Successfully update password for an existing customer with a valid password
+    Given a customer with email "john.doe@example.com" and passwordd "oldPassword"
+    When the user updates the password for the customer with email "john.doe@example.com" to "newSecurePassword"
+    Then the system should update the password for the customer
+
+  Scenario: Fail to update password for a customer with an invalid new password
+    Given a customer withh email "jane.smith@example.com" and passwordddddd "oldPassword"
+    When the user tries to update the password for the customer with email "jane.smith@example.com" to "weak"
+    Then the system should not update the password, and indicate that the new password is invalid
+
+  Scenario: Fail to update password for a non-existing customer
+   Given a non-existing customer
+    When the user tries to update the password for a non-existing customer with email "nonexistent@example.com" to "newPassword"
+    Then the system should indicate that the customer was not found
+
+  Scenario: Fail to update password when new password is null
+    Given a customer with emailll "alice@example.com" and password "oldPassword"
+    When the user tries to update the password for the customer with email "alice@example.com" to null
+    Then the system should not update the password, and indicate that the new password is invalid
+
+  Scenario: Fail to update password when new password is empty
+    Given a customer with email "bob@example.com" and passworddddd "oldPassword"
+    When the user tries to update the password for the customer with email "bob@example.com" to an empty string
+    Then the system should not update the password, and indicate that the new password is invalidd
+  
   
