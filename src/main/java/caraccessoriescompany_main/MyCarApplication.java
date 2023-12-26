@@ -468,10 +468,11 @@ public boolean invalidEmailType(String email) {
 		return getValidCommand();
 	}
 	
-	String em = "Email";
-	String Pass = "Password";
+	String em = "email";
+	String pass = "password";
 	String fn = "username";
 	String ph = "phoneNumber";
+	
 	public boolean editField(String email, String fieldName, String update) {
 	    boolean emailExists = checkFieldExists(em, update);
 	    boolean usernameExists = checkFieldExists(fn, update);

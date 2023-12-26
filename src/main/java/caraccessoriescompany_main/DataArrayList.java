@@ -21,7 +21,7 @@ public class DataArrayList {
 	private static String secscustomer = "Customer2";
 	private static final String FIRSTIN = "Installer1";
 	private static final String SECIN = "Installer2";
-	
+
 	public DataArrayList() {
 		User firstadmin = new User("Ahmaddweikat@gmail.com","Ahmad123");
 		User secondadmin = new User("Hameedo@gmail.com","Hameedo123");
