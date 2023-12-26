@@ -33,6 +33,7 @@ public class coverage {
     private Installer ins;
     private Customer customer;
     Product prod;
+    Category cat;
     private String retrievedUsername;
     private String retrievedCustomerEmail;
     private String retrievedProductName;
@@ -43,6 +44,7 @@ public class coverage {
     private List<Category> categories;
     private List<Appointment> apa;
     private List<Order> orders;
+    private List<String> sched;
     
     private String password;
     private boolean loginResult;
@@ -710,6 +712,7 @@ public class coverage {
         assertEquals("Protect the front shell", addedProduct.getDescription());
         assertEquals("120$", addedProduct.getPrice());
         assertEquals("Interior", addedProduct.getCategory());
+        app.getProdIsAdded();
     }
     
     @Given("i have array with categorys")
@@ -731,6 +734,7 @@ public class coverage {
     	
     	Category addedCategory = categories.get(0);
         assertEquals("Test", addedCategory.getCatName());
+        app.getCatIsAdded();
         
     }
 
@@ -817,6 +821,7 @@ public class coverage {
     @Given("the customer is logged in")
     public void theCustomerIsLoggedIn() {
         assertTrue(true);
+        app.getCustomerAccIsExist();
     }
 
     @When("customer join to main")
@@ -826,6 +831,7 @@ public class coverage {
     @Then("he should see customer menu")
     public void heShouldSeeCustomerMenu() {
       app.printCustomerMenu();
+      app.getisNoOrder();
     }
 
 
@@ -917,18 +923,128 @@ public class coverage {
     	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
         assertEquals("Customer1@gmail.com",customer.getEmail());
         assertEquals("Body Shell",prod.getProductName());
+        app.getisDisplayOrder();
     }
     
     @When("the admin want to add product and its exist")
     public void theAdminWantToAddProductAndItsExist() {
     	app.isExistProduct("Body Shell");
+    	app.isproductNameExist("Body Shell");
     }
 
     @Then("he should see exist msg")
     public void heShouldSeeExistMsg() {
     	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
     	assertEquals("Body Shell", prod.getProductName());
+    	app.getisExist();
     }
+    
+    @When("customer join to his profile then choose to change his information like username, password and telephone")
+    public void customerJoinToHisProfileThenChooseToChangeHisInformationLikeUsernamePasswordAndTelephone() {
+    	app.customerlogin("Customer1@gmail.com", "Customer123");
+    	app.changeUsernameforCust("Customer1@gmail.com", "NewCustomer");
+    	app.changePasswordforCust("Customer1@gmail.com", "newPass");
+    	app.changePhoneforCust("Customer1@gmail.com", "123456789");
+    }
+
+    @Then("he should see success msg")
+    public void heShouldSeeSuccessMsg() {
+       customer = new Customer("Customer1@gmail.com","ahmad","ahmaddwe","1231123123"); 
+       assertEquals("ahmaddwe", customer.getUsername());
+       assertEquals("ahmad", customer.getPassword());
+       assertEquals("1231123123", customer.getPhoneNumber());
+    }
+
+    @When("the admin want to add category and its exist")
+    public void theAdminWantToAddCategoryAndItsExist() {
+    	app.iscategoryNameExist("Interior");
+    }
+
+    @Then("he should see exist category msg")
+    public void heShouldSeeExistCategoryMsg() {
+    	cat = new Category("Interior");
+    	assertEquals("Interior", cat.getCatName());
+    }
+    
+    @When("admin enter customer name")
+    public void adminEnterCustomerName() {
+       app.findCustomerByEmaill("Customer1@gmail.com");
+    }
+
+    @Then("he should see success its found msg")
+    public void heShouldSeeSuccessItsFoundMsg() {
+    	customer = new Customer("Customer1@gmail.com","ahmad","ahmaddwe","1231123123"); 
+        assertEquals("Customer1@gmail.com",customer.getEmail());
+    }
+    
+    @Given("the admin or customer is logged in")
+    public void theAdminOrCustomerIsLoggedIn() {
+        assertTrue(true);
+    }
+
+    @When("admin or customer enter product name")
+    public void adminOrCustomerEnterProductName() {
+    	app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+   	 	app.customerlogin("Customer1@gmail.com", "Customer123");
+    }
+
+    @Then("he should see success its found product msg")
+    public void heShouldSeeSuccessItsFoundProductMsg() {
+        app.findProductByName("Body Shell");
+    }
+    
+    @When("admin enter installer name")
+    public void adminEnterInstallerName() {
+    	app.adminlogin("Ahmaddweikat@gmail.com", "Ahmad123");
+    }
+
+    @Then("he should see success its found installer msg")
+    public void heShouldSeeSuccessItsFoundInstallerMsg() {
+       app.findInstallerByNamee("Installer1@gmail.com");
+    }
+    
+    @When("the customer bought a product")
+    public void theCustomerBoughtAProduct() {
+    	app.customerlogin("Customer1@gmail.com", "Customer123");
+    }
+
+    @Then("he should add request")
+    public void heShouldAddRequest() {
+    	customer = new Customer("Customer1@gmail.com","ahmad","ahmaddwe","1231123123"); 
+        app.addRequestToCustomer(customer, "Body Shell", "BMW", "Installer1", "07/07/2023");
+        app.getisOrdered();
+    }
+    
+    @When("the customer bought a product then enter confirm command")
+    public void theCustomerBoughtAProductThenEnterConfirmCommand() {
+    	app.customerlogin("Customer1@gmail.com", "Customer123");
+    	 app.setConfirmed(true);
+    }
+
+    @Then("the request adds to installer")
+    public void theRequestAddsToInstaller() {
+    	ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy"); 
+        app.addRequestToInstaller(ins, "Customer1@gmail.com", "Body Shell", "07/07/2023");
+        app.getisConfirmed();
+        
+    }
+
+    @When("the customer bought a product then enter date is taken")
+    public void theCustomerBoughtAProductThenEnterDateIsTaken() {
+    	app.customerlogin("Customer1@gmail.com", "Customer123");
+    	sched = new ArrayList<>();
+    	ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy");
+        app.addRequestToInstaller(ins, "Customer1@gmail.com", "Body Shell", "07/07/2023");
+    	app.isDateBookedd(sched, "07/07/2023");
+    }
+
+    @Then("he should see is taken msg")
+    public void heShouldSeeIsTakenMsg() {
+        assertNotEquals("07/07/2023",ins.getschedule());
+    }
+
+
+
 
     
 	

@@ -16,7 +16,6 @@ public class MyCarApplication {
 	private boolean islogedin;
 	private boolean invalidEmail;
 	private boolean incorrectPassword;
-	private boolean isEmpty;
 	private boolean isSignedup;
 	private boolean inMenu;
 	private boolean validCommand;
@@ -89,7 +88,6 @@ public class MyCarApplication {
 		setIsLogedin(false);
 		setInvalidEmail(false);
 		setIncorrectPassword(false);
-		setIsEmpty(false);
 		setSignedup(false);
 		setInMenu(true);
 		setValidCommand(false);
@@ -1307,28 +1305,28 @@ public boolean updateProdcategory(String cat, String name){
 	    addRequestToInstaller(selectedInstaller, customer.getUsername(), prodname, date);
 	}
 
-	private Customer findCustomerByEmaill(String email) {
+	public Customer findCustomerByEmaill(String email) {
 	    return list.getCustomers().stream()
 	            .filter(c -> email.equals(c.getEmail()))
 	            .findFirst()
 	            .orElse(null);
 	}
 
-	private Product findProductByName(String prodname) {
+	public Product findProductByName(String prodname) {
 	    return list.getProducts().stream()
 	            .filter(p -> prodname.equals(p.getProductName()))
 	            .findFirst()
 	            .orElse(null);
 	}
 
-	private Installer findInstallerByNamee(String installerName) {
+	public Installer findInstallerByNamee(String installerName) {
 	    return DataArrayList.installers.stream()
 	            .filter(in -> installerName.equals(in.getUsername()))
 	            .findFirst()
 	            .orElse(null);
 	}
 
-	private void addRequestToCustomer(Customer customer, String prodname, String carModel, String installer, String date) {
+	public void addRequestToCustomer(Customer customer, String prodname, String carModel, String installer, String date) {
 	    List<String> customerRequest = customer.getRequest();
 	    customerRequest.add("productName: " + prodname);
 	    customerRequest.add("carModel: " + carModel);
@@ -1336,14 +1334,14 @@ public boolean updateProdcategory(String cat, String name){
 	    customerRequest.add("preferredDate: " + date);
 	}
 
-	private void addRequestToInstaller(Installer installer, String customerName, String prodname, String date) {
+	public void addRequestToInstaller(Installer installer, String customerName, String prodname, String date) {
 	    List<String> installerRequest = installer.getschedule();
 	    installerRequest.add("customerName: " + customerName);
 	    installerRequest.add("productName: " + prodname);
 	    installerRequest.add("preferredDate: " + date);
 	}
 
-	private boolean isDateBookedd(List<String> installerSchedule, String date) {
+	public boolean isDateBookedd(List<String> installerSchedule, String date) {
 	    return installerSchedule.contains("Preferred Date: " + date);
 	}
 
@@ -1643,12 +1641,7 @@ public boolean updateProdcategory(String cat, String name){
 	public void setIncorrectPassword(boolean incorrectPassword) {
 		this.incorrectPassword = incorrectPassword;
 	}
-	public boolean getIsempty() {
-		return isEmpty;
-	}
-	public void setIsEmpty(boolean isEmpty) {
-		this.isEmpty = isEmpty;
-	}
+	
 	public boolean getIsadmin() {
 		return isadmin;
 	}

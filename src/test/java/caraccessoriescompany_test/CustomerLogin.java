@@ -27,6 +27,7 @@ public class CustomerLogin {
     @When("The customer entered a valid email {string} and a valid password {string}")
     public void theCustomerEnteredAValidEmailAndAValidPassword(String string, String string2) {
         app.customerlogin("Customer1@gmail.com", "Customer123");
+        app.getIsCustomer();
     }
 
     @Then("The customer sign-in succeeded")

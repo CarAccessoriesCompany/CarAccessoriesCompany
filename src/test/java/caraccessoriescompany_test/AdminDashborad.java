@@ -59,14 +59,6 @@ public void theSystemShouldRemoveTheProductCategory(String string) {
 
 
 
-
-
-
-
-
-
-
-
 @Given("the Admin is on the product listings management page")
 public void theAdminIsOnTheProductListingsManagementPage() {
 	assertTrue(app.getInDashboard());

@@ -158,6 +158,8 @@ Feature: coverage
 		Given the admin is logged in
 		When admin join to main then enter admin dashboard and chose to see users
 		Then he should see list of users
+		
+		
     
     
     ######## print customerMenu
@@ -165,6 +167,11 @@ Feature: coverage
 		Given the customer is logged in
 		When customer join to main
 		Then he should see customer menu
+		
+		Scenario: customer edit his own informations
+		Given the customer is logged in
+		When customer join to his profile then choose to change his information like username, password and telephone
+		Then he should see success msg
 		
 		########  customer serach for specfic product
 		Scenario: customer serach for specfic product
@@ -180,6 +187,42 @@ Feature: coverage
 		Then the product ad to his list success
 		
 		
+		##### find customer
+			Scenario: find customer
+			Given the admin is logged in
+			When admin enter customer name
+			Then he should see success its found msg
+			
+			##### find installer
+			Scenario: find installer
+			Given the admin is logged in
+			When admin enter installer name
+			Then he should see success its found installer msg
+			
+			##### add request
+			Scenario: add Request
+			Given the customer is logged in
+			When the customer bought a product
+			Then he should add request
+			
+			##### add request to installer
+			Scenario: add Request to installer
+			Given the customer is logged in
+			When the customer bought a product then enter confirm command
+			Then the request adds to installer
+			
+			##### check date avalability
+			Scenario: check if date is empty
+			Given the customer is logged in
+			When the customer bought a product then enter date is taken
+			Then he should see is taken msg
+			
+			
+		####  find product
+			Scenario: find product
+			Given the admin or customer is logged in
+			When admin or customer enter product name
+			Then he should see success its found product msg
 		
 		######## print products
 		Scenario: print products
@@ -192,6 +235,12 @@ Feature: coverage
 			Given the admin is logged in
 			When the admin want to add product and its exist 
 			Then he should see exist msg
+			
+			####### check category exist
+		Scenario: check category exist
+			Given the admin is logged in
+			When the admin want to add category and its exist 
+			Then he should see exist category msg
 			
 		
 		######## print installerMenu

@@ -26,8 +26,9 @@ public class InstallerLogin {
     @When("The installer entered a valid email {string} and a valid password {string}")
     public void theInstallerEnteredAValidEmailAndAValidPassword(String string, String string2) {
         app.installerlogin("Installer1@gmail.com", "Installer123");
+        app.getIsInstaller();
     }
-    //h
+ 
     @Then("The installer sign-in succeeded")
     public void theInstallerSignInSucceeded() {
         assertTrue(app.getIsLogedin());

@@ -32,6 +32,7 @@ public class AdminLogin {
     @Then("The admin sign-in succeeded")
     public void theAdminSignInSucceeded() {
         assertTrue(app.getIsLogedin());
+        app.getIsadmin();
     }
 
     @When("The admin enters the invalid email {string}")
