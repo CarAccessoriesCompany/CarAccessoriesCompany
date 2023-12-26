@@ -786,7 +786,7 @@ public class coverage {
 
     @Then("the order shoud back the info successfuly")
     public void theOrderShoudBackTheInfoSuccessfuly() {
-        assertNotEquals("ProductB",li.getOrders());
+    	assertFalse(li.getOrders().contains("ProductB"));
     }
     
     @Given("the admin is logged in")
