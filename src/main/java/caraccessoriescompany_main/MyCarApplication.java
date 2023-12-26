@@ -991,10 +991,10 @@ public boolean updateProdcategory(String cat, String name){
 	
 	
 	public void printTheProducts(int cat) {
-	    for (Product p : list.getProducts()) {
-	        if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
-	                || (cat == 3 && p.getCategory().equals("Exterior"))
-	                || (cat == 4 && p.getCategory().equals("Electronic"))) {
+		for (Product p : list.getProducts()) {
+		    if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
+		            || (cat == 3 && p.getCategory().equals("Exterior"))
+		            || (cat == 4 && p.getCategory().equals("Electronic"))) {
 	            logger.info("productName: "+ p.getProductName());
 	            logger.info("productDescription: "+ p.getDescription());
 	            logger.info("productPrice: "+ p.getPrice());
@@ -1004,8 +1004,7 @@ public boolean updateProdcategory(String cat, String name){
 	        }
 	    }
 	}
-	
-	
+
 	String signOut = "0.Sign out";
 	
 	public void printEditChoices(){

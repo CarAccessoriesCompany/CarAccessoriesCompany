@@ -29,6 +29,7 @@ public class Main {
 	    printMenu();
 	   
 	    do {
+	    	
 	        logger.info("Enter your choice (0 to exit): ");
 	        choice = input.nextInt();
 	        input.nextLine();
@@ -48,7 +49,8 @@ public class Main {
 	               
 	                break;
 	            case 2:
-	                // Add logic for sign-up
+	            	
+	            	signUp();
 	                break;
 	            case 0:
 	                logger.info("Exiting...");
@@ -93,7 +95,7 @@ public class Main {
 	        	obj.printadminMenu();
 	        	int adminChoice = stringInput.nextInt();
 	        	if(adminChoice == 1) {
-	        		
+	        		obj.printadminDashoard();
 	        		logger.info("Enter your choice: ");
 	        		int innerAdmin = stringInput.nextInt();
 	        		switch(innerAdmin) {
@@ -343,7 +345,6 @@ public class Main {
 	    
 	}
 	    
-	
 	public String customerSignInMenu(String email) {
 		Scanner stringInput = new Scanner(System.in);
 		  
@@ -403,10 +404,10 @@ public class Main {
         		            obj.addReq(email, productName, carModel, instName, date);
         		            logger.info("The Product is purchased successfully !");
         		        }
-						break;
+						continue;
 	        		case 2:
-	        			obj.printTheProducts(2);
 	        			stringInput.nextLine();
+	        			obj.printTheProducts(2);
 						logger.info("Enter Product name you want to buy: ");
 						String productNamein = stringInput.nextLine(); 
         		        obj.isproductNameExist(productNamein);
@@ -423,10 +424,10 @@ public class Main {
         		            obj.addReq(email, productNamein, carModel, instName, date);
         		            logger.info("The Product is purchased successfully !");
         		        }
-		        		    break;
+        		        continue;
 	        		case 3:
-	        			obj.printTheProducts(3);
 	        			stringInput.nextLine();
+	        			obj.printTheProducts(3);
 						logger.info("Enter Product name you want to buy: ");
 						String productNameex = stringInput.nextLine(); 
         		        obj.isproductNameExist(productNameex);
@@ -443,10 +444,10 @@ public class Main {
         		            obj.addReq(email, productNameex, carModel, instName, date);
         		            logger.info("The Product is purchased successfully !");
         		        }
-	        		    break;
+        		        continue;
 	        		case 4:
-	        			obj.printTheProducts(4);
 	        			stringInput.nextLine();
+	        			obj.printTheProducts(4);
 						logger.info("Enter Product name you want to buy: ");
 						String productNameel = stringInput.nextLine(); 
         		        obj.isproductNameExist(productNameel);
@@ -463,7 +464,7 @@ public class Main {
         		            obj.addReq(email, productNameel, carModel, instName, date);
         		            logger.info("The Product is purchased successfully !");
         		        }
-	        		    break;
+        		        continue;
 	        							 
         		    	default: logger.info("Invalid Choice");
 	        		} 
@@ -605,56 +606,53 @@ public class Main {
 
 	    return email;
 	}
-}
+	
+	public void signUp() {
+		String emailInvalid = "Invalid email!, re-Enter your email: ";
+		logger.info(emailMsg);
+		Scanner scan = new Scanner(System.in);
+    	String upEmail = scan.nextLine();
+    	obj.invalidEmailType(upEmail);
+    	if (obj.getInvalidEmail()) {
+	        logger.info(emailInvalid);
+	    } 
+    	else {
+    		obj.existEmail(upEmail);
+    		if (!obj.getIsSignedup()) {
+	            logger.info("Exist email!, re-Enter non exist email: ");
+	        }
+    		logger.info("Enter password the password must have at least 8 characters: ");
+	        String password = scan.nextLine();
+	        obj.signupWeakPassword(upEmail, password);
 
-// if (choice == 2) {
-//	    input.nextLine();
-//	    logger.info(emailMsg);
-//	    email = input.nextLine();
-//	    obj.invalidEmailType(email);
-//
-//	    if (obj.getInvalidEmail()) {
-//	        logger.info(emailInvalid);
-//	    } else {
-//	        obj.existEmail(email);
-//	        if (!obj.getIsSignedup()) {
-//	            logger.info("Exist email!, re-Enter non exist email: ");
-//	        }
-//
-//	       
-//	        logger.info("Enter password the password must have at least 8 characters: ");
-//	        password = input.nextLine();
-//	        obj.signupEmptyPassword(email, password);
-//
-//	        if (!obj.getIsSignedup()) {
-//	            logger.info("Weak password!, re-Enter Stronger password: ");
-//	        }
-//
-//	        logger.info("Enter username: ");
-//	        username = input.nextLine();
-//	        obj.existUsername(username);
-//
-//	        if (!obj.getIsSignedup()) {
-//	            logger.info("Exist username!, re-Enter non exist username: ");
-//	        }
-//
-//	        logger.info("Phone Number: ");
-//	        phoneNumber = input.nextLine();
-//	        obj.existPhoneNumber(phoneNumber);
-//
-//	        if (!obj.getIsSignedup()) {
-//	            logger.info("Exist Phone Number!, re-Enter non exist Phone Number: ");
-//	        } else {
-//	            obj.userSignUp(email, password, username, phoneNumber);
-//
-//	            if (obj.getIsSignedup()) {
-//	            	mn.printMenu();
-//	                obj.setSignedup(false);
-//	                choice = input.nextInt();
-//	            }
-//	        }
-//	    }
-//	}
-//
-// 
-//}
+	        if (!obj.getIsSignedup()) {
+	            logger.info("Weak password!, re-Enter Stronger password: ");
+	        }
+
+	        logger.info("Enter username: ");
+	        String username = scan.nextLine();
+	        obj.existUsername(username);
+
+	        if (!obj.getIsSignedup()) {
+	            logger.info("Exist username!, re-Enter non exist username: ");
+	        }
+
+	        logger.info("Phone Number: ");
+	        String phoneNumber = scan.nextLine();
+	        obj.existPhoneNumber(phoneNumber);
+
+	        if (!obj.getIsSignedup()) {
+	            logger.info("Exist Phone Number!, re-Enter non exist Phone Number: ");
+	        } else {
+	            obj.userSignUp(upEmail, password, username, phoneNumber);
+
+	            if (obj.getIsSignedup()) {
+	            	printMenu();
+	                obj.setSignedup(false);
+	            }
+	        }
+	    }
+	}
+
+
+	}
