@@ -405,9 +405,9 @@ public boolean existPhoneNumber(String phoneNumber) {
 
 public boolean signupWeakPassword(String email, String password) {
     setSignedup(true);
-    boolean invalidEmail = invalidEmailType(email);
+    boolean isinvalidEmail = invalidEmailType(email);
 
-    if (invalidEmail || password.length() < 8) {
+    if (isinvalidEmail || password.length() < 8) {
         setSignedup(false);
     }
 
@@ -419,10 +419,10 @@ public boolean invalidEmailType(String email) {
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(email);
     
-    boolean invalidEmail = !matcher.matches();
-    setSignedup(!invalidEmail);
+    boolean sinvalidEmail = !matcher.matches();
+    setSignedup(!sinvalidEmail);
 
-    return invalidEmail;
+    return sinvalidEmail;
 }
 	
 	// ProductCatalog functions
@@ -468,18 +468,18 @@ public boolean invalidEmailType(String email) {
 		return getValidCommand();
 	}
 	
-	final static String  em = "email";
-	final static String pass = "password";
-	final static String fn = "username";
-	final static String ph = "phoneNumber";
+	static final  String EM = "email";
+	static final  String PASS = "password";
+	static final  String FN = "username";
+	static final  String PH = "phoneNumber";
 	
 	public boolean editField(String email, String fieldName, String update) {
-	    boolean emailExists = checkFieldExists(em, update);
-	    boolean usernameExists = checkFieldExists(fn, update);
-	    boolean phoneNumberExists = checkFieldExists(ph, update);
+	    boolean emailExists = checkFieldExists(EM, update);
+	    boolean usernameExists = checkFieldExists(FN, update);
+	    boolean phoneNumberExists = checkFieldExists(FN, update);
 
 	    if (!emailExists) {
-	        updateField(em, email, update);
+	        updateField(EM, email, update);
 	    }
 
 	    if (fieldName.equals("Password")) {
@@ -487,11 +487,11 @@ public boolean invalidEmailType(String email) {
 	    }
 
 	    if (!usernameExists) {
-	        updateField("Username", email, update);
+	        updateField(FN, email, update);
 	    }
 
 	    if (!phoneNumberExists) {
-	        updateField("PhoneNumber", email, update);
+	        updateField(PH, email, update);
 	    }
 
 	    return getIsupdated();
@@ -526,11 +526,11 @@ public boolean invalidEmailType(String email) {
 	
 	public String getField(Customer customer, String fieldName) {
 	    switch (fieldName) {
-	        case em:
+	        case EM:
 	            return customer.getEmail();
-	        case fn:
+	        case FN:
 	            return customer.getUsername();
-	        case ph:
+	        case PH:
 	            return customer.getPhoneNumber();
 	        default:
 	            return " ";
@@ -539,13 +539,13 @@ public boolean invalidEmailType(String email) {
 
 	public void setField(Customer customer, String fieldName, String value) {
 	    switch (fieldName) {
-	        case em:
+	        case EM:
 	            customer.setEmail(value);
 	            break;
-	        case fn:
+	        case FN:
 	            customer.setUsername(value);
 	            break;
-	        case ph:
+	        case PH:
 	            customer.setPhoneNumber(value);
 	            break;
             default: break;
@@ -581,21 +581,30 @@ public boolean invalidEmailType(String email) {
 	            int orderNumber = 1;
 
 	            for (int i = 0; i < customerOrders.size(); i += 3) {
-	            	logger.info(orderNumber + ". " +
-	            	        customerOrders.get(i)+ " " + customerOrders.get(i + 1)+ " " + customerOrders.get(i + 2));
-	                orderNumber++;
+	                // Ensure that there are enough elements in the list before accessing them
+	                if (i + 2 < customerOrders.size()) {
+	                    String formattedOrder = String.format("%d. %s %s %s", 
+	                                                          orderNumber, 
+	                                                          customerOrders.get(i), 
+	                                                          customerOrders.get(i + 1), 
+	                                                          customerOrders.get(i + 2));
+	                    logger.info(formattedOrder);
+	                    orderNumber++;
+	                }
 	            }
 	            logger.info("\n");
 	        } else {
 	            logger.info("No orders");
 	        }
 	    } else {
-	        logger.info("Customer not found with email: ");
+	        logger.info("Customer not found with email: " + email);
 	    }
 	}
+
 	
 
-	public boolean displayInstallationrequests(String email) {
+	public boolean displayInstallationRequests(String email) {
+	    boolean displayList = false;
 	    Customer customer = findCustomerByEmail(email);
 
 	    if (customer != null) {
@@ -603,22 +612,26 @@ public boolean invalidEmailType(String email) {
 
 	        if (!customerRequests.isEmpty()) {
 	            int requestNumber = 1;
+
 	            for (int i = 0; i < customerRequests.size(); i += 4) {
-	                logger.info(requestNumber + ". " +
-	                		customerRequests.get(i) + " " +
-	                		customerRequests.get(i + 1) + " " +
-	                		customerRequests.get(i + 2) + " " +
-	                		customerRequests.get(i + 3));
-	                requestNumber++;
+	                // Check if there are enough elements in the list to avoid IndexOutOfBoundsException
+	                if (i + 3 < customerRequests.size()) {
+	                    String formattedRequest = String.format("%d. %s %s %s %s", 
+	                                                             requestNumber, 
+	                                                             customerRequests.get(i), 
+	                                                             customerRequests.get(i + 1), 
+	                                                             customerRequests.get(i + 2), 
+	                                                             customerRequests.get(i + 3));
+	                    logger.info(formattedRequest);
+	                    requestNumber++;
+	                }
 	            }
 	            logger.info("\n");
 	            displayList = true; // Set the flag to true since the list is not empty
 	        }
 	    }
-
 	    return displayList;
 	}
-
 
 	
 	public Customer findCustomerByEmail(String email) {
@@ -943,8 +956,8 @@ public boolean updateProdcategory(String cat, String name){
 		
 	
 	public boolean instAvalibilty(String username) {
-		for(Installer in: DataArrayList.installers) {
-			if(username.equals(in.getUsername()) && in.getInstallerAvalibilty().equals("Available")) {
+		for(Installer installer: DataArrayList.installers) {
+			if(username.equals(installer.getUsername()) && installer.getInstallerAvalibilty().equals("Available")) {
 				
 					setAvailable(true);
 				
@@ -991,7 +1004,7 @@ public boolean updateProdcategory(String cat, String name){
 		    if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
 		            || (cat == 3 && p.getCategory().equals("Exterior"))
 		            || (cat == 4 && p.getCategory().equals("Electronic"))) {
-	            logger.info("productName: "+ p.getProductName());
+	            logger.info(PRONAME+ p.getProductName());
 	            logger.info("productDescription: "+ p.getDescription());
 	            logger.info("productPrice: "+ p.getPrice());
 	            logger.info("productAvailability: "+ p.getAvailability());
@@ -1022,19 +1035,24 @@ public boolean updateProdcategory(String cat, String name){
 		
 	}
 	public void printUsers() {
-		logger.info("customers:");
-		int i = 1;
-		for(Customer n : list.getCustomers()) {
-	       logger.info(i + "." + n.getUsername());
-	       logger.info("/////////////////////////////////////////////////////");
-	       i++;
-	        }
-		for(Installer J : DataArrayList.installers) {
-		       logger.info(i + "." + J.getUsername());
-		       logger.info("/////////////////////////////////////////////////////");
-		       i++;
-		        }
+	    logger.info("customers:");
+	    int i = 1;
+
+	    for(Customer n : list.getCustomers()) {
+	        String customerInfo = String.format("%d. %s", i, n.getUsername());
+	        logger.info(customerInfo);
+	        logger.info("/////////////////////////////////////////////////////");
+	        i++;
 	    }
+
+	    for(Installer J : DataArrayList.installers) {
+	        String installerInfo = String.format("%d. %s", i, J.getUsername());
+	        logger.info(installerInfo);
+	        logger.info("/////////////////////////////////////////////////////");
+	        i++;
+	    }
+	}
+
 	
 	
 	
@@ -1096,7 +1114,6 @@ public boolean updateProdcategory(String cat, String name){
 	    Installer installer = findInstallerByName(insName);
 
 	    if (installer == null) {
-	        // Logger.info("No installer with this name! Re-enter new order with a valid Installer");
 	        return false;
 	    }
 
@@ -1119,7 +1136,6 @@ public boolean updateProdcategory(String cat, String name){
 
 	public void sortInstallerSchedule(List<String> installerSchedule) {
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
 	    Collections.sort(installerSchedule, (str1, str2) -> {
 	        if (isDate(str1, dateFormat) && isDate(str2, dateFormat)) {
 	            try {
@@ -1127,7 +1143,9 @@ public boolean updateProdcategory(String cat, String name){
 	                Date date2 = dateFormat.parse(str2);
 	                return date1.compareTo(date2);
 	            } catch (ParseException e) {
-	               
+	                // Adjust the log level and message according to your logger's capabilities
+	                logger.info("Unable to parse dates: " + str1 + " and " + str2);
+	                return 0;
 	            }
 	        }
 	        // If not both are dates, compare as strings
@@ -1135,15 +1153,31 @@ public boolean updateProdcategory(String cat, String name){
 	    });
 	}
 
+
+
+
 	public void displayInstallerSchedule(List<String> installerSchedule) {
 	    int index = 1;
 
 	    for (int i = 0; i < installerSchedule.size(); i += 3) {
-	        logger.info(index + " "+
-	                installerSchedule.get(i)+ " "+ installerSchedule.get(i + 1)+ " "+ installerSchedule.get(i + 2));
+	        // Check if there are enough elements in the list to avoid IndexOutOfBoundsException
+	        if (i + 2 < installerSchedule.size()) {
+	            String formattedSchedule = String.format("%d. %s %s %s", 
+	                                                     index, 
+	                                                     installerSchedule.get(i), 
+	                                                     installerSchedule.get(i + 1), 
+	                                                     installerSchedule.get(i + 2));
+	            logger.info(formattedSchedule);
+	        } else {
+	            // Handle the case where the remaining elements are less than 3
+	            StringBuilder partialSchedule = new StringBuilder(index + ".");
+	            for (int j = i; j < installerSchedule.size(); j++) {
+	                partialSchedule.append(" ").append(installerSchedule.get(j));
+	            }
+	            logger.info(partialSchedule.toString());
+	        }
 	        index++;
 	    }
-
 	    logger.info("\n");
 	}
 
@@ -1158,7 +1192,7 @@ public boolean updateProdcategory(String cat, String name){
 
 	
 	
-	
+	static final String PRONAME = "productName: ";
 	public boolean orderIsPlacedBy(String email, String prodname, String status) {
 	   
 
@@ -1171,7 +1205,7 @@ public boolean updateProdcategory(String cat, String name){
 	                    
 
 	                    if ("Confirm".equals(status)) { // Use equals() for string comparison
-	                    	inbox.add("productName: " + product.getProductName());
+	                    	inbox.add(PRONAME + product.getProductName());
 	                    	inbox.add("Price: " + product.getPrice());
 	                    	inbox.add("category: " + product.getCategory());
 	                        sendEmail = true; // Set sendEmail to true if the status is "Confirm"
@@ -1188,16 +1222,29 @@ public boolean updateProdcategory(String cat, String name){
 	    return sendEmail;
 	}
 	
-	public boolean getorderIsPlacedBy(String email) {
+	public boolean getOrderIsPlacedBy(String email) {
 	    for (Customer customer : list.getCustomers()) {
-	        List<String> inbox = customer.getInbox();
 	        if (email.equals(customer.getEmail())) {
+	            List<String> inbox = customer.getInbox();
 	            int index = 1;
+
 	            for (int i = 0; i < inbox.size(); i += 3) {
-	                logger.info(index + ". " +
-	                		inbox.get(i) + " " +
-	                		inbox.get(i + 1) + " " +
-	                		inbox.get(i + 2));
+	                // Check if there are enough elements in the list to avoid IndexOutOfBoundsException
+	                if (i + 2 < inbox.size()) {
+	                    String formattedInboxEntry = String.format("%d. %s %s %s", 
+	                                                               index, 
+	                                                               inbox.get(i), 
+	                                                               inbox.get(i + 1), 
+	                                                               inbox.get(i + 2));
+	                    logger.info(formattedInboxEntry);
+	                } else {
+	                    // Handle the case where the remaining elements are less than 3
+	                    StringBuilder partialInboxEntry = new StringBuilder(index + ".");
+	                    for (int j = i; j < inbox.size(); j++) {
+	                        partialInboxEntry.append(" ").append(inbox.get(j));
+	                    }
+	                    logger.info(partialInboxEntry.toString());
+	                }
 	                index++;
 	            }
 	            logger.info("\n");
@@ -1206,6 +1253,7 @@ public boolean updateProdcategory(String cat, String name){
 	    }
 	    return false;
 	}
+
 
 	
 	
@@ -1236,9 +1284,10 @@ public boolean updateProdcategory(String cat, String name){
 	    }
 		return getCatIsExist();
 	}	
+	static final String BEFORE = "BEFORE ";
 	public void changeUsernameforCust(String email, String nname) {
 		for(Customer c : list.getCustomers()) {
-			logger.info("Before " + c.getUsername());
+			logger.info(BEFORE + c.getUsername());
 	        if(email.equals(c.getEmail())) {
 	        	c.setUsername(nname);
 	        	logger.info(c.getUsername());
@@ -1249,7 +1298,7 @@ public boolean updateProdcategory(String cat, String name){
 	}
 	public void changePasswordforCust(String email, String nPass) {
 		for(Customer c : list.getCustomers()) {
-			logger.info("Before " + c.getPassword());
+			logger.info(BEFORE + c.getPassword());
 	        if(email.equals(c.getEmail())) {
 	        	c.setPassword(nPass);
 	        	logger.info(c.getPassword());
@@ -1260,7 +1309,7 @@ public boolean updateProdcategory(String cat, String name){
 	}
 	public void changePhoneforCust(String email, String nPhone) {
 		for(Customer c : list.getCustomers()) {
-			logger.info("Before " + c.getPhoneNumber());
+			logger.info(BEFORE + c.getPhoneNumber());
 	        if(email.equals(c.getEmail())) {
 	        	c.setPhoneNumber(nPhone);
 	        	logger.info(c.getPhoneNumber());
@@ -1275,14 +1324,14 @@ public boolean updateProdcategory(String cat, String name){
 	    Customer customer = findCustomerByEmaill(email);
 
 	    if (customer == null) {
-	        logger.info("Customer not found with email: " + email);
+	        logger.info(String.format("Customer not found with email: %s", email));
 	        return;
 	    }
 
 	    Product product = findProductByName(prodname);
 
 	    if (product == null) {
-	        logger.info("Product not found with name: " + prodname);
+	        logger.info(String.format("Product not found with name: %s", prodname));
 	        return;
 	    }
 
@@ -1302,6 +1351,7 @@ public boolean updateProdcategory(String cat, String name){
 	    addRequestToInstaller(selectedInstaller, customer.getUsername(), prodname, date);
 	}
 
+
 	public Customer findCustomerByEmaill(String email) {
 	    return list.getCustomers().stream()
 	            .filter(c -> email.equals(c.getEmail()))
@@ -1318,14 +1368,14 @@ public boolean updateProdcategory(String cat, String name){
 
 	public Installer findInstallerByNamee(String installerName) {
 	    return DataArrayList.installers.stream()
-	            .filter(in -> installerName.equals(in.getUsername()))
+	            .filter(installer -> installerName.equals(installer.getUsername()))
 	            .findFirst()
 	            .orElse(null);
 	}
 
 	public void addRequestToCustomer(Customer customer, String prodname, String carModel, String installer, String date) {
 	    List<String> customerRequest = customer.getRequest();
-	    customerRequest.add("productName: " + prodname);
+	    customerRequest.add(PRONAME + prodname);
 	    customerRequest.add("carModel: " + carModel);
 	    customerRequest.add("installerName: " + installer);
 	    customerRequest.add("preferredDate: " + date);
@@ -1334,7 +1384,7 @@ public boolean updateProdcategory(String cat, String name){
 	public void addRequestToInstaller(Installer installer, String customerName, String prodname, String date) {
 	    List<String> installerRequest = installer.getschedule();
 	    installerRequest.add("customerName: " + customerName);
-	    installerRequest.add("productName: " + prodname);
+	    installerRequest.add(PRONAME + prodname);
 	    installerRequest.add("preferredDate: " + date);
 	}
 
