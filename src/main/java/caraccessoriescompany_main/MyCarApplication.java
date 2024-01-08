@@ -965,7 +965,7 @@ public boolean updateProdcategory(String cat, String name){
 		}
 		return getIsAvailable();
 	}
-	final static proName = "productName: ";
+	final static String proName = "productName: ";
 	public void printadminMenu() {
 		logger.info("\tWelcome admin");
 		logger.info("1.admin Dashboard");
