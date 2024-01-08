@@ -965,7 +965,7 @@ public boolean updateProdcategory(String cat, String name){
 		}
 		return getIsAvailable();
 	}
-
+	final static proName = "productName: ";
 	public void printadminMenu() {
 		logger.info("\tWelcome admin");
 		logger.info("1.admin Dashboard");
@@ -1004,7 +1004,7 @@ public boolean updateProdcategory(String cat, String name){
 		    if (cat == 1 || (cat == 2 && p.getCategory().equals("Interior"))
 		            || (cat == 3 && p.getCategory().equals("Exterior"))
 		            || (cat == 4 && p.getCategory().equals("Electronic"))) {
-	            logger.info("productName: "+ p.getProductName());
+	            logger.info(proName + p.getProductName());
 	            logger.info("productDescription: "+ p.getDescription());
 	            logger.info("productPrice: "+ p.getPrice());
 	            logger.info("productAvailability: "+ p.getAvailability());
@@ -1184,7 +1184,7 @@ public boolean updateProdcategory(String cat, String name){
 	                    
 
 	                    if ("Confirm".equals(status)) { // Use equals() for string comparison
-	                    	inbox.add("productName: " + product.getProductName());
+	                    	inbox.add(proName + product.getProductName());
 	                    	inbox.add("Price: " + product.getPrice());
 	                    	inbox.add("category: " + product.getCategory());
 	                        sendEmail = true; // Set sendEmail to true if the status is "Confirm"
@@ -1338,7 +1338,7 @@ public boolean updateProdcategory(String cat, String name){
 
 	public void addRequestToCustomer(Customer customer, String prodname, String carModel, String installer, String date) {
 	    List<String> customerRequest = customer.getRequest();
-	    customerRequest.add("productName: " + prodname);
+	    customerRequest.add(proName + prodname);
 	    customerRequest.add("carModel: " + carModel);
 	    customerRequest.add("installerName: " + installer);
 	    customerRequest.add("preferredDate: " + date);
@@ -1347,7 +1347,7 @@ public boolean updateProdcategory(String cat, String name){
 	public void addRequestToInstaller(Installer installer, String customerName, String prodname, String date) {
 	    List<String> installerRequest = installer.getschedule();
 	    installerRequest.add("customerName: " + customerName);
-	    installerRequest.add("productName: " + prodname);
+	    installerRequest.add(proName + prodname);
 	    installerRequest.add("preferredDate: " + date);
 	}
 
