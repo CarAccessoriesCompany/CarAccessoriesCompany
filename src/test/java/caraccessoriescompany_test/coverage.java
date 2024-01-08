@@ -933,14 +933,18 @@ public class coverage {
     	customer = new Customer("Customer1@gmail.com","ahmad","asddasd","1231123123"); // Instantiate the customer object
     	prod = new Product("Body Shell", "Protect the front shell", "120$", "Yes", "Interior");
         assertEquals("Customer1@gmail.com",customer.getEmail());
+        assertEquals("1231123123",customer.getPhoneNumber());
+        app.getField(customer, "PH");
         assertEquals("Body Shell",prod.getProductName());
         app.getisDisplayOrder();
+        app.editField("Customer1@gmail.com", "Password", "NEWAHMAD");
     }
     
     @When("the admin want to add product and its exist")
     public void theAdminWantToAddProductAndItsExist() {
     	app.isExistProduct("Body Shell");
     	app.isproductNameExist("Body Shell");
+    	
     }
 
     @Then("he should see exist msg")
@@ -1380,5 +1384,28 @@ public class coverage {
     	assertFalse(app.getIsupdated());
     }
     
+
+
+
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
 	
 }
