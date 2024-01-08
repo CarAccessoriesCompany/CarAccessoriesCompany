@@ -405,9 +405,9 @@ public boolean existPhoneNumber(String phoneNumber) {
 
 public boolean signupWeakPassword(String email, String password) {
     setSignedup(true);
-    boolean invalidEmail = invalidEmailType(email);
+    boolean isinvalidEmail = invalidEmailType(email);
 
-    if (invalidEmail || password.length() < 8) {
+    if (isinvalidEmail || password.length() < 8) {
         setSignedup(false);
     }
 
