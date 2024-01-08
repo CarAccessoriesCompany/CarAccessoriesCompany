@@ -383,7 +383,7 @@ public class Main {
 //	                       obj.getCus
 	                        break;
 	                    case 4:
-	                        obj.getOrderIsPlacedBy(email);
+	                        obj.getorderIsPlacedBy(email);
 	                        break;
 	                    case 0:
 	                        break;
@@ -460,13 +460,13 @@ public class Main {
 	                break;
 	                
 	            case 2:
-	                obj.displayInstallationRequests(email);
+	                obj.displayInstallationrequests(email);
 	                break;
 	            case 3:
 	            	handleCustomerAccountManagement(stringInput, email);
 	                break;
 	            case 4:
-	            	obj.getOrderIsPlacedBy(email);
+	            	obj.getorderIsPlacedBy(email);
 	                break;
 	            default:
 	                logger.info("Invalid Choice");
