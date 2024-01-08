@@ -602,29 +602,35 @@ public boolean invalidEmailType(String email) {
 }
 	
 
-	public boolean displayInstallationrequests(String email) {
-	    Customer customer = findCustomerByEmail(email);
+	public boolean displayInstallationRequests(String email) {
+    boolean displayList = false;
+    Customer customer = findCustomerByEmail(email);
 
-	    if (customer != null) {
-	        List<String> customerRequests = customer.getRequest();
+    if (customer != null) {
+        List<String> customerRequests = customer.getRequest();
 
-	        if (!customerRequests.isEmpty()) {
-	            int requestNumber = 1;
-	            for (int i = 0; i < customerRequests.size(); i += 4) {
-	                logger.info(requestNumber + ". " +
-	                		customerRequests.get(i) + " " +
-	                		customerRequests.get(i + 1) + " " +
-	                		customerRequests.get(i + 2) + " " +
-	                		customerRequests.get(i + 3));
-	                requestNumber++;
-	            }
-	            logger.info("\n");
-	            displayList = true; // Set the flag to true since the list is not empty
-	        }
-	    }
+        if (!customerRequests.isEmpty()) {
+            int requestNumber = 1;
 
-	    return displayList;
-	}
+            for (int i = 0; i < customerRequests.size(); i += 4) {
+                // Check if there are enough elements in the list to avoid IndexOutOfBoundsException
+                if (i + 3 < customerRequests.size()) {
+                    String formattedRequest = String.format("%d. %s %s %s %s", 
+                                                             requestNumber, 
+                                                             customerRequests.get(i), 
+                                                             customerRequests.get(i + 1), 
+                                                             customerRequests.get(i + 2), 
+                                                             customerRequests.get(i + 3));
+                    logger.info(formattedRequest);
+                    requestNumber++;
+                }
+            }
+            logger.info("\n");
+            displayList = true; // Set the flag to true since the list is not empty
+        }
+    }
+    return displayList;
+}
 
 
 	
