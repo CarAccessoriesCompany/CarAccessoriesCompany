@@ -956,8 +956,8 @@ public boolean updateProdcategory(String cat, String name){
 		
 	
 	public boolean instAvalibilty(String username) {
-		for(Installer in: DataArrayList.installers) {
-			if(username.equals(in.getUsername()) && in.getInstallerAvalibilty().equals("Available")) {
+		for(Installer installer : DataArrayList.installers) {
+			if(username.equals(installer.getUsername()) && installer.getInstallerAvalibilty().equals("Available")) {
 				
 					setAvailable(true);
 				
