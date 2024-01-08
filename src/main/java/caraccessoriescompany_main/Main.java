@@ -70,15 +70,15 @@ public class Main {
 	        obj.invalidEmailType(email);
 
 	        if (obj.getInvalidEmail()) {
-	            logger.info(emailInvalid);
+	            logger.info(EmailInvalid);
 	        }
 
-	        logger.info(passwordMsg);
+	        logger.info(PasswordMsg);
 	        String password = stringInput.nextLine();
 
 	        obj.adminIncorrectPassword(email, password);
 	        if (!obj.getIsLogedin()) {
-	            logger.info(passwordInvalid);
+	            logger.info(PasswordInvalid);
 	            password = stringInput.next();
 	        }
 
@@ -90,7 +90,7 @@ public class Main {
 	                 adminChoice = stringInput.nextInt();
 	                switch (adminChoice) {
 	                    case 1:
-	                        adminCase1(stringInput, prName, prExist, prodEnter, editSuccess, catExist, userNotExist);
+	                        adminCase1(stringInput, PrName, PrExist, ProdEnter, EditSuccess, catExist, userNotExist);
 	                        break;
 	                    case 0:
 	                        obj.printadminMenu();
@@ -552,8 +552,7 @@ public class Main {
                    
                     
                 }
-                logger.info("1.Sign in");
-        	logger.info("2.Sign up");
+                
 	        }        
 	    } while (obj.getInvalidEmail());
 	   
