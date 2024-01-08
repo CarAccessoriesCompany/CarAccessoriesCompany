@@ -56,14 +56,14 @@ public class Main {
 	    Scanner stringInput = new Scanner(System.in);
 
 	    do {
-	        String emailInvalid = "Invalid email!, re-Enter your email: ";
-	        String passwordMsg = "Enter your password: ";
-	        String passwordInvalid = "Incorrect password!, re-Enter your password: ";
-	        String prName = "Enter product name: ";
-	        String prExist = "The Product is not exist !";
-	        String prisExist = "The Product is exist !";
-	        String prodEnter = "Enter the product name that you want to edit:";
-	        String editSuccess = "Edit Done Successfully :)";
+	        String EmailInvalid = "Invalid email!, re-Enter your email: ";
+	        String PasswordMsg = "Enter your password: ";
+	        String PasswordInvalid = "Incorrect password!, re-Enter your password: ";
+	        String PrName = "Enter product name: ";
+	        String PrExist = "The Product is not exist !";
+	        String PrisExist = "The Product is exist !";
+	        String ProdEnter = "Enter the product name that you want to edit:";
+	        String EditSuccess = "Edit Done Successfully :)";
 	        String catExist = "The category is not exist !";
 	        String userNotExist = "The user does not exist";
 
