@@ -1072,7 +1072,17 @@ public class coverage {
     @When("the system displays orders placed by the customer")
     public void theSystemDisplaysOrdersPlacedByTheCustomer() {
        result=app.getorderIsPlacedBy("Customer1@gmail.com");
-       
+       ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy");
+       app.addReq("Customer1@gmail.com", "Body Shell","BMW", "Installer1", "07/07/2024");
+       app.displayCustomerOrders("Customer1@gmail.com");
+       app.addReq("Customer1@gmail.com", "Body Shell","BMW", "Installer1", "07/07/2024");
+       app.addReq("Customer1@gmail.com", "Body Shasdasdell","BMW", "Installer2221", "07/07/2024");
+       app.displayInstallationrequests("Customer1@gmail.com");
+       List<String> installerSchedule = new ArrayList<>();
+       installerSchedule.add("07/07/2024");
+       installerSchedule.add("03/07/2024");
+       installerSchedule.add("02/07/2024");
+       app.displayInstallerSchedule(installerSchedule);
     }
 
     @Then("the system should show the customer’s orders")
@@ -1132,6 +1142,7 @@ public class coverage {
     @When("the user tries to update the price of a product with name {string} to {string}")
     public void theUserTriesToUpdateThePriceOfAProductWithNameTo(String string, String string2) {
     	app.updateProdPrice("100.00", "bodyShell");
+    	
     }
 
     @Then("the price of the product {string} should not be updated")
@@ -1247,9 +1258,15 @@ public class coverage {
 
     @When("the user tries to display orders for the customer with email {string}")
     public void theUserTriesToDisplayOrdersForTheCustomerWithEmail(String string) {
+    	Customer newCustomer = new Customer("Customer1@gmail.com", "asadasda123", "Ahmad", "059105388");
         Customer c=app.findCustomerByEmail("Customer1@gmail.com");
-      
-        	app.displayCustomerOrders("Customer1@gmail.com");
+        result=app.getorderIsPlacedBy("Customer1@gmail.com");
+        ins = new Installer("Installer1@gmail.com", "Installer123", "Installer1", "Busy");
+        app.addReq("Customer1@gmail.com", "Body Shell","BMW", "Installer1", "07/07/2024");
+        app.addReq("Customer1@gmail.com", "Body Shell","BMW", "Installer1", "07/07/2024");
+        app.addReq("Customer1@gmail.com", "Body Shell","BMW", "Installer1", "07/07/2024");
+        app.displayCustomerOrders("Customer1@gmail.com");
+        	
         
     }
 
@@ -1363,28 +1380,5 @@ public class coverage {
     	assertFalse(app.getIsupdated());
     }
     
-
-
-
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
 	
 }
