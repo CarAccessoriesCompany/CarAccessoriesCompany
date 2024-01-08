@@ -468,10 +468,10 @@ public boolean invalidEmailType(String email) {
 		return getValidCommand();
 	}
 	
-	String em = "email";
-	String pass = "password";
-	String fn = "username";
-	String ph = "phoneNumber";
+	final String em = "email";
+	final String pass = "password";
+	final String fn = "username";
+	final String ph = "phoneNumber";
 	
 	public boolean editField(String email, String fieldName, String update) {
 	    boolean emailExists = checkFieldExists(em, update);
@@ -526,11 +526,11 @@ public boolean invalidEmailType(String email) {
 	
 	public String getField(Customer customer, String fieldName) {
 	    switch (fieldName) {
-	        case "Email":
+	        case em:
 	            return customer.getEmail();
-	        case "Username":
+	        case fn:
 	            return customer.getUsername();
-	        case "PhoneNumber":
+	        case ph:
 	            return customer.getPhoneNumber();
 	        default:
 	            return " ";
@@ -539,13 +539,13 @@ public boolean invalidEmailType(String email) {
 
 	public void setField(Customer customer, String fieldName, String value) {
 	    switch (fieldName) {
-	        case "Email":
+	        case em:
 	            customer.setEmail(value);
 	            break;
-	        case "Username":
+	        case fn:
 	            customer.setUsername(value);
 	            break;
-	        case "PhoneNumber":
+	        case ph:
 	            customer.setPhoneNumber(value);
 	            break;
             default: break;
