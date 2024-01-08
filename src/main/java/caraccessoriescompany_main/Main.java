@@ -552,7 +552,8 @@ public class Main {
                    
                     
                 }
-                
+                logger.info("1.Sign in");
+        	logger.info("2.Sign up");
 	        }        
 	    } while (obj.getInvalidEmail());
 	   
