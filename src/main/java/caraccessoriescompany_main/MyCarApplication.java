@@ -572,27 +572,34 @@ public boolean invalidEmailType(String email) {
 	}
 	
 	public void displayCustomerOrders(String email) {
-	    Customer customer = findCustomerByEmail(email);
+    Customer customer = findCustomerByEmail(email);
 
-	    if (customer != null) {
-	        List<String> customerOrders = customer.getOrders();
+    if (customer != null) {
+        List<String> customerOrders = customer.getOrders();
 
-	        if (!customerOrders.isEmpty()) {
-	            int orderNumber = 1;
+        if (!customerOrders.isEmpty()) {
+            int orderNumber = 1;
 
-	            for (int i = 0; i < customerOrders.size(); i += 3) {
-	            	logger.info(orderNumber + ". " +
-	            	        customerOrders.get(i)+ " " + customerOrders.get(i + 1)+ " " + customerOrders.get(i + 2));
-	                orderNumber++;
-	            }
-	            logger.info("\n");
-	        } else {
-	            logger.info("No orders");
-	        }
-	    } else {
-	        logger.info("Customer not found with email: ");
-	    }
-	}
+            for (int i = 0; i < customerOrders.size(); i += 3) {
+                // Ensure that there are enough elements in the list before accessing them
+                if (i + 2 < customerOrders.size()) {
+                    String formattedOrder = String.format("%d. %s %s %s", 
+                                                          orderNumber, 
+                                                          customerOrders.get(i), 
+                                                          customerOrders.get(i + 1), 
+                                                          customerOrders.get(i + 2));
+                    logger.info(formattedOrder);
+                    orderNumber++;
+                }
+            }
+            logger.info("\n");
+        } else {
+            logger.info("No orders");
+        }
+    } else {
+        logger.info("Customer not found with email: " + email);
+    }
+}
 	
 
 	public boolean displayInstallationrequests(String email) {
