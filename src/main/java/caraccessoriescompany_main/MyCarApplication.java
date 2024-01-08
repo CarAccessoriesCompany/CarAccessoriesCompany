@@ -602,7 +602,7 @@ public boolean invalidEmailType(String email) {
 }
 	
 
-	public boolean displayInstallationRequests(String email) {
+	public boolean displayInstallationrequests(String email) {
     boolean displayList = false;
     Customer customer = findCustomerByEmail(email);
 
