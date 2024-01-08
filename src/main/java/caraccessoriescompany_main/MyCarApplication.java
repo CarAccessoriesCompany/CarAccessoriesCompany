@@ -603,7 +603,7 @@ public boolean invalidEmailType(String email) {
 
 	
 
-	public boolean displayInstallationRequests(String email) {
+	public boolean displayInstallationrequests(String email) {
 	    boolean displayList = false;
 	    Customer customer = findCustomerByEmail(email);
 
@@ -1222,7 +1222,7 @@ public boolean updateProdcategory(String cat, String name){
 	    return sendEmail;
 	}
 	
-	public boolean getOrderIsPlacedBy(String email) {
+	public boolean getorderIsPlacedBy(String email) {
 	    for (Customer customer : list.getCustomers()) {
 	        if (email.equals(customer.getEmail())) {
 	            List<String> inbox = customer.getInbox();
